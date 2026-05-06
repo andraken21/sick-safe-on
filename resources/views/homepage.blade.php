@@ -488,10 +488,10 @@
 
 {{-- ══ NAVBAR ══ --}}
 <nav class="navbar">
-    <a href="" class="logo">
-        <div class="logo-icon"><img src="resources/views/logo sick safe on.png" alt="Logo"></div>
+    <div class="logo">
+        <img src="{{ asset('image/logo.png') }}" alt="Logo Aplikasi" width="100px" >
         <span class="logo-text">Sick Safe <span>ON</span></span>
-    </a>
+    </div>
     <ul class="nav-links">
         <li><a href="#beranda">Beranda</a></li>
         <li><a href="#tentang">Tentang</a></li>
