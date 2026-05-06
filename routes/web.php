@@ -18,3 +18,7 @@ Route::get('/register', function () {
 Route::get('/app', function () {
     return view('app');
 });
+
+Route::get('/forgot', function () {
+    return view('forgot');
+});
