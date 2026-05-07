@@ -15,5 +15,5 @@ Route::get('/register', function () {
 });
 
 Route::get('/app', function () {
-    return view('app');
+    return view('layout/app');
 });

@@ -1,117 +1,70 @@
-# 💊 Sick Safe ON
+<<<<<<< HEAD
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Platform digital untuk manajemen farmasi rumah sakit.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
----
+## About Laravel
 
-## 👥 Kelompok 6
-- Joel Felix Ananta Saragih Jawak (251402109)  
-- Joice Christie Gultom (251402100)  
-- Cindy Christina Rajagukguk (251402021)  
-- Tiara Agnesia Br Siahaan (251402136)  
-- Faridhah Izzati Hasanah Hasugian (251402118)  
-- M. Andra Kenzie Sibuea (251402024)  
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
----
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## 🚀 Slogan
-**"Innovating for Healthier Tomorrows"**
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
----
+## Learning Laravel
 
-## 📌 Latar Belakang
-Di era modern saat ini, perkembangan teknologi seharusnya mampu meningkatkan kualitas pelayanan kesehatan agar lebih efektif dan efisien. Namun, pada kenyataannya masih terdapat berbagai permasalahan, seperti:
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-- Pasien kesulitan membaca resep dokter karena tulisan tangan  
-- Resep obat berisiko hilang karena masih berbentuk kertas  
-- Pasien tidak selalu memiliki waktu untuk datang langsung ke rumah sakit  
-- Apoteker berpotensi salah membaca resep  
-- Dokter kesulitan memantau konsumsi obat pasien secara berkala  
-- Pengelolaan stok obat dan tanggal kedaluwarsa masih kurang optimal  
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-Hal ini menunjukkan bahwa sistem manual masih memiliki banyak kelemahan seperti rawan kesalahan, tidak efisien, dan kurang terintegrasi.
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
----
+## Laravel Sponsors
 
-## 💡 Solusi
-Untuk mengatasi permasalahan tersebut, kami mengembangkan **Sick Safe ON**, yaitu platform manajemen farmasi rumah sakit berbasis digital.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-Sistem ini mengintegrasikan seluruh proses pengelolaan obat, mulai dari:
-- Pembuatan resep oleh dokter  
-- Validasi oleh apoteker  
-- Pembayaran oleh pasien  
-- Hingga distribusi obat  
+### Premium Partners
 
-Semua proses berjalan dalam satu sistem yang **terhubung, transparan, dan efisien**, sehingga meningkatkan akurasi dan kualitas pelayanan kesehatan.
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
----
+## Contributing
 
-## 🧠 Penjelasan Nama
-- **Sick** → Merepresentasikan pasien yang membutuhkan pelayanan kesehatan  
-- **Safe** → Melambangkan keamanan dan kepercayaan (resep tervalidasi, obat tepat dosis, dan pembayaran aman)  
-- **ON** → Menunjukkan sistem yang aktif 24/7, real-time, dan saling terhubung  
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
----
+## Code of Conduct
 
-## ⚙️ Alur Program
-Website dimulai dari **dashboard**, kemudian pengguna dapat login atau registrasi.
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-### 👤 Jenis Pengguna
-- Pasien  
-- Dokter  
-- Apoteker  
-- Admin  
+## Security Vulnerabilities
 
-Setelah login, sistem akan menyesuaikan fitur berdasarkan peran masing-masing pengguna.
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
----
+## License
 
-### 🧑‍⚕️ 1. Pasien
-- Melihat resep dari dokter  
-- Melihat total harga dan memilih metode pembayaran (mandiri / BPJS)  
-- Memantau status obat (diproses / siap diambil / dikirim)  
-- Memilih metode pengambilan atau pengiriman obat  
-- Mencatat konsumsi obat harian untuk monitoring  
-- Data konsumsi digunakan dokter untuk evaluasi  
-
----
-
-### 🩺 2. Dokter
-- Mengakses sistem untuk membuat resep digital  
-- Memilih atau menginput data pasien  
-- Mengisi resep (nama obat, dosis, aturan pakai)  
-- Resep dikirim otomatis ke apoteker (real-time)  
-- Memantau kepatuhan konsumsi obat pasien  
-
----
-
-### 💊 3. Apoteker
-- Menerima resep dari dokter  
-- Memeriksa detail resep  
-- Melakukan validasi untuk mencegah kesalahan  
-- Menyiapkan obat setelah pembayaran  
-- Menyerahkan atau mengirim obat ke pasien  
-
----
-
-### 🛠️ 4. Admin
-- Mengelola akun pengguna  
-- Mengelola data obat (stok & harga)  
-- Memantau transaksi (mandiri & BPJS)  
-- Menangani kendala sistem  
-- Membuat laporan dan analisis data  
-
----
-
-## 📌 Saran Pengembangan
-Beberapa pengembangan yang dapat dilakukan ke depan:
-
-- Input data pasien dapat dikelola oleh admin, sehingga dokter cukup memilih data yang sudah tersedia  
-- Perlu adanya manajemen jumlah pasien per dokter agar beban kerja lebih terkontrol  
-- Sistem dapat menerapkan **pairing otomatis** antara pasien dan dokter untuk meningkatkan efisiensi  
-- Fitur pengiriman obat dan monitoring konsumsi dapat dibuat opsional atau disederhanakan sesuai kebutuhan pengguna  
-
----
-
-## ✨ Penutup
-Sick Safe ON hadir sebagai solusi digital untuk meningkatkan efisiensi, akurasi, dan kualitas layanan farmasi rumah sakit di era modern.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+>>>>>>> acbe1ceed63fe3030a094218e102db8516efecbb
+"# sick-safe-on" 
