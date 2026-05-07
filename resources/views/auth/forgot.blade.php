@@ -144,7 +144,7 @@
             <button type="submit" class="btn-submit">Simpan kata sandi baru</button>
         </form>
 
-        <a href="/login" class="back-link">
+        <a href="/auth/login" class="back-link">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
