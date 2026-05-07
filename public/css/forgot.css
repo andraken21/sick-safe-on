@@ -1,0 +1,232 @@
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+            display: flex;
+            width: 520px;
+            max-width: 96vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo-corner {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1a2e3b;
+            z-index: 2;
+        }
+        .logo-corner svg {
+            width: 22px;
+            height: 22px;
+            color: #2dc98a;
+        }
+
+        /* ── Panel Kiri ── */
+        .left {
+            background: linear-gradient(160deg, #e6f7f2 0%, #c8ece2 100%);
+            width: 180px;
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 48px 16px 24px;
+        }
+
+        .left h2 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #1a5c42;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .left p {
+            font-size: 0.72rem;
+            color: #4a9b7a;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ── Panel Kanan ── */
+        .right {
+            flex: 1;
+            padding: 28px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a2e3b;
+            margin: 0 0 2px;
+        }
+
+        .subtitle {
+            font-size: 0.78rem;
+            color: #8a9bb0;
+            margin: 0 0 18px;
+        }
+
+        .form-group { margin-bottom: 12px; }
+
+        label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #2d3e50;
+            margin-bottom: 4px;
+        }
+
+        .pw-wrap { position: relative; }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 38px 8px 10px;
+            border: 1.5px solid #dde4ec;
+            border-radius: 9px;
+            font-size: 0.85rem;
+            color: #2d3e50;
+            background: #f8fafc;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input:focus { border-color: #2dc98a; background: #fff; }
+        input::placeholder { color: #b5c3cf; }
+        input.is-invalid { border-color: #e53935; }
+
+        /* Sembunyikan ikon bawaan browser */
+        input::-ms-reveal,
+        input::-ms-clear { display: none; }
+
+        /* Toggle mata */
+        .toggle-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            color: #b5c3cf;
+        }
+        .toggle-btn:hover { color: #2dc98a; }
+        .toggle-btn svg { width: 20px; height: 20px; }
+
+        /* Validasi password */
+        .password-rules {
+            margin-top: 6px;
+            padding: 8px 10px;
+            border: 1.5px solid #dde4ec;
+            border-radius: 9px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: #f8fafc;
+        }
+        .password-rules.show { display: flex; }
+
+        .rule {
+            font-size: 0.74rem;
+            color: #e53935;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .rule.valid { color: #2dc98a; }
+        .rule-icon { width: 12px; text-align: center; font-weight: 700; font-size: 11px; }
+
+        /* Error & mismatch */
+        .error-msg {
+            color: #e53935;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .mismatch-msg {
+            color: #e53935;
+            font-size: 0.74rem;
+            margin-top: 4px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+        .mismatch-msg.show { display: flex; }
+        .mismatch-msg svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+        /* Alert sukses */
+        .alert-success {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            margin-bottom: 14px;
+        }
+
+        /* Tombol */
+        .btn-submit {
+            width: 100%;
+            padding: 9px;
+            background: linear-gradient(90deg, #2dc98a 0%, #1aaf74 100%);
+            color: #fff;
+            border: none;
+            border-radius: 9px;
+            font-size: 0.87rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(45,201,138,0.18);
+        }
+        .btn-submit:hover { box-shadow: 0 6px 16px rgba(45,201,138,0.30); }
+
+        /* Kembali */
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            color: #8a9bb0;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #2dc98a; }
+
+        @media (max-width: 500px) {
+            .left { display: none; }
+            .right { padding: 32px 20px; }
+            .card { border-radius: 12px; }
+        }
+  
