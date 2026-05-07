@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
     return view('layouts/header');
     });
     
-
+// Agar saat menekan button app akan pergi ke web app
     Route::get('/app', function () {
         return view('layouts/app');
     });
