@@ -138,11 +138,11 @@
 
                 </div>
 
-                <a href="/auth/forgot" class="forgot-link">
-                    Lupa kata sandi?
-                </a>
+<a href="/auth/forgot" class="forgot-link">
+    Lupa kata sandi?
+</a>
 
-            </div>
+</div>
 
             {{-- Ingat saya --}}
             <div class="remember-row">

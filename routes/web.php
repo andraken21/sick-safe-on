@@ -21,9 +21,21 @@ use Illuminate\Support\Facades\Route;
     Route::get('/auth/forgot', function () {
         return view('auth.forgot');
     });
+// Agar saat menekan button daftar di login akan pergi ke web registrasi
+    Route::get('/register', function () {
+        return view('auth.registrasi');
+    });
 
+// Agar saat menekan button forgot di login akan pergi ke web forgot
+    Route::get('/forgot', function () {
+        return view('auth.forgot');
+    });
 
+    Route::get('/header', function () {
+    return view('layouts/header');
+    });
     
+
     Route::get('/app', function () {
         return view('layouts/app');
     });

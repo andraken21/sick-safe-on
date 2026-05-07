@@ -35,6 +35,9 @@
     {{-- FOOTER --}}
     @include('layouts.partials.footer')
 
-    <script></script>
+   <script src="{{ asset('js/app.js') }}"></script>
+   <script src="{{ asset('js/header.js') }}"></script>
+   <script src="{{ asset('js/sidebar.js') }}"></script>
+   <script src="{{ asset('js/footer.js') }}"></script>
 </body>
 </html>
