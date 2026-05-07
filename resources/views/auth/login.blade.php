@@ -92,7 +92,7 @@
                     </div>
                 </div>
 
-                <a href="/forgot" class="forgot-link">Lupa kata sandi?</a>
+                <a href="/auth/forgot" class="forgot-link">Lupa kata sandi?</a>
             </div>
 
             {{-- Ingat saya --}}
@@ -105,7 +105,7 @@
         </form>
 
         <p class="register-text">
-            Belum punya akun? <a href="/register">Daftar di sini</a>
+            Belum punya akun? <a href="/auth/register">Daftar di sini</a>
         </p>
 
     </div>
