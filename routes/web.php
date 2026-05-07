@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
 Route::get('/', function () {
     return view('homepage');
 });
@@ -16,6 +17,13 @@ Route::get('/register', function () {
 
 Route::get('/app', function () {
     return view('layout/app');
+<<<<<<< HEAD
+=======
+});
+
+Route::get('/forgot', function () {
+    return view('forgot');
+>>>>>>> 44306c0210b4a89fb7fd07498def95f1a9e2dd65
 });
 
 Route::get('/navigation', function () {
