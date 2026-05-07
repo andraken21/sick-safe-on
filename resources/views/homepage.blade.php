@@ -275,6 +275,5 @@
 </footer>
 
 <script src="{{ asset('js/homepage.js') }}"></script>
-
 </body>
 </html>
