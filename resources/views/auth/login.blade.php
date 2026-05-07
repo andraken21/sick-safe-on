@@ -92,7 +92,11 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <a href="/auth/forgot" class="forgot-link">Lupa kata sandi?</a>
+=======
+                <a href="/forgot" class="forgot-link">Lupa kata sandi?</a>
+>>>>>>> 6efbb85607e476b1ecfee4d472dba63adf762253
             </div>
 
             {{-- Ingat saya --}}
@@ -105,7 +109,11 @@
         </form>
 
         <p class="register-text">
+<<<<<<< HEAD
             Belum punya akun? <a href="/auth/register">Daftar di sini</a>
+=======
+            Belum punya akun? <a href="/register">Daftar di sini</a>
+>>>>>>> 6efbb85607e476b1ecfee4d472dba63adf762253
         </p>
 
     </div>
