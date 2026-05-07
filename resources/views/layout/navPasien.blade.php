@@ -102,7 +102,7 @@
 <nav class="navbar">
     <a href="dashboard-pasien.php" class="logo">
         <div class="logo-icon">🏥</div>
-       <img src="/sicksafeon/public/image/logo.png" alt="Logo Aplikasi" width="80px">
+        <img src="{{ asset('image/logo.png') }}" alt="Logo Saya" width="100">
         <div class="logo-text">Sick<br><span>Safe</span> ON</div>
     </a>
 
