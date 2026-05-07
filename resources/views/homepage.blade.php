@@ -56,20 +56,13 @@
 
     {{-- Mock Dashboard Card --}}
     <div class="hero-visual">
-        <div class="float-card top-left">
-            <span class="float-icon">✅</span>
-            <div class="float-text">
-                <strong>Resep Tervalidasi</strong>
-                <span>RSP-2024-0051 · barusan</span>
-            </div>
-        </div>
-
+        
         <div class="hero-card-wrap">
             <div class="card-header-bar">
                 <span class="dot-red"></span>
                 <span class="dot-yellow"></span>
                 <span class="dot-green"></span>
-                <span class="card-title-bar">🛡️ Sick Safe ON — Dashboard Pasien</span>
+                <span class="card-title-bar">Sick Safe ON — Dashboard Pasien</span>
             </div>
 
             <div class="stats-row">
@@ -86,13 +79,13 @@
                     <div class="lbl">Siap Diambil</div>
                 </div>
             </div>
-
+            
             <div style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">Resep Terbaru</div>
-
+            
             <div class="resep-list">
                 <div class="resep-item">
                     <div class="ri-left">
-                        <div class="resep-icon">📋</div>
+                        <div><img src="{{ asset('image/resep_digital.png') }}" alt="Logo Saya" width="40px"></div>
                         <div class="resep-info">
                             <div class="rnum">Resep #RSP-2024-0051</div>
                             <div class="rdoc">Dr. Budi Santoso · 20 Mei 2024</div>
@@ -102,7 +95,7 @@
                 </div>
                 <div class="resep-item">
                     <div class="ri-left">
-                        <div class="resep-icon">📋</div>
+                        <div><img src="{{ asset('image/resep_digital.png') }}" alt="Logo Saya" width="40px"></div>
                         <div class="resep-info">
                             <div class="rnum">Resep #RSP-2024-0048</div>
                             <div class="rdoc">Dr. Budi Santoso · 15 Mei 2024</div>
@@ -112,9 +105,16 @@
                 </div>
             </div>
         </div>
-
+        <div class="float-card top-left">
+            <div><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
+            <div class="float-text">
+                <strong>Resep Tervalidasi</strong>
+                <span>RSP-2024-0051 · barusan</span>
+            </div>
+        </div>
+        
         <div class="float-card bottom-right">
-            <span class="float-icon">💊</span>
+            <div><img src="{{ asset('image/distribusi_obat.png') }}" alt="Logo Saya" width="40px"></div>
             <div class="float-text">
                 <strong>Stok Aman</strong>
                 <span>Paracetamol 500mg</span>
@@ -126,22 +126,22 @@
 {{-- ══ FEATURE CARDS ══ --}}
 <div class="features-strip" id="fitur">
     <div class="feature-card">
-        <div class="feature-icon-wrap">📝</div>
+        <div class="feature-icon-wrap"><img src="{{ asset('image/resep_digital.png') }}" alt="Logo Saya" width="40px"></div>
         <div class="feature-title">Resep Digital</div>
         <div class="feature-desc">Buat, kirim, dan kelola resep secara digital. Aman dan mudah diakses kapan saja.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon-wrap">✅</div>
+        <div class="feature-icon-wrap"><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
         <div class="feature-title">Validasi Apoteker</div>
         <div class="feature-desc">Apoteker memvalidasi resep secara real-time untuk memastikan obat tepat dan aman.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon-wrap">💳</div>
+        <div class="feature-icon-wrap"><img src="{{ asset('image/pembayaran_aman.png') }}" alt="Logo Saya" width="40px"></div>
         <div class="feature-title">Pembayaran Aman</div>
         <div class="feature-desc">Bayar mandiri atau via BPJS Kesehatan dengan proses yang mudah dan transparan.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon-wrap">🚚</div>
+        <div class="feature-icon-wrap"><img src="{{ asset('image/distribusi_obat.png') }}" alt="Logo Saya" width="40px"></div>
         <div class="feature-title">Distribusi Obat</div>
         <div class="feature-desc">Ambil langsung di apotek atau pilih layanan antar ke rumah dengan mudah.</div>
     </div>
@@ -185,22 +185,18 @@
 
     <div class="roles-grid">
         <div class="role-card rc-pasien">
-            <div class="role-emoji">🧑‍🤝‍🧑</div>
             <div class="role-title">Pasien</div>
             <div class="role-desc">Lihat resep aktif, pantau status pesanan obat, dan kelola riwayat transaksi pembayaran dengan mudah.</div>
         </div>
         <div class="role-card rc-dokter">
-            <div class="role-emoji">👨‍⚕️</div>
             <div class="role-title">Dokter</div>
             <div class="role-desc">Buat resep digital, kelola antrian pasien, dan kirim resep langsung ke apoteker secara real-time.</div>
         </div>
         <div class="role-card rc-apotek">
-            <div class="role-emoji">💊</div>
             <div class="role-title">Apoteker</div>
             <div class="role-desc">Validasi resep masuk, kelola stok obat, dan proses pesanan distribusi dengan efisien.</div>
         </div>
         <div class="role-card rc-admin">
-            <div class="role-emoji">🛠️</div>
             <div class="role-title">Admin</div>
             <div class="role-desc">Pantau seluruh aktivitas sistem, kelola pengguna, obat, transaksi, dan laporan secara terpusat.</div>
         </div>
@@ -210,11 +206,11 @@
 {{-- ══ STATS BAND ══ --}}
 <div class="stats-band">
     <div class="stat-item">
-        <div class="big">120<span>+</span></div>
+        <div class="big">250<span>+</span></div>
         <div class="lbl">Pasien Terdaftar</div>
     </div>
     <div class="stat-item">
-        <div class="big">25<span>+</span></div>
+        <div class="big">20<span>+</span></div>
         <div class="lbl">Dokter Aktif</div>
     </div>
     <div class="stat-item">
