@@ -25,21 +25,21 @@ use Illuminate\Support\Facades\Route;
 
     
     Route::get('/app', function () {
-        return view('layout/app');
+        return view('layouts/app');
     });
 
     Route::get('/navpasien', function () {
-        return view('layout/navPasien');
+        return view('layouts/navPasien');
     });
 
     Route::get('/navadmin', function () {
-        return view('layout/navAdmin');
+        return view('layouts/navAdmin');
     });
 
     Route::get('/navdokter', function () {
-        return view('layout/navDokter');
+        return view('layouts/navDokter');
     });
 
     Route::get('/navapoteker', function () {
-        return view('layout/navApoteker');
+        return view('layouts/navApoteker');
     });
