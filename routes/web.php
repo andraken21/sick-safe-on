@@ -22,8 +22,9 @@ use Illuminate\Support\Facades\Route;
         return view('auth.forgot');
     });
 
+// Agar saat menekan buton konifirmasi forgot akan pergi ke web forgot reset
     Route::get('/auth/forgotReset', function () {
-        return view('auth.forgotReset');
+        return view('auth.forgot-reset');
     });
 // Agar saat menekan button daftar di login akan pergi ke web registrasi
     Route::get('/register', function () {
