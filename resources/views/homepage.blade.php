@@ -32,11 +32,7 @@
 {{-- ══ HERO ══ --}}
 <section class="hero" id="beranda">
     <div class="hero-content">
-        <div class="hero-badge">
-            <span class="dot"></span>
-            Platform Manajemen Farmasi #1 di Indonesia
-        </div>
-
+       
         <h1 class="hero-title">
             Kelola Resep, Obat,<br>
             dan Pasien dalam<br>
@@ -50,76 +46,27 @@
 
         <div class="hero-cta">
             <a href="/auth/register" class="btn-primary btn-lg">Mulai Sekarang</a>
-            <a href="#fitur" class="btn-outline-lg">Pelajari Lebih Lanjut</a>
         </div>
     </div>
 
     {{-- Mock Dashboard Card --}}
-    <div class="hero-visual">
-        
-        <div class="hero-card-wrap">
-            <div class="card-header-bar">
-                <span class="dot-red"></span>
-                <span class="dot-yellow"></span>
-                <span class="dot-green"></span>
-                <span class="card-title-bar">Sick Safe ON — Dashboard Pasien</span>
-            </div>
-
-            <div class="stats-row">
-                <div class="stat-box highlight">
-                    <div class="num">2</div>
-                    <div class="lbl">Resep Aktif</div>
-                </div>
-                <div class="stat-box">
-                    <div class="num">1</div>
-                    <div class="lbl">Menunggu Bayar</div>
-                </div>
-                <div class="stat-box">
-                    <div class="num">0</div>
-                    <div class="lbl">Siap Diambil</div>
-                </div>
-            </div>
-            
-            <div style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">Resep Terbaru</div>
-            
-            <div class="resep-list">
-                <div class="resep-item">
-                    <div class="ri-left">
-                        <div><img src="{{ asset('image/resep_digital.png') }}" alt="Logo Saya" width="40px"></div>
-                        <div class="resep-info">
-                            <div class="rnum">Resep #RSP-2024-0051</div>
-                            <div class="rdoc">Dr. Budi Santoso · 20 Mei 2024</div>
-                        </div>
-                    </div>
-                    <span class="badge badge-warning">Diproses</span>
-                </div>
-                <div class="resep-item">
-                    <div class="ri-left">
-                        <div><img src="{{ asset('image/resep_digital.png') }}" alt="Logo Saya" width="40px"></div>
-                        <div class="resep-info">
-                            <div class="rnum">Resep #RSP-2024-0048</div>
-                            <div class="rdoc">Dr. Budi Santoso · 15 Mei 2024</div>
-                        </div>
-                    </div>
-                    <span class="badge badge-success">Selesai</span>
-                </div>
-            </div>
-        </div>
-        <div class="float-card top-left">
+    <div class="hero-visual">   
+        <div><img src="{{ asset('image/dokter_sso.png') }}" alt="Logo Saya" width="230px"></div>
+        {{-- <div class="float-card top-left">
             <div><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
             <div class="float-text">
                 <strong>Resep Tervalidasi</strong>
                 <span>RSP-2024-0051 · barusan</span>
             </div>
-        </div>
+        </div> --}}
         
-        <div class="float-card bottom-right">
+        {{-- <div class="float-card bottom-right">
             <div><img src="{{ asset('image/distribusi_obat.png') }}" alt="Logo Saya" width="40px"></div>
             <div class="float-text">
                 <strong>Stok Aman</strong>
                 <span>Paracetamol 500mg</span>
             </div>
-        </div>
+        </div> --}}
     </div>
 </section>
 
