@@ -17,10 +17,11 @@ body{
 .login-card{
     background:#fff;
     border-radius:16px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.09);
+    box-shadow:0 8px 40px rgba(0,0,0,0.09);
     display:flex;
-    width:520px;
-    max-width:96vw;
+    width:720px;
+    height:auto;
+    max-width:95vw;
     overflow:hidden;
     position:relative;
 }
@@ -36,8 +37,8 @@ body{
 /* PANEL KIRI */
 .left-panel{
     background:linear-gradient(160deg,#e6f7f2 0%,#c8ece2 100%);
-    width:180px;
-    min-width:140px;
+    width:240px;
+    min-width:240px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -47,21 +48,21 @@ body{
 /* PANEL KANAN */
 .right-panel{
     flex:1;
-    padding:28px;
+    padding:36px 40px;
     display:flex;
     flex-direction:column;
     justify-content:center;
 }
 
 .right-panel h1{
-    font-size:1.1rem;
-    font-weight:700;
+    font-size:1.5rem;
+    font-weight:800;
     color:#1a2e3b;
-    margin:0 0 2px;
+    margin:0 0 4px;
 }
 
 .subtitle{
-    font-size:.78rem;
+    font-size:0.88rem;
     color:#8a9bb0;
     margin:0 0 18px;
 }
@@ -73,20 +74,21 @@ body{
 
 label{
     display:block;
-    font-size:.78rem;
-    font-weight:600;
+    font-size:0.82rem;
+    font-weight:700;
     color:#2d3e50;
     margin-bottom:4px;
+    letter-spacing:.2px;
 }
 
 input[type="email"],
 input[type="password"],
 input[type="text"]{
     width:100%;
-    padding:8px 38px 8px 10px;
+    padding:9px 38px 9px 12px;
     border:1.5px solid #dde4ec;
-    border-radius:9px;
-    font-size:.85rem;
+    border-radius:8px;
+    font-size:0.88rem;
     color:#2d3e50;
     background:#f8fafc;
     outline:none;
@@ -99,7 +101,8 @@ input:focus{
 }
 
 input::placeholder{
-    color:#b5c3cf;
+    color:#c2cdd8;
+    font-size:0.84rem;
 }
 
 /* PASSWORD */
@@ -109,16 +112,16 @@ input::placeholder{
 
 .toggle-password{
     position:absolute;
-    right:8px;
+    right:9px;
     top:50%;
     transform:translateY(-50%);
     background:none;
     border:none;
     cursor:pointer;
-    padding:4px;
+    padding:2px;
     display:flex;
     align-items:center;
-    color:#b5c3cf;
+    color:#c2cdd8;
 }
 
 .toggle-password:hover{
@@ -126,8 +129,8 @@ input::placeholder{
 }
 
 .toggle-password svg{
-    width:20px;
-    height:20px;
+    width:16px;
+    height:16px;
 }
 
 /* PASSWORD RULES */
@@ -135,7 +138,7 @@ input::placeholder{
     margin-top:6px;
     padding:8px 10px;
     border:1.5px solid #dde4ec;
-    border-radius:9px;
+    border-radius:8px;
     display:none;
     flex-direction:column;
     gap:4px;
@@ -147,7 +150,7 @@ input::placeholder{
 }
 
 .rule{
-    font-size:.74rem;
+    font-size:0.78rem;
     color:#e53935;
     display:flex;
     gap:6px;
@@ -163,14 +166,14 @@ input::placeholder{
     width:12px;
     text-align:center;
     font-weight:700;
-    font-size:11px;
+    font-size:10px;
 }
 
 /* FORGOT */
 .forgot-link{
     display:block;
     text-align:right;
-    font-size:.75rem;
+    font-size:0.78rem;
     color:#2dc98a;
     text-decoration:none;
     margin-top:4px;
@@ -185,17 +188,18 @@ input::placeholder{
     display:flex;
     align-items:center;
     gap:6px;
-    margin-bottom:4px;
+    margin-bottom:6px;
+    margin-top:4px;
 }
 
 .remember-row input[type="checkbox"]{
-    width:16px;
-    height:16px;
+    width:13px;
+    height:13px;
     accent-color:#2dc98a;
 }
 
 .remember-row label{
-    font-size:.85rem;
+    font-size:0.82rem;
     color:#8a9bb0;
     margin:0;
     font-weight:400;
@@ -204,15 +208,15 @@ input::placeholder{
 /* BUTTON */
 .btn-login{
     width:100%;
-    padding:9px;
+    padding:10px;
     background:linear-gradient(90deg,#2dc98a 0%,#1aaf74 100%);
     color:#fff;
     border:none;
     border-radius:9px;
-    font-size:.87rem;
-    font-weight:600;
+    font-size:0.92rem;
+    font-weight:700;
     cursor:pointer;
-    margin-top:4px;
+    margin-top:2px;
     transition:box-shadow .2s;
     box-shadow:0 4px 12px rgba(45,201,138,.18);
 }
@@ -224,14 +228,14 @@ input::placeholder{
 /* REGISTER */
 .register-text{
     text-align:center;
-    margin-top:18px;
-    font-size:.78rem;
+    margin-top:14px;
+    font-size:0.82rem;
     color:#8a9bb0;
 }
 
 .register-text a{
     color:#2dc98a;
-    font-weight:600;
+    font-weight:700;
     text-decoration:none;
 }
 
@@ -245,9 +249,17 @@ input::placeholder{
     border:1px solid #a5d6a7;
     color:#2e7d32;
     border-radius:8px;
-    padding:10px 14px;
-    font-size:.82rem;
-    margin-bottom:14px;
+    padding:8px 12px;
+    font-size:0.82rem;
+    margin-bottom:12px;
+}
+
+/* ERROR MSG */
+.error-msg{
+    font-size:0.76rem;
+    color:#e53935;
+    margin-top:3px;
+    display:block;
 }
 
 /* HIDE DEFAULT ICON */
@@ -257,14 +269,13 @@ input::-ms-clear{
 }
 
 /* RESPONSIVE */
-@media (max-width:500px){
-
+@media (max-width:600px){
     .left-panel{
         display:none;
     }
 
     .right-panel{
-        padding:32px 20px;
+        padding:32px 28px;
     }
 
     .login-card{

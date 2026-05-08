@@ -1,232 +1,244 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f0f4f8;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f0f4f8;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.09);
+    display:flex;
+    width:720px;
+    max-width:95vw;
+    overflow:hidden;
+    position:relative;
+}
 
-        .card {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.09);
-            display: flex;
-            width: 520px;
-            max-width: 96vw;
-            overflow: hidden;
-            position: relative;
-        }
+.logo-corner{
+    position:absolute;
+    top:12px;
+    left:14px;
+    z-index:2;
+}
 
-        .logo-corner {
-            position: absolute;
-            top: 12px;
-            left: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
-            font-size: 13px;
-            color: #1a2e3b;
-            z-index: 2;
-        }
-        .logo-corner svg {
-            width: 22px;
-            height: 22px;
-            color: #2dc98a;
-        }
+.left{
+    background:linear-gradient(160deg,#e6f7f2 0%,#c8ece2 100%);
+    width:240px;
+    min-width:240px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:48px 16px 24px;
+}
 
-        /* ── Panel Kiri ── */
-        .left {
-            background: linear-gradient(160deg, #e6f7f2 0%, #c8ece2 100%);
-            width: 180px;
-            min-width: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 48px 16px 24px;
-        }
+.right{
+    flex:1;
+    padding:36px 40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
 
-        .left h2 {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #1a5c42;
-            text-align: center;
-            line-height: 1.5;
-        }
+.right h1{
+    font-size:1.5rem;
+    font-weight:800;
+    color:#1a2e3b;
+    margin-bottom:4px;
+}
 
-        .left p {
-            font-size: 0.72rem;
-            color: #4a9b7a;
-            text-align: center;
-            line-height: 1.6;
-        }
+.subtitle{
+    font-size:0.88rem;
+    color:#8a9bb0;
+    margin-bottom:18px;
+}
 
-        /* ── Panel Kanan ── */
-        .right {
-            flex: 1;
-            padding: 28px 28px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+.form-group{
+    margin-bottom:12px;
+}
 
-        .right h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1a2e3b;
-            margin: 0 0 2px;
-        }
+label{
+    display:block;
+    font-size:0.82rem;
+    font-weight:700;
+    color:#2d3e50;
+    margin-bottom:4px;
+    letter-spacing:.2px;
+}
 
-        .subtitle {
-            font-size: 0.78rem;
-            color: #8a9bb0;
-            margin: 0 0 18px;
-        }
+.pw-wrap{
+    position:relative;
+}
 
-        .form-group { margin-bottom: 12px; }
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+    width:100%;
+    padding:9px 38px 9px 12px;
+    border:1.5px solid #dde4ec;
+    border-radius:8px;
+    font-size:0.88rem;
+    color:#2d3e50;
+    background:#f8fafc;
+    outline:none;
+    transition:border-color 0.2s;
+}
 
-        label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #2d3e50;
-            margin-bottom: 4px;
-        }
+input:focus{
+    border-color:#2dc98a;
+    background:#fff;
+}
 
-        .pw-wrap { position: relative; }
+input::placeholder{
+    color:#c2cdd8;
+    font-size:0.84rem;
+}
 
-        input[type="email"],
-        input[type="password"],
-        input[type="text"] {
-            width: 100%;
-            padding: 8px 38px 8px 10px;
-            border: 1.5px solid #dde4ec;
-            border-radius: 9px;
-            font-size: 0.85rem;
-            color: #2d3e50;
-            background: #f8fafc;
-            outline: none;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-        input:focus { border-color: #2dc98a; background: #fff; }
-        input::placeholder { color: #b5c3cf; }
-        input.is-invalid { border-color: #e53935; }
+input.is-invalid{
+    border-color:#e53935;
+}
 
-        /* Sembunyikan ikon bawaan browser */
-        input::-ms-reveal,
-        input::-ms-clear { display: none; }
+.toggle-btn{
+    position:absolute;
+    right:9px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:2px;
+    display:flex;
+    align-items:center;
+    color:#c2cdd8;
+}
 
-        /* Toggle mata */
-        .toggle-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            color: #b5c3cf;
-        }
-        .toggle-btn:hover { color: #2dc98a; }
-        .toggle-btn svg { width: 20px; height: 20px; }
+.toggle-btn:hover{
+    color:#2dc98a;
+}
 
-        /* Validasi password */
-        .password-rules {
-            margin-top: 6px;
-            padding: 8px 10px;
-            border: 1.5px solid #dde4ec;
-            border-radius: 9px;
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            background: #f8fafc;
-        }
-        .password-rules.show { display: flex; }
+.toggle-btn svg{
+    width:16px;
+    height:16px;
+}
 
-        .rule {
-            font-size: 0.74rem;
-            color: #e53935;
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            transition: color 0.2s;
-        }
-        .rule.valid { color: #2dc98a; }
-        .rule-icon { width: 12px; text-align: center; font-weight: 700; font-size: 11px; }
+.password-rules{
+    margin-top:6px;
+    padding:8px 10px;
+    border:1.5px solid #dde4ec;
+    border-radius:8px;
+    display:none;
+    flex-direction:column;
+    gap:4px;
+    background:#f8fafc;
+}
 
-        /* Error & mismatch */
-        .error-msg {
-            color: #e53935;
-            font-size: 0.75rem;
-            margin-top: 4px;
-            display: block;
-        }
+.password-rules.show{
+    display:flex;
+}
 
-        .mismatch-msg {
-            color: #e53935;
-            font-size: 0.74rem;
-            margin-top: 4px;
-            display: none;
-            align-items: center;
-            gap: 4px;
-        }
-        .mismatch-msg.show { display: flex; }
-        .mismatch-msg svg { width: 12px; height: 12px; flex-shrink: 0; }
+.rule{
+    font-size:0.78rem;
+    color:#e53935;
+    display:flex;
+    gap:6px;
+    align-items:center;
+}
 
-        /* Alert sukses */
-        .alert-success {
-            background: #e8f5e9;
-            border: 1px solid #a5d6a7;
-            color: #2e7d32;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.82rem;
-            margin-bottom: 14px;
-        }
+.rule.valid{
+    color:#2dc98a;
+}
 
-        /* Tombol */
-        .btn-submit {
-            width: 100%;
-            padding: 9px;
-            background: linear-gradient(90deg, #2dc98a 0%, #1aaf74 100%);
-            color: #fff;
-            border: none;
-            border-radius: 9px;
-            font-size: 0.87rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 4px;
-            transition: box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(45,201,138,0.18);
-        }
-        .btn-submit:hover { box-shadow: 0 6px 16px rgba(45,201,138,0.30); }
+.rule-icon{
+    width:12px;
+    text-align:center;
+    font-weight:700;
+    font-size:10px;
+}
 
-        /* Kembali */
-        .back-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 14px;
-            font-size: 0.75rem;
-            color: #8a9bb0;
-            text-decoration: none;
-        }
-        .back-link:hover { color: #2dc98a; }
+.error-msg{
+    color:#e53935;
+    font-size:0.76rem;
+    margin-top:3px;
+    display:block;
+}
 
-        @media (max-width: 500px) {
-            .left { display: none; }
-            .right { padding: 32px 20px; }
-            .card { border-radius: 12px; }
-        }
-  
+.mismatch-msg{
+    color:#e53935;
+    font-size:0.76rem;
+    margin-top:4px;
+    display:none;
+    align-items:center;
+    gap:4px;
+}
+
+.mismatch-msg.show{
+    display:flex;
+}
+
+.alert-success{
+    background:#e8f5e9;
+    border:1px solid #a5d6a7;
+    color:#2e7d32;
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:0.82rem;
+    margin-bottom:12px;
+}
+
+.btn-submit{
+    width:100%;
+    padding:10px;
+    background:linear-gradient(90deg,#2dc98a 0%,#1aaf74 100%);
+    color:#fff;
+    border:none;
+    border-radius:9px;
+    font-size:0.92rem;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:2px;
+    box-shadow:0 4px 12px rgba(45,201,138,0.18);
+    transition:box-shadow .2s;
+}
+
+.btn-submit:hover{
+    box-shadow:0 6px 16px rgba(45,201,138,0.30);
+}
+
+.back-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    margin-top:14px;
+    font-size:0.82rem;
+    color:#8a9bb0;
+    text-decoration:none;
+}
+
+.back-link:hover{
+    color:#2dc98a;
+}
+
+@media(max-width:600px){
+    .left{
+        display:none;
+    }
+
+    .right{
+        padding:32px 28px;
+    }
+
+    .card{
+        border-radius:12px;
+    }
+}
