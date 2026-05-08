@@ -4,170 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>forgot</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f4f8;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.10);
-            width: 440px;
-            max-width: 95vw;
-            padding: 48px 44px;
-        }
-
-        .icon-wrap {
-            width: 56px;
-            height: 56px;
-            background: #e6f7f2;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a2e3b;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-            color: #8a9bb0;
-            margin-bottom: 28px;
-            line-height: 1.5;
-        }
-
-        label {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #2d3e50;
-            margin-bottom: 6px;
-        }
-
-        input[type="email"] {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid #dde4ec;
-            border-radius: 9px;
-            font-size: 0.95rem;
-            color: #2d3e50;
-            background: #f8fafc;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        input[type="email"]:focus { border-color: #2dc98a; background: #fff; }
-        input::placeholder { color: #b5c3cf; }
-        input.is-invalid { border-color: #e53935; }
-
-        .error-msg {
-            color: #e53935;
-            font-size: 0.80rem;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .alert-success {
-            background: #e8f5e9;
-            border: 1px solid #a5d6a7;
-            color: #2e7d32;
-            border-radius: 9px;
-            padding: 12px 14px;
-            font-size: 0.87rem;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(90deg, #2dc98a 0%, #1aaf74 100%);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 18px;
-            transition: box-shadow 0.2s;
-            box-shadow: 0 4px 14px rgba(45,201,138,0.18);
-        }
-        .btn:hover { box-shadow: 0 6px 18px rgba(45,201,138,0.30); }
-
-        .back-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 20px;
-            font-size: 0.88rem;
-            color: #8a9bb0;
-            text-decoration: none;
-        }
-        .back-link:hover { color: #2dc98a; }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/forgot.css') }}">
 </head>
 <body>
 
 <div class="card">
 
-    <div class="icon-wrap">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
-            stroke="#2dc98a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
+    {{-- Logo pojok kiri atas --}}
+    <div class="logo-corner">
+        <img src="{{ asset('image/logo.png') }}" alt="Logo Saya" width="50" height="50">
     </div>
 
-    <h1>Lupa Kata Sandi?</h1>
-    <p class="subtitle">
-        Masukkan email kamu dan kami akan mengirimkan link untuk mereset kata sandi.
-    </p>
+    {{-- Panel Kiri --}}
+    <div class="left">
+        <!-- nanti kita buat fotonya disini -->
+    </div>
 
-    @if (session('status'))
-        <div class="alert-success">{{ session('status') }}</div>
-    @endif
+    {{-- Panel Kanan --}}
+    <div class="right">
 
-    <form method="POST" action="/forgot-password">
-        @csrf
+        <h1>Lupa kata sandi?</h1>
+        <p class="subtitle">Buat kata sandi baru untuk akunmu.</p>
 
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email"
-                placeholder="user@email.com"
-                value="{{ old('email') }}"
-                class="{{ $errors->has('email') ? 'is-invalid' : '' }}"
-                required autofocus>
-            @error('email')
-                <span class="error-msg">{{ $message }}</span>
-            @enderror
-        </div>
+        @if (session('status'))
+            <div class="alert-success">{{ session('status') }}</div>
+        @endif
 
-        <button type="submit" class="btn">Kirim Link Reset</button>
-    </form>
+        <form method="POST" action="/reset-password-direct">
+            @csrf
 
-    <a href="/login" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        Kembali ke halaman login
-    </a>
+            {{-- Email --}}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                    placeholder="user@email.com"
+                    value="{{ old('email') }}"
+                    class="{{ $errors->has('email') ? 'is-invalid' : '' }}"
+                    required autocomplete="email" autofocus>
+                @error('email')
+                    <span class="error-msg">{{ $message }}</span>
+                @enderror
+            </div>
 
+            {{-- Kata Sandi Baru --}}
+            <div class="form-group">
+                <label for="password">Kata sandi baru</label>
+                <div class="pw-wrap">
+                    <input type="password" id="password" name="password"
+                        placeholder="Minimal 8 karakter"
+                        class="{{ $errors->has('password') ? 'is-invalid' : '' }}"
+                        required autocomplete="new-password">
+
+                    <button type="button" class="toggle-btn"
+                        onclick="togglePw('password', 'eye-pw', 'eyeoff-pw')"
+                        title="Tampilkan kata sandi">
+                        <svg id="eye-pw" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:block;">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <svg id="eyeoff-pw" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="password-rules" id="password-rules">
+                    <div class="rule" id="rule-length">
+                        <span class="rule-icon">✗</span>
+                        <span>Minimal 8 karakter</span>
+                    </div>
+                    <div class="rule" id="rule-upper">
+                        <span class="rule-icon">✗</span>
+                        <span>Minimal 1 huruf kapital (A-Z)</span>
+                    </div>
+                    <div class="rule" id="rule-number">
+                        <span class="rule-icon">✗</span>
+                        <span>Minimal 1 angka (0-9)</span>
+                    </div>
+                    <div class="rule" id="rule-special">
+                        <span class="rule-icon">✗</span>
+                        <span>Minimal 1 karakter spesial (!@#$...)</span>
+                    </div>
+                </div>
+
+                @error('password')
+                    <span class="error-msg">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {{-- Konfirmasi Kata Sandi --}}
+            <div class="form-group">
+                <label for="password_confirmation">Konfirmasi kata sandi</label>
+                <div class="pw-wrap">
+                    <input type="password" id="password_confirmation" name="password_confirmation"
+                        placeholder="Ulangi kata sandi baru"
+                        class="{{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                        required autocomplete="new-password">
+
+                    <button type="button" class="toggle-btn"
+                        onclick="togglePw('password_confirmation', 'eye-conf', 'eyeoff-conf')"
+                        title="Tampilkan konfirmasi">
+                        <svg id="eye-conf" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:block;">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <svg id="eyeoff-conf" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mismatch-msg" id="mismatch-msg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    Kata sandi tidak cocok
+                </div>
+
+                @error('password_confirmation')
+                    <span class="error-msg">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn-submit">Simpan kata sandi baru</button>
+        </form>
+
+        <a href="/auth/login" class="back-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Kembali ke halaman login
+        </a>
+
+    </div>
 </div>
+
+<script>
+    function togglePw(inputId, eyeId, eyeOffId) {
+        const input  = document.getElementById(inputId);
+        const eye    = document.getElementById(eyeId);
+        const eyeOff = document.getElementById(eyeOffId);
+        if (input.type === 'password') {
+            input.type           = 'text';
+            eye.style.display    = 'none';
+            eyeOff.style.display = 'block';
+        } else {
+            input.type           = 'password';
+            eye.style.display    = 'block';
+            eyeOff.style.display = 'none';
+        }
+    }
+
+    const passwordInput = document.getElementById('password');
+    const confInput     = document.getElementById('password_confirmation');
+    const rulesBox      = document.getElementById('password-rules');
+    const mismatchMsg   = document.getElementById('mismatch-msg');
+
+    passwordInput.addEventListener('input', function () {
+        const val = this.value;
+
+        val.length > 0
+            ? rulesBox.classList.add('show')
+            : rulesBox.classList.remove('show');
+
+        const checks = [
+            val.length >= 8,
+            /[A-Z]/.test(val),
+            /[0-9]/.test(val),
+            /[!@#$%^&*(),.?":{}|<>]/.test(val)
+        ];
+
+        updateRule('rule-length',  checks[0]);
+        updateRule('rule-upper',   checks[1]);
+        updateRule('rule-number',  checks[2]);
+        updateRule('rule-special', checks[3]);
+
+        // Sembunyikan rules jika semua valid
+        if (checks.every(Boolean)) {
+            setTimeout(() => rulesBox.classList.remove('show'), 600);
+        }
+
+        checkMatch();
+    });
+
+    confInput.addEventListener('input', checkMatch);
+
+    function checkMatch() {
+        if (confInput.value.length === 0) {
+            mismatchMsg.classList.remove('show');
+            confInput.classList.remove('is-invalid');
+            return;
+        }
+        if (passwordInput.value !== confInput.value) {
+            mismatchMsg.classList.add('show');
+            confInput.classList.add('is-invalid');
+        } else {
+            mismatchMsg.classList.remove('show');
+            confInput.classList.remove('is-invalid');
+        }
+    }
+
+    function updateRule(id, valid) {
+        const el   = document.getElementById(id);
+        const icon = el.querySelector('.rule-icon');
+        if (valid) {
+            el.classList.add('valid');
+            icon.textContent = '✓';
+        } else {
+            el.classList.remove('valid');
+            icon.textContent = 'x';
+        }
+    }
+</script>
 
 </body>
 </html>

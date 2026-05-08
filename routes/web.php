@@ -7,21 +7,20 @@ use Illuminate\Support\Facades\Route;
         return view('homepage');
     });
 
-// Agar saat menekan button masuk di homepage akan pergi ke web login
+// Agar saat menekan button masuk akan pergi ke web login
     Route::get('/auth/login', function () {
         return view('auth.login');
     });
 
-// Agar saat menekan button daftar di homepage akan pergi ke web registrasi
+// Agar saat menekan button daftar akan pergi ke web registrasi
     Route::get('/auth/register', function () {
         return view('auth.registrasi');
     });
 
-// Agar saat menekan button daftar di homepage akan pergi ke web forgot
+// Agar saat menekan button forgot akan pergi ke web forgot
     Route::get('/auth/forgot', function () {
         return view('auth.forgot');
     });
-
 // Agar saat menekan button daftar di login akan pergi ke web registrasi
     Route::get('/register', function () {
         return view('auth.registrasi');
@@ -32,24 +31,27 @@ use Illuminate\Support\Facades\Route;
         return view('auth.forgot');
     });
 
+    Route::get('/header', function () {
+    return view('layouts/header');
+    });
     
-
+// Agar saat menekan button app akan pergi ke web app
     Route::get('/app', function () {
-        return view('layout/app');
+        return view('layouts/app');
     });
 
     Route::get('/navpasien', function () {
-        return view('layout/navPasien');
+        return view('layouts/navPasien');
     });
 
     Route::get('/navadmin', function () {
-        return view('layout/navAdmin');
+        return view('layouts/navAdmin');
     });
 
     Route::get('/navdokter', function () {
-        return view('layout/navDokter');
+        return view('layouts/navDokter');
     });
 
     Route::get('/navapoteker', function () {
-        return view('layout/navApoteker');
+        return view('layouts/navApoteker');
     });
