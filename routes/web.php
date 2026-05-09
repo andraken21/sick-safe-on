@@ -59,3 +59,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('/navapoteker', function () {
         return view('layouts/navApoteker');
     });
+    Route::get('/footer', function () {
+    return view('layouts/footer'); 
+});
