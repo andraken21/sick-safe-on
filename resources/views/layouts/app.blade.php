@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
+    <style type="text/css">
+        
+        .main-layout {
+                display: flex;
+            }
+
+            .content {
+                flex: 1;
+                padding: 20px;
+            }
+
+    </style>
+    
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
