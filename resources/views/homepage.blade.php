@@ -11,13 +11,13 @@
 {{-- ══ NAVBAR ══ --}}
 <nav class="navbar">
     <div class="logo">
-        <img src="{{ asset('image/logo.png') }}" alt="Logo Aplikasi" width="100px" >
+        <img src="{{ asset('image/logo.png') }}" alt="Logo Aplikasi" width="55px" >
         <span class="logo-text">Sick Safe <span>ON</span></span>
     </div>
     <ul class="nav-links">
         <li><a href="#beranda">Beranda</a></li>
-        <li><a href="#tentang">Tentang</a></li>
         <li><a href="#fitur">Fitur</a></li>
+        <li><a href="#tentang">Tentang</a></li>
         <li><a href="#kontak">Kontak</a></li>
     </ul>
     <div class="nav-actions">
@@ -51,7 +51,7 @@
 
     {{-- Mock Dashboard Card --}}
     <div class="hero-visual">   
-        <div><img src="{{ asset('image/dokter_sso.png') }}" alt="Logo Saya" width="230px"></div>
+        <div><img src="{{ asset('image/hm_logo.png') }}" alt="Logo Saya" width="800px"></div>
         {{-- <div class="float-card top-left">
             <div><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
             <div class="float-text">
@@ -78,14 +78,14 @@
         <div class="feature-desc">Buat, kirim, dan kelola resep secara digital. Aman dan mudah diakses kapan saja.</div>
     </div>
     <div class="feature-card">
-        <div class="feature-icon-wrap"><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
-        <div class="feature-title">Validasi Apoteker</div>
-        <div class="feature-desc">Apoteker memvalidasi resep secara real-time untuk memastikan obat tepat dan aman.</div>
-    </div>
-    <div class="feature-card">
         <div class="feature-icon-wrap"><img src="{{ asset('image/pembayaran_aman.png') }}" alt="Logo Saya" width="40px"></div>
         <div class="feature-title">Pembayaran Aman</div>
         <div class="feature-desc">Bayar mandiri atau via BPJS Kesehatan dengan proses yang mudah dan transparan.</div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon-wrap"><img src="{{ asset('image/validasi_apoteker.png') }}" alt="Logo Saya" width="40px"></div>
+        <div class="feature-title">Validasi Apoteker</div>
+        <div class="feature-desc">Apoteker memvalidasi resep secara real-time untuk memastikan obat tepat dan aman.</div>
     </div>
     <div class="feature-card">
         <div class="feature-icon-wrap"><img src="{{ asset('image/distribusi_obat.png') }}" alt="Logo Saya" width="40px"></div>
@@ -108,13 +108,13 @@
         </div>
         <div class="step">
             <div class="step-num">2</div>
-            <div class="step-title">Apoteker Validasi</div>
-            <div class="step-desc">Apoteker menerima, mengecek, dan memvalidasi resep sesuai stok obat yang tersedia.</div>
+            <div class="step-title">Pasien Bayar</div>
+            <div class="step-desc">Pasien melakukan pembayaran melalui platform, baik mandiri maupun via BPJS Kesehatan.</div>
         </div>
         <div class="step">
             <div class="step-num">3</div>
-            <div class="step-title">Pasien Bayar</div>
-            <div class="step-desc">Pasien melakukan pembayaran melalui platform, baik mandiri maupun via BPJS Kesehatan.</div>
+            <div class="step-title">Apoteker Validasi</div>
+            <div class="step-desc">Apoteker menerima, mengecek, dan memvalidasi resep sesuai stok obat yang tersedia.</div>
         </div>
         <div class="step">
             <div class="step-num">4</div>
@@ -132,18 +132,22 @@
 
     <div class="roles-grid">
         <div class="role-card rc-pasien">
+            <div class="feature-icon-wrap"><img src="{{ asset('image/pasien.png') }}" alt="Logo Saya" width="50px"></div>
             <div class="role-title">Pasien</div>
             <div class="role-desc">Lihat resep aktif, pantau status pesanan obat, dan kelola riwayat transaksi pembayaran dengan mudah.</div>
         </div>
         <div class="role-card rc-dokter">
+            <div class="feature-icon-wrap"><img src="{{ asset('image/dokter.png') }}" alt="Logo Saya" width="50px"></div>
             <div class="role-title">Dokter</div>
             <div class="role-desc">Buat resep digital, kelola antrian pasien, dan kirim resep langsung ke apoteker secara real-time.</div>
         </div>
         <div class="role-card rc-apotek">
+            <div class="feature-icon-wrap"><img src="{{ asset('image/apoteker.png') }}" alt="Logo Saya" width="50px"></div>
             <div class="role-title">Apoteker</div>
             <div class="role-desc">Validasi resep masuk, kelola stok obat, dan proses pesanan distribusi dengan efisien.</div>
         </div>
         <div class="role-card rc-admin">
+            <div class="feature-icon-wrap"><img src="{{ asset('image/admin.png') }}" alt="Logo Saya" width="50px"></div>
             <div class="role-title">Admin</div>
             <div class="role-desc">Pantau seluruh aktivitas sistem, kelola pengguna, obat, transaksi, dan laporan secara terpusat.</div>
         </div>
@@ -185,7 +189,7 @@
     <div class="footer-inner">
         <div class="footer-brand">
             <div class="logo" style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
-                <div class="logo-icon" style="width:36px;height:36px;font-size:17px;">🛡️</div>
+                <div><img src="{{ asset('image/logo_ll.png') }}" alt="Logo Saya" width="40px"></div>
                 <span class="logo-text">Sick Safe <span style="color:var(--teal)">ON</span></span>
             </div>
             <p>Platform digital untuk manajemen farmasi rumah sakit yang terintegrasi, aman, dan mudah digunakan.</p>
