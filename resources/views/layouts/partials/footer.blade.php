@@ -1,235 +1,324 @@
-<footer class="site-footer wave-top">
-    <div class="footer-container">
-        <!-- KOLOM 1: Logo + Teks + Deskripsi + Keamanan -->
-        <div class="footer-col">
-            <div class="logo-wrapper">
-                <img src="{{ asset('image/logo.png') }}" alt="Logo Saya" width="100">
-                <h3 class="footer-logo">Sick Safe <span class="logo-on">ON</span></h3>
-            </div>
-            <p class="footer-desc">
-                Platform terintegrasi untuk<br>
-                pengelolaan resep, obat, dan<br>
-                pasien secara aman dan efisien.
-            </p>
-            <div class="security-plain">
-            <span class="security-title"> Keamanan Data Terjamin</span><br>
-              Kami menjaga data Anda dengan<br>
-              standar keamanan terbaik.
-</div>
-        </div>
-        <div class="footer-col">
-            <h4>Layanan Kami</h4>
-            <div class="service-list">
-                <div class="service-item">
-                    <div class="service-title">Resep Digital</div>
-                    <div class="service-desc">Kelola resep dengan mudah dan aman.</div>
-                </div>
-                <div class="service-item">
-                    <div class="service-title">Validasi Apoteker</div>
-                    <div class="service-desc">Memastikan obat sesuai dan aman.</div>
-                </div>
-                <div class="service-item">
-                    <div class="service-title">Pembayaran Aman</div>
-                    <div class="service-desc">Transaksi mandiri atau melalui BPJS.</div>
-                </div>
-                <div class="service-item">
-                    <div class="service-title">Distribusi Obat</div>
-                    <div class="service-desc">Pengantaran obat langsung ke rumah.</div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-col">
-            <h4>Hubungi Kami</h4>
-            <ul class="footer-contact">
-                <li>📧 info@sicksafeon.com</li>
-                <li>📞 +62 812-3456-7890</li>
-                <li>📍 Jl. Alumni No.3, Padang Bulan</li>
-            </ul>
-            <h4 class="follow-heading">Ikuti Kami</h4>
-            <div class="social-plain">
-                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>© <span class="copyright-year">2026</span> Sick Safe ON. All rights reserved.</p>
-    </div>
-</footer>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="{{asset('css/footer.css')}}">
-<style>
-    
-    .service-item {
-        margin-bottom: 20px;
-    }
-    .security-title {
-    color: #2ecc71;
-    font-weight: 500; 
-}
-    .service-desc {
-        font-size: 0.8rem;
-        color: #E1F1FE;
-        line-height: 1.4;
-        display: block;
-    }
-    .site-footer {
-        background-color: #004369;
-        color: #E1F1FE;
-        padding: 0 20px 20px;
-        font-family: 'Poppins', 'Inter', 'Arial', sans-serif;
-        width: 100%;
-        margin-top: 60px;
-        position: relative;
-    }
-    .footer-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 30px 40px;
-        padding: 20px 0 30px;
-    }
-    .footer-col {
-        flex: 1;
-        min-width: 180px;
-        position: relative;
-    }
-    .logo-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 16px;
-    }
-    .footer-logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #E1F1FE;
-        margin-bottom: 0;   
-    }
-    .logo-on {
-        color: #2ecc71;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="logo-wrapper">
+                    <img src="{{ asset('image/logo.png') }}" alt="Logo" width="80">
+                    <h3 class="footer-logo">Sick Safe <span class="logo-on">ON</span></h3>
+                </div>
+                <p class="footer-desc">
+                    Platform terintegrasi untuk<br>
+                    pengelolaan resep, obat, dan <br>
+                    pasien secara aman & efisien.
+                </p>
+                <div class="security-text">
+                    <span class="check">✓</span> Keamanan Data Terjamin
+                </div>
+                <div class="social-media-container">
+                    <a href="#" class="social-media" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-media" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-media" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-media" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="link-container">
+                <div class="footer-menu">
+                    <h4>Layanan Kami</h4>
+                    <ul>
+                        <li><a href="#" class="menu-link">Resep Digital</a><span class="menu-desc">Kelola resep dengan mudah & aman</span></li>
+                        <li><a href="#" class="menu-link">Validasi Apoteker</a><span class="menu-desc">Obat sesuai & aman</span></li>
+                        <li><a href="#" class="menu-link">Pembayaran Aman</a><span class="menu-desc">Mandiri atau BPJS</span></li>
+                        <li><a href="#" class="menu-link">Distribusi Obat</a><span class="menu-desc">Antar langsung ke rumah</span></li>
+                    </ul>
+                </div>
+                 <div class="footer-menu">
+                    <h4>Perusahaan</h4>
+                    <ul>
+                       <li><a href="#" class="menu-link-simple">Tentang Kami</a></li>
+                       <li><a href="#" class="menu-link-simple">Tim</a></li>
+                       <li><a href="#" class="menu-link-simple">Karier</a></li>
+                       <li><a href="#" class="menu-link-simple">Blog</a></li>
+                    </ul>
+                   <h4>Dukungan</h4>
+                   <ul>
+                      <li><a href="#" class="menu-link-simple">Dokumentasi</a></li>
+                      <li><a href="#" class="menu-link-simple">FAQ</a></li>
+                      <li><a href="#" class="menu-link-simple">Kebijakan Privasi</a></li>
+                   </ul>
+                </div>
+                <div class="footer-menu">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@sicksafeon.com" class="contact-link">info@sicksafeon.com</a></li>
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+6281234567890" class="contact-link">+62 812-3456-7890</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Alumni No.3, Padang Bulan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-    .footer-desc {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin-bottom: 16px;
-        color: #E1F1FE;
-    }
-    .security-plain {
-        font-size: 0.85rem;
-        color: #E1F1FE;
-        line-height: 1.5;
-        margin-top: 10px;
-    }
-    .footer-col h4 {
-        font-size: 1.1rem;
-        margin-bottom: 18px;
-        color: #E1F1FE;
-        position: relative;
-        display: inline-block;
-    }
-    .footer-col h4:after {
-        content: '';
-        position: absolute;
-        bottom: -6px;
-        left: 0;
-        width: 40px;
-        height: 2px;
-        background-color: #4db8ff;
-    }
-    .footer-contact {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .footer-contact li {
-        margin-bottom: 12px;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .social-plain {
-        display: flex;
-        gap: 20px;
-        margin-top: 5px;
-    }
-    .social-plain a {
-        color: #E1F1FE;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.9rem;
-    }
-    .social-plain a:hover {
-        color: #2ecc71;
-    }
-    .footer-bottom {
-        background-color: #3FBBA0;
-        text-align: center;
-        margin-top: 20px;
-        padding: 15px 20px;
-        border-radius: 16px 16px 0 0;
-        font-size: 0.8rem;
-        color: #E1F1FE;
-    }
-    .footer-bottom .copyright-year {
-        font-weight: 900;
-        font-size: 1rem;
-        
-    }
-    .follow-heading {
-        position: relative;
-        margin-top: 12px;
-        padding-top: 12px;
-        display: inline-block;
-    }
-    .follow-heading::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 3;
-        width: 350%;           
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
+        <div class="footer-bottom">
+            <p>© 2026 Sick Safe ON. All rights reserved.</p>
+        </div>
+    </footer>
 
-    .security-plain {
-        position: relative;
-        padding-top: 12px;
-        margin-top: 12px;
-    }
-   .security-plain::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 5;
-        width: 70%;
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    .footer-col:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: -5px;   
-        top: 0;
-        height: 100%;
-        width: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    @media (max-width: 768px) {
-        .footer-col:not(:last-child)::after {
-            display: none;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        .site-footer {
+            background-color: #0A2E3F;
+            color: #D9E6F2;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+       
         .footer-container {
-            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px 60px;
+            padding: 60px 40px 50px 40px;
         }
-    }
-</style>
+
+        .footer-left {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-on {
+            color: #2BAE66;
+        }
+
+        .footer-desc {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #C2D6E6;
+        }
+
+        .security-text {
+            font-size: 0.85rem;
+            background: rgba(43, 174, 102, 0.12);
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .security-text .check {
+            color: #2BAE66;
+            margin-right: 6px;
+            font-weight: bold;
+        }
+        
+        .social-media-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .social-media {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #D9E6F2;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .social-media:hover {
+            background: #2BAE66;
+            color: #0A2E3F;
+            transform: translateY(-3px);
+        }
+
+        .link-container {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px 60px;
+        }
+
+        .footer-menu {
+            min-width: 160px;
+        }
+
+        .footer-menu h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: #FFFFFF;
+            opacity: 0.8;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-menu h4:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 35px;
+            height: 2px;
+            background-color: #2BAE66;
+        }
+
+        .footer-menu ul {
+            list-style: none;
+        }
+
+        .footer-menu ul li {
+            margin-bottom: 16px;
+        }
+        .menu-link {
+            color: #E6F0F5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: block;
+            transition: all 0.2s ease;
+        }
+
+        .menu-link:hover {
+            color: #2BAE66;
+            transform: translateX(4px);
+        }
+
+        .menu-desc {
+            font-size: 0.75rem;
+            color: #8DA6B5;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .menu-link-simple {
+            color: #C2D6E6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .menu-link-simple:hover {
+            color: #2BAE66;
+            transform: translateX(4px);
+        }
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+            color: #C2D6E6;
+        }
+
+        .contact-list li i {
+            width: 22px;
+            color: #2BAE66;
+            font-size: 1rem;
+        }
+
+        .contact-link {
+            color: #C2D6E6;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-link:hover {
+            color: #2BAE66;
+        }
+
+        .mt-2 {
+            margin-top: 28px;
+        }
+        .footer-bottom {
+            background-color: #0A2E3F;
+            text-align: center;
+            padding: 20px 20px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: #8DA6B5;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+        .footer-menu:first-child h4 {
+        margin-top: 25px;
+        }
+
+        .footer-menu:not(:first-child) h4 {
+        margin-top: 25px;
+        }
+        @media (max-width: 1024px) {
+            .footer-container {
+                gap: 40px;
+                padding: 50px 30px;
+            }
+            .link-container {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px 25px;
+            }
+            .footer-left {
+                min-width: 100%;
+            }
+            .link-container {
+                flex-direction: column;
+                gap: 35px;
+            }
+            .footer-menu {
+                min-width: 100%;
+            }
+        }
+    </style>

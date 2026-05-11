@@ -1,7 +1,6 @@
 <?php
 // layout/header.php
 
-$nama_user = $_SESSION['nama_user'] ?? 'Tiara Agnesia';
 // Foto profil (jika tidak ada, pakai default)
 $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 ?>
@@ -218,7 +217,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
                 @csrf
                 <button type="submit" class="btn btn-danger">Keluar</button>
             </form>
-            <div class="nama"><?php echo htmlspecialchars($nama_user); ?></div>
+            <div class="nama"><strong>{{ Auth::user()->nama }}</strong></div>
 
             <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
             <div class="profile-avatar">
