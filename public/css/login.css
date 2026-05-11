@@ -225,6 +225,21 @@ input::placeholder{
     box-shadow:0 6px 16px rgba(45,201,138,.30);
 }
 
+.back-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    margin-top:14px;
+    font-size:0.82rem;
+    color:#8a9bb0;
+    text-decoration:none;
+}
+
+.back-link:hover{
+    color:#2dc98a;
+}
+
 /* REGISTER */
 .register-text{
     text-align:center;

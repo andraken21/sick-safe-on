@@ -21,7 +21,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     }
 
     .dashboard-header {
-        background: #292d30;
+        background: #302929;
         padding: 10px 0;
         font-family: 'Poppins', sans-serif;
         width: 100%;
@@ -47,13 +47,13 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         gap: 12px;
         min-width: 200px;
         text-align: left;
-        padding-left: 0;
+        padding-left: 15px;
         flex-shrink: 0;
     }
 
     .header-left img {
-        width: 32px;
-        height: 32px;
+        width: 50px;
+        height: 50px;
         object-fit: contain;
     }
 
@@ -77,7 +77,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     }
 
     .tanggal {
-        font-size: 0.8rem;
+        font-size: 15px;
         font-weight: 600;
         color: #b1ddff;
         line-height: 1.3;
@@ -86,7 +86,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     }
 
     .waktu {
-        font-size: 0.7rem;
+        font-size: 14px;
         font-weight: 500;
         color: #b1ddff;
         opacity: 0.9;
@@ -102,7 +102,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         justify-content: flex-end;
         gap: 12px;
         min-width: 200px;
-        padding-right: 0;
+        padding-right: 15px;
         flex-shrink: 0;
     }
 

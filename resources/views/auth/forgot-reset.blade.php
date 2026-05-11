@@ -26,8 +26,13 @@
         <p class="subtitle">
             Gunakan password baru untuk akunmu.
         </p>
+
         
         <form method="POST" action="/reset-password">
+
+
+        <form method="POST" action="/forgot/reset">
+
 
             @csrf
             <input type="hidden" name="email" value="{{ $email }}">
@@ -47,26 +52,30 @@
                         class="toggle-btn"
                         onclick="togglePw('password','eye1','eyeoff1')">
 
+                        {{-- Mata terbuka --}}
                         <svg id="eye1"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2">
-
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                             <circle cx="12" cy="12" r="3"/>
-
                         </svg>
 
+                        {{-- Mata dicoret --}}
                         <svg id="eyeoff1"
                             style="display:none"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2">
-
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
                             <line x1="1" y1="1" x2="23" y2="23"/>
-
                         </svg>
 
                     </button>
@@ -138,13 +147,10 @@ function togglePw(inputId, eyeId, eyeOffId){
     const eyeOff = document.getElementById(eyeOffId);
 
     if(input.type === 'password'){
-
         input.type = 'text';
         eye.style.display = 'none';
         eyeOff.style.display = 'block';
-
     }else{
-
         input.type = 'password';
         eye.style.display = 'block';
         eyeOff.style.display = 'none';
@@ -184,17 +190,13 @@ confInput.addEventListener('input', checkMatch);
 function checkMatch(){
 
     if(confInput.value.length === 0){
-
         mismatchMsg.classList.remove('show');
         return;
     }
 
     if(passwordInput.value !== confInput.value){
-
         mismatchMsg.classList.add('show');
-
     }else{
-
         mismatchMsg.classList.remove('show');
     }
 }
@@ -205,12 +207,9 @@ function updateRule(id, valid){
     const icon = el.querySelector('.rule-icon');
 
     if(valid){
-
         el.classList.add('valid');
         icon.textContent = '✓';
-
     }else{
-
         el.classList.remove('valid');
         icon.textContent = '✗';
     }
