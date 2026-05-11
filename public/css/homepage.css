@@ -21,7 +21,7 @@
             background: 
             linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),
             url('/image/bg_homepage.png');
-         background-repeat: none;   
+            background-repeat: none;   
             color: var(--navy);
             line-height: 1.6;
             overflow-x: hidden;
@@ -32,9 +32,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
+            background-color: transparent;
+            backdrop-filte (14px);
             padding: 0 1%;
             display: flex;
             align-items: center;
@@ -82,7 +81,7 @@
             padding: .5rem 1.2rem;
             border: 1.5px solid var(--border);
             border-radius: 8px;
-            background: transparent;
+            background-color: white;
             font-family: 'Poppins', sans-serif;
             font-size: .88rem;
             font-weight: 600;
@@ -208,6 +207,7 @@
             align-items: center;
             width: 315px;
             animation: float 5s ease-in-out infinite;
+            margin-left: 30px;
         }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 
