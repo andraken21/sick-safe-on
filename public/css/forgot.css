@@ -6,20 +6,24 @@
 
 body{
     font-family:'Poppins',sans-serif;
-    background:#f0f4f8;
+    background-image:linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),url('/image/bg_auth.jpg'); 
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
     min-height:100vh;
     display:flex;
     align-items:center;
-    justify-content:center;
+    justify-content:flex-end;
+    padding-right:6vw;
 }
 
 .card{
     background:#fff;
     border-radius:16px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.09);
+    box-shadow:0 8px 40px rgba(0,0,0,0.18);
     display:flex;
     width:720px;
-    max-width:95vw;
+    max-width:90vw;
     overflow:hidden;
     position:relative;
 }
@@ -230,6 +234,12 @@ input.is-invalid{
 }
 
 @media(max-width:600px){
+    body{
+        justify-content:center;
+        padding-right:0;
+        padding:20px;
+    }
+
     .left{
         display:none;
     }
@@ -240,5 +250,6 @@ input.is-invalid{
 
     .card{
         border-radius:12px;
+        width:100%;
     }
 }
