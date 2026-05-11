@@ -27,7 +27,7 @@
             Masukkan email akunmu terlebih dahulu.
         </p>
 
-        <form method="POST" action="/forgot-password/check">
+        <form method="POST" action="/forgot-password">
 
             @csrf
 
@@ -56,7 +56,7 @@
 
         </form>
 
-        <a href="/auth/login" class="back-link">
+        <a href="/login" class="back-link">
 
             <svg width="14" height="14"
                 viewBox="0 0 24 24"

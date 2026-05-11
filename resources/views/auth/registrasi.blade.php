@@ -45,12 +45,12 @@
                 {{-- Nama --}}
                 <div class="form-group">
                     <label for="name" class="label-required">Nama Lengkap</label>
-                    <input type="text" id="name" name="name"
+                    <input type="text" id="nama" name="nama"
                         placeholder="Nama lengkap"
-                        value="{{ old('name') }}"
-                        class="{{ $errors->has('name') ? 'is-invalid' : '' }}"
-                        required autocomplete="name">
-                    @error('name')
+                        value="{{ old('nama') }}"
+                        class="{{ $errors->has('nama') ? 'is-invalid' : '' }}"
+                        required autocomplete="nama">
+                    @error('nama')
                         <span class="error-msg">{{ $message }}</span>
                     @enderror
                 </div>
@@ -71,27 +71,27 @@
 
                 {{-- Tanggal Lahir --}}
                 <div class="form-group">
-                    <label for="ttl" class="label-required">Tanggal Lahir</label>
-                    <input type="date" id="ttl" name="ttl"
-                        value="{{ old('ttl') }}"
-                        class="{{ $errors->has('ttl') ? 'is-invalid' : '' }}"
+                    <label for="tanggal_lahir" class="label-required">Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir"
+                        value="{{ old('tanggal_lahir') }}"
+                        class="{{ $errors->has('tanggal_lahir') ? 'is-invalid' : '' }}"
                         required>
-                    @error('ttl')
+                    @error('tanggal_lahir')
                         <span class="error-msg">{{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Gender --}}
+                {{-- Jenis Kelamin --}}
                 <div class="form-group">
-                    <label for="gender" class="label-required">Jenis Kelamin</label>
-                    <select id="gender" name="gender"
-                        class="{{ $errors->has('gender') ? 'is-invalid' : '' }}"
+                    <label for="jenis_kelamin" class="label-required">Jenis Kelamin</label>
+                    <select id="jenis_kelamin" name="jenis_kelamin"
+                        class="{{ $errors->has('jenis_kelamin') ? 'is-invalid' : '' }}"
                         required>
-                        <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Pilih jenis kelamin</option>
-                        <option value="L" {{ old('gender') == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="P" {{ old('gender') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih jenis kelamin</option>
+                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
-                    @error('gender')
+                    @error('jenis_kelamin')
                         <span class="error-msg">{{ $message }}</span>
                     @enderror
                 </div>

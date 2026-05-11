@@ -21,8 +21,8 @@
         <li><a href="#kontak">Kontak</a></li>
     </ul>
     <div class="nav-actions">
-        <a href="/auth/login" class="btn-ghost">Masuk</a>
-        <a href="/auth/register" class="btn-primary">Daftar</a>
+        <a href="/login" class="btn-ghost">Masuk</a>
+        <a href="/register" class="btn-primary">Daftar</a>
     </div>
     <button class="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -45,7 +45,7 @@
         </p>
 
         <div class="hero-cta">
-            <a href="/auth/register" class="btn-primary btn-lg">Mulai Sekarang</a>
+            <a href="/register" class="btn-primary btn-lg">Mulai Sekarang</a>
         </div>
     </div>
 
@@ -181,7 +181,7 @@
     <p class="section-sub" style="text-align:center">
         Daftar gratis hari ini dan rasakan kemudahan pengelolaan resep, obat, dan pasien dalam satu platform terintegrasi.
     </p>
-    <a href="/auth/register" class="btn-primary btn-lg">Daftar Gratis Sekarang →</a>
+    <a href="/register" class="btn-primary btn-lg">Daftar Gratis Sekarang →</a>
 </section>
 
 {{-- ══ FOOTER ══ --}}

@@ -27,10 +27,10 @@
             Gunakan password baru untuk akunmu.
         </p>
         
-        <form method="POST" action="/forgot/reset">
+        <form method="POST" action="/reset-password">
 
             @csrf
-
+            <input type="hidden" name="email" value="{{ $email }}">
             <div class="form-group">
 
                 <label>Kata sandi baru</label>

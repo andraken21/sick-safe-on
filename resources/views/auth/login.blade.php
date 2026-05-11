@@ -138,9 +138,9 @@
 
                 </div>
 
-<a href="/auth/forgot" class="forgot-link">
-    Lupa kata sandi?
-</a>
+                <a href="/forgot" class="forgot-link">
+                    Lupa kata sandi?
+                </a>
 
 </div>
 
@@ -149,7 +149,7 @@
 
                 <input type="checkbox"
                     id="remember"
-                    name="remember">
+                    name="remember" required>
 
                 <label for="remember">
                     Ingat saya
@@ -165,7 +165,7 @@
 
         <p class="register-text">
             Belum punya akun?
-            <a href="/auth/register">Daftar di sini</a>
+            <a href="/register">Daftar di sini</a>
         </p>
 
     </div>

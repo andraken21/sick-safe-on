@@ -214,6 +214,10 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 
         <!-- Kanan: Nama User + Foto Profil (ala Instagram) -->
         <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png' && file_exists('../public/image/' . $foto_profil)) ? 'has-photo' : ''; ?>">
+            <form action="/logout" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-danger">Keluar</button>
+            </form>
             <div class="nama"><?php echo htmlspecialchars($nama_user); ?></div>
 
             <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
