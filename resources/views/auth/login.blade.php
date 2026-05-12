@@ -168,7 +168,7 @@
             <a href="/register">Daftar di sini</a>
         </p>
 
-        <a href="/views/homepage" class="back-link">
+        <a href="/" class="back-link">
 
             <svg width="14" height="14"
                 viewBox="0 0 24 24"

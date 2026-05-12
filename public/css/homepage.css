@@ -32,7 +32,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: transparent;
+            background-color: white;
             backdrop-filter: (14px);
             padding: 0 1%;
             display: flex;
@@ -207,7 +207,7 @@
             align-items: center;
             width: 315px;
             animation: float 5s ease-in-out infinite;
-            margin-left: 30px;
+            margin-left: 100px;
         }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 
@@ -345,14 +345,6 @@
             margin-top: 3rem;
             position: relative;
         }
-        .steps-grid::before {
-            content: '';
-            position: absolute;
-            top: 36px; left: calc(12.5% + 28px); right: calc(12.5% + 28px);
-            height: 2px;
-            background: repeating-linear-gradient(90deg, var(--teal) 0 10px, transparent 10px 20px);
-        }
-
         .step {
             text-align: center;
             position: relative;
