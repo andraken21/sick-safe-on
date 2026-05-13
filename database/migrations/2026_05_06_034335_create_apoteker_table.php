@@ -15,8 +15,7 @@ return new class extends Migration
         $table->id('ID_Apoteker');
         $table->unsignedBigInteger('ID_User');
         $table->timestamps();
-
-        $table->foreign('ID_User')->references('ID_User')->on('users')->onDelete('cascade');
+        $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
     });
 }
 
