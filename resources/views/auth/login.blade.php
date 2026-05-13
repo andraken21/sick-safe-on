@@ -7,6 +7,10 @@
 
     <link rel="stylesheet" href="{{ asset('css/login.css') }}?v=10">
 </head>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Mohon tunggu...</p>
+</div>
 <body>
 
 <div class="login-card">
@@ -187,7 +191,11 @@
     </div>
 </div>
 
-<script src="{{ asset('js/login.js') }}"></script>
+<script >src="{{ asset('js/login.js') }}";
+    document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('loadingOverlay').classList.add('show');
+});
+</script>
 
 </body>
 </html>

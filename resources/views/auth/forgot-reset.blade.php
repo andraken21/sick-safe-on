@@ -7,6 +7,10 @@
 
     <link rel="stylesheet" href="{{ asset('css/forgot.css') }}">
 </head>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Mohon tunggu...</p>
+</div>
 <body>
 
 <div class="card">
@@ -214,7 +218,9 @@ function updateRule(id, valid){
         icon.textContent = '✗';
     }
 }
-
+document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('loadingOverlay').classList.add('show');
+});
 </script>
 
 </body>

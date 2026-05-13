@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Perempuan',
             'no_telp' => '088201660591',
             'role' => 'Dokter',
-            'nik' => '12711190051234567',
+            'nik' => '1271119005123456',
             'alamat' => 'Jl. Tamora, Tanjung Morawa',
         ]);
         
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
             'no_telp' => '087812345678',
             'role' => 'Dokter',
-            'nik' => '12211190051234567',
+            'nik' => '1221119005123456',
             'alamat' => 'Jl. Amsterdam, Siantar',
         ]);
         
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Perempuan',
             'no_telp' => '081312345678',
             'role' => 'Apoteker',
-            'nik' => '129131190051234567',
+            'nik' => '1918272617261421',
             'alamat' => 'Jl. Pungo, Aceh',
         ]);
 
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Perempuan',
             'no_telp' => '082123456789',
             'role' => 'Apoteker',
-            'nik' => '130131190051234567',
+            'nik' => '1302314567278291',
             'alamat' => 'Jl. Berdikari, Batam',
         ]);
 
@@ -80,7 +80,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Perempuan',
             'no_telp' => '088543216789',
             'role' => 'Apoteker',
-            'nik' => '127112190051234567',
+            'nik' => '1271129192716171',
             'alamat' => 'Jl. STM, Teladan City',
         ]);
 
@@ -92,7 +92,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
             'no_telp' => '081234567890',
             'role' => 'Pasien',
-            'nik' => '127111010220081111',
+            'nik' => '1271110102200811',
             'alamat' => 'Jl. Jolam, England',
         ]);
 
@@ -104,7 +104,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
             'no_telp' => '082274162677',
             'role' => 'Pasien',
-            'nik' => '127111010220081112',
+            'nik' => '1271110102200812',
             'alamat' => 'Jl. Dekat rumah kevin, America',
         ]);
 
