@@ -1,112 +1,155 @@
-<?php
-// layout/navigation.php
-// Navbar VERTICAL untuk Sick Safe ON - Menu: Beranda saja
-// Color Palette: #3FBBA0, #004369, #b1ddff, #E1F1FE
-?>
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2>Sick Safe <span>ON</span></h2>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-label">Menu Utama</div>
+        <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="#" class="nav-item"><i class="fas fa-file-prescription"></i> Resep Digital</a>
+        <a href="#" class="nav-item"><i class="fas fa-pills"></i> Stok Obat</a>
+        <a href="#" class="nav-item"><i class="fas fa-user-md"></i> Apoteker</a>
+
+        <div class="nav-label">Transaksi</div>
+        <a href="#" class="nav-item"><i class="fas fa-shopping-cart"></i> Pembelian</a>
+        <a href="#" class="nav-item"><i class="fas fa-credit-card"></i> Pembayaran</a>
+        <a href="#" class="nav-item"><i class="fas fa-truck"></i> Distribusi</a>
+
+        <div class="nav-label">Pengaturan</div>
+        <a href="#" class="nav-item"><i class="fas fa-cog"></i> Pengaturan</a>
+        <a href="#" class="nav-item"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+
+    <div class="sidebar-user">
+        <div class="user-avatar">AD</div>
+        <div class="user-info">
+            <p>Admin</p>
+            <span>Apoteker</span>
+        </div>
+    </div>
+</aside>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    /* NAVBAR VERTICAL (SAMPING KIRI) */
-    .navbar {
-        background: #004369;  /* Biru Tua */
-        width: 260px;
-        min-height: 100vh;
-        position: sticky;
+    .sidebar {
+        width: 250px;
+        min-width: 250px;
+        background-color: #0A2E3F;
+        position: fixed;
         top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 200;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        padding: 40px 20px;
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        border-right: 1px solid rgba(255,255,255,0.06);
     }
 
-    /* Logo di atas */
-    .logo {
-        text-decoration: none;
+    .sidebar.collapsed {
+        transform: translateX(-250px);
+    }
+
+    .sidebar-logo {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 60px;
+        gap: 10px;
+        padding: 22px 18px 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
     }
 
-    .logo-icon {
-        font-size: 48px;
-        background: #3FBBA0;
-        width: 70px;
-        height: 70px;
-        border-radius: 20px;
+    .sidebar-logo-icon {
+        width: 34px;
+        height: 34px;
+        background: rgba(46,204,113,0.15);
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(46,204,113,0.25);
+        flex-shrink: 0;
     }
 
-    .logo-text {
-        text-align: center;
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: white;
-        line-height: 1.3;
-    }
+    .sidebar-logo-icon i { color: #2ecc71; font-size: 16px; }
 
-    .logo-text span {
-        font-weight: normal;
-        color: #b1ddff;
-    }
-
-    /* Menu Navigasi (VERTICAL ke bawah) */
-    .nav-menu {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        list-style: none;
-        width: 100%;
-    }
-
-    .nav-menu li {
-        width: 100%;
-    }
-
-    .nav-menu li a {
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        padding: 12px 20px;
-        border-radius: 40px;
-        font-weight: 600;
+    .sidebar-logo h2 {
         font-size: 1rem;
-        transition: all 0.3s ease;
+        font-weight: 700;
+        color: #fff;
+        white-space: nowrap;
     }
 
-    /* Tombol Beranda */
-    .btn-beranda {
-        background: #3FBBA0;
-        color: #004369;
+    .sidebar-logo h2 span { color: #2ecc71; }
+
+    .sidebar-nav {
+        flex: 1;
+        padding: 14px 10px;
+        overflow-y: auto;
     }
 
-    .btn-beranda:hover {
-        background: #359a84;
-        color: white;
-        transform: translateX(5px);
+    .nav-label {
+        font-size: 0.63rem;
+        font-weight: 600;
+        color: #4a6a7a;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 8px 10px 5px;
+        margin-top: 6px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: #8DA6B5;
+        text-decoration: none;
+        font-size: 0.83rem;
+        transition: all 0.2s;
+        margin-bottom: 2px;
+        white-space: nowrap;
+    }
+
+    .nav-item i { width: 17px; font-size: 14px; flex-shrink: 0; }
+
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
+
+    .nav-item.active {
+        background: rgba(46,204,113,0.12);
+        color: #2ecc71;
+        border: 1px solid rgba(46,204,113,0.2);
+    }
+
+    .sidebar-user {
+        padding: 14px 16px;
+        border-top: 1px solid rgba(255,255,255,0.07);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(46,204,113,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #2ecc71;
+        flex-shrink: 0;
+    }
+
+    .user-info p { font-size: 0.80rem; font-weight: 500; color: #E1F1FE; }
+    .user-info span { font-size: 0.70rem; color: #5a7a8a; }
+
+    @media (max-width: 768px) {
+        .sidebar { transform: translateX(-250px); }
+        body.sidebar-open .sidebar { transform: translateX(0); }
     }
 </style>
-
-<!-- NAVBAR VERTICAL DI SAMPING KIRI -->
-<nav class="navbar">
-    <!-- Logo di atas -->
-    <a href="index.php" class="logo">
-        <div class="logo-icon">🏥</div>
-        <div class="logo-text">Sick<br><span>Safe</span> ON</div>
-    </a>
-
-    <!-- Menu Beranda -->
-    <ul class="nav-menu">
-        <li><a href="index.php" class="btn-beranda">🏠 Beranda</a></li>
-    </ul>
-</nav>
