@@ -16,7 +16,7 @@ class RoleMiddleware
             return $next($request);
         }
 
-        // Jika tidak sesuai, tendang balik ke halaman utama
-        return redirect('/'); 
+        // Jika tidak sesuai, tendang balik ke halaman login
+        return redirect('/login'); 
     }
 }
