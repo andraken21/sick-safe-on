@@ -4,14 +4,13 @@
 
 @section('content')
 <div class="dashboard-wrap">
-
-
+<link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">  
 
     {{-- MAIN AREA --}}
     <div class="dash-main">
 
         {{-- TOPBAR --}}
-        <header class="dash-topbar">
+        <!-- <header class="dash-topbar">
             <div>
                 <div class="topbar-title">Ringkasan Sistem</div>
                 <div class="topbar-sub">Selamat datang, <strong>{{ Auth::user()->nama }}</strong> 👋</div>
@@ -28,7 +27,7 @@
                     {{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}
                 </div>
             </div>
-        </header>
+        </header> -->
 
         {{-- CONTENT --}}
         <div class="dash-content">
