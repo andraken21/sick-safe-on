@@ -1,9 +1,5 @@
 <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-        <div class="sidebar-logo-icon">
-            <i class="fas fa-shield-alt"></i>
-        </div>
-        <h2>Sick Safe <span>ON</span></h2>
+   
     </div>
 
     <nav class="sidebar-nav">
@@ -11,12 +7,12 @@
         <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
         <a href="#" class="nav-item"><i class="fas fa-file-prescription"></i> Resep Digital</a>
         <a href="#" class="nav-item"><i class="fas fa-pills"></i> Stok Obat</a>
-        <a href="#" class="nav-item"><i class="fas fa-user-md"></i> Apoteker</a>
+        <a href="#" class="nav-item"><i class="fas fa-user-md"></i> Validasi Apoteker</a>
 
         <div class="nav-label">Transaksi</div>
         <a href="#" class="nav-item"><i class="fas fa-shopping-cart"></i> Pembelian</a>
         <a href="#" class="nav-item"><i class="fas fa-credit-card"></i> Pembayaran</a>
-        <a href="#" class="nav-item"><i class="fas fa-truck"></i> Distribusi</a>
+        <a href="#" class="nav-item"><i class="fas fa-truck"></i> Distribusi Obat</a>
 
         <div class="nav-label">Pengaturan</div>
         <a href="#" class="nav-item"><i class="fas fa-cog"></i> Pengaturan</a>
