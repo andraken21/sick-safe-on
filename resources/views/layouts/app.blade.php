@@ -12,98 +12,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        * * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            z-index: 9999;
+            transform: translateX(-250px);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .page-wrapper {
+            margin-left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .page-wrapper.sidebar-open {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        .dashboard-header {
+            position: sticky !important; 
+            top: 0 !important;
+            left: auto !important;       
+            right: auto !important;      
+            width: 100% !important;      
+            z-index: 1000;
+        }
+
+        .content {
+            flex: 1;
+            padding: 24px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .site-footer {
+            width: 100% !important;
+            margin-left: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .sidebar-overlay {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 9998;
+        }
 
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 250px;
-    z-index: 300;
-    transition: transform 0.3s ease;
-}
-
-.sidebar.collapsed {
-    transform: translateX(-250px);
-}
-
-.dashboard-header {
-    position: fixed;
-    top: 0;
-    left: 250px;       
-    right: 0;           
-    z-index: 200;
-    transition: left 0.3s ease;  
-    overflow: hidden;   
-}
-
-body.sidebar-collapsed .dashboard-header {
-    left: 0;
-}
-
-.header-row {
-    width: 100%;
-    
-}
-
-.page-wrapper {
-    margin-left: 250px;
-    margin-top: 70px;
-    min-height: calc(100vh - 70px);
-    display: flex;
-    flex-direction: column;
-    transition: margin-left 0.3s ease; 
-    width: calc(100% - 250px);
-}
-
-body.sidebar-collapsed .page-wrapper {
-    margin-left: 0;
-    width: 100%;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-.site-footer {
-    width: 100% !important;
-    margin-left: 0 !important;
-    box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-    .sidebar { transform: translateX(-250px); }
-    .dashboard-header { left: 0; }
-    .page-wrapper { margin-left: 0; margin-top: 60px; width: 100%; }
-    body.sidebar-open .sidebar { transform: translateX(0); }
-}
+        @media (max-width: 768px) {
+            .page-wrapper.sidebar-open {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    {{-- SIDEBAR (fixed, di luar page-wrapper) --}}
+    {{-- SIDEBAR --}}
     @include('layouts.partials.sidebar')
 
-    {{-- HEADER (fixed, di luar page-wrapper) --}}
-    @include('layouts.partials.header')
+    {{-- OVERLAY --}}
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    {{-- KONTEN + FOOTER (ikut margin sidebar) --}}
-    <div class="page-wrapper">
+    {{-- PAGE WRAPPER: header + konten + footer semua di dalam sini --}}
+    <div class="page-wrapper" id="pageWrapper">
+
+        {{-- HEADER di dalam page-wrapper --}}
+        @include('layouts.partials.header')
+
+        {{-- KONTEN --}}
         <main class="content">
             @yield('content')
         </main>
 
-        {{-- FOOTER di dalam page-wrapper --}}
+        {{-- FOOTER --}}
         @include('layouts.partials.footer')
+
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
@@ -112,11 +119,13 @@ body.sidebar-collapsed .page-wrapper {
     <script src="{{ asset('js/footer.js') }}"></script>
 
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const isCollapsed = sidebar.classList.toggle('collapsed');
-            document.body.classList.toggle('sidebar-collapsed', isCollapsed);
-        }
+    function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const pageWrapper = document.getElementById('pageWrapper');
+
+    const isOpen = sidebar.classList.toggle('open');
+    pageWrapper.classList.toggle('sidebar-open', isOpen);
+}
     </script>
 
 </body>

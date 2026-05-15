@@ -6,22 +6,14 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-    .dashboard-header {
-        background: #302929;
-        padding: 10px 20px;
-        font-family: 'Poppins', sans-serif;
-        position: fixed;
-        top: 0;
-        left: 250px;
-        right: 0;
-        height: 70px;
-        z-index: 1000;
-        transition: left 0.3s ease;
-    }
-
-    body.sidebar-collapsed .dashboard-header {
-        left: 0;
-    }
+  .dashboard-header {
+    background: #302929;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    height: 70px;
+    width: 100%;
+    z-index: 1000;
+}
 
     .header-row {
         display: flex;
@@ -188,7 +180,6 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         background: #fdecea;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
         .dashboard-header {
             left: 0 !important;

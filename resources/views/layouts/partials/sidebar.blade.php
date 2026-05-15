@@ -1,22 +1,38 @@
 <aside class="sidebar" id="sidebar">
-   
-    </div>
 
     <nav class="sidebar-nav">
         <div class="nav-label">Menu Utama</div>
-        <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
-        <a href="#" class="nav-item"><i class="fas fa-file-prescription"></i> Resep Digital</a>
-        <a href="#" class="nav-item"><i class="fas fa-pills"></i> Stok Obat</a>
-        <a href="#" class="nav-item"><i class="fas fa-user-md"></i> Validasi Apoteker</a>
+        <a href="#" class="nav-item active">
+            <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-file-prescription"></i> Resep Digital
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-pills"></i> Stok Obat
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user-md"></i> Validasi Apoteker
+        </a>
 
         <div class="nav-label">Transaksi</div>
-        <a href="#" class="nav-item"><i class="fas fa-shopping-cart"></i> Pembelian</a>
-        <a href="#" class="nav-item"><i class="fas fa-credit-card"></i> Pembayaran</a>
-        <a href="#" class="nav-item"><i class="fas fa-truck"></i> Distribusi Obat</a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-shopping-cart"></i> Pembelian
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-credit-card"></i> Pembayaran
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-truck"></i> Distribusi Obat
+        </a>
 
         <div class="nav-label">Pengaturan</div>
-        <a href="#" class="nav-item"><i class="fas fa-cog"></i> Pengaturan</a>
-        <a href="#" class="nav-item"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i> Pengaturan
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-sign-out-alt"></i> Keluar
+        </a>
     </nav>
 
     <div class="sidebar-user">
@@ -26,64 +42,42 @@
             <span>Apoteker</span>
         </div>
     </div>
+
 </aside>
 
 <style>
+  
     .sidebar {
-        width: 250px;
-        min-width: 250px;
-        background-color: #0A2E3F;
         position: fixed;
         top: 0;
         left: 0;
+        width: 250px;
         height: 100vh;
-        z-index: 200;
+        background-color: #0A2E3F;
         display: flex;
         flex-direction: column;
+        z-index: 9999;
+        transform: translateX(-250px); /* default: tertutup */
         transition: transform 0.3s ease;
         border-right: 1px solid rgba(255,255,255,0.06);
+        overflow: hidden;
     }
 
-    .sidebar.collapsed {
-        transform: translateX(-250px);
+    .sidebar.open {
+        transform: translateX(0);
     }
 
-    .sidebar-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 22px 18px 18px;
-        border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .sidebar-logo-icon {
-        width: 34px;
-        height: 34px;
-        background: rgba(46,204,113,0.15);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(46,204,113,0.25);
-        flex-shrink: 0;
-    }
-
-    .sidebar-logo-icon i { color: #2ecc71; font-size: 16px; }
-
-    .sidebar-logo h2 {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #fff;
-        white-space: nowrap;
-    }
-
-    .sidebar-logo h2 span { color: #2ecc71; }
-
+  
     .sidebar-nav {
         flex: 1;
-        padding: 14px 10px;
+        padding: 16px 10px;
         overflow-y: auto;
+        margin-top: 0;
     }
+
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
     .nav-label {
         font-size: 0.63rem;
@@ -91,32 +85,42 @@
         color: #4a6a7a;
         text-transform: uppercase;
         letter-spacing: 1px;
-        padding: 8px 10px 5px;
-        margin-top: 6px;
+        padding: 10px 10px 5px;
+        margin-top: 8px;
     }
 
     .nav-item {
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 9px 12px;
+        padding: 10px 12px;
         border-radius: 8px;
         color: #8DA6B5;
         text-decoration: none;
         font-size: 0.83rem;
-        transition: all 0.2s;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.2s ease;
         margin-bottom: 2px;
         white-space: nowrap;
+        border: 1px solid transparent;
     }
 
-    .nav-item i { width: 17px; font-size: 14px; flex-shrink: 0; }
+    .nav-item i {
+        width: 18px;
+        font-size: 14px;
+        flex-shrink: 0;
+        text-align: center;
+    }
 
-    .nav-item:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
+    .nav-item:hover {
+        background: rgba(255,255,255,0.06);
+        color: #E1F1FE;
+    }
 
     .nav-item.active {
         background: rgba(46,204,113,0.12);
         color: #2ecc71;
-        border: 1px solid rgba(46,204,113,0.2);
+        border-color: rgba(46,204,113,0.2);
     }
 
     .sidebar-user {
@@ -125,27 +129,54 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        flex-shrink: 0;
     }
 
     .user-avatar {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
         background: rgba(46,204,113,0.2);
+        border: 1px solid rgba(46,204,113,0.3);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.72rem;
-        font-weight: 600;
+        font-weight: 700;
         color: #2ecc71;
         flex-shrink: 0;
     }
 
-    .user-info p { font-size: 0.80rem; font-weight: 500; color: #E1F1FE; }
-    .user-info span { font-size: 0.70rem; color: #5a7a8a; }
+    .user-info p {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #E1F1FE;
+        margin: 0;
+    }
+
+    .user-info span {
+        font-size: 0.70rem;
+        color: #5a7a8a;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 9998;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
 
     @media (max-width: 768px) {
-        .sidebar { transform: translateX(-250px); }
-        body.sidebar-open .sidebar { transform: translateX(0); }
+        .sidebar {
+            z-index: 9999;
+        }
     }
 </style>

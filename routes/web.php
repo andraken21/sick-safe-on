@@ -91,4 +91,16 @@ use App\Http\Controllers\LoginController;
     });
     Route::get('/footer', function () {
     return view('layouts/footer'); 
-});
+    });
+    Route::get('/dashpasien', function () {
+        return view('pasien/dashboard');
+    });
+
+    Route::get('/pasien/resep', function () {
+        return view('pasien.resep.index');
+    })->name('pasien.resep.index');
+
+    Route::get('/pasien/pembayaran', function () {
+        return view('pasien.pembayaran.index');
+    })->name('pasien.pembayaran.index');
+
