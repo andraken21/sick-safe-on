@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\ApotekerController;
 
     // Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
     Route::get('/', function () {
-        return view('homepage');    
+        return view('apoteker.dashboard');    
     });
 
     // Agar saat menekan button daftar akan pergi ke web registrasi
@@ -46,9 +46,8 @@ use App\Http\Controllers\LoginController;
 
     // Kalau Role Apoteker
     Route::middleware(['auth', 'role:Apoteker'])->group(function () {
-        Route::get('/apoteker/dashboard', function () {
-            return view('apoteker.dashboard');
-        });
+        Route::get('/apoteker/dashboard', [ApotekerController::class, 'dashboard'])
+        ->name('apoteker.dashboard');
     });
 
     // Agar saat menekan button forgot akan pergi ke web forgot
@@ -89,6 +88,11 @@ use App\Http\Controllers\LoginController;
     Route::get('/navapoteker', function () {
         return view('layouts.navApoteker');
     });
-    Route::get('/footer', function () {
-    return view('layouts/footer'); 
-});
+
+    // Route::get('/footer', function () {
+    // return view('layouts/footer'); 
+    // });
+
+    // Route::get('/apoteker', function () {
+    //     return view('apoteker.apoteker');
+    // });

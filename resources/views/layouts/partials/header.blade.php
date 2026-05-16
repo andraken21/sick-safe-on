@@ -217,7 +217,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
                 @csrf
                 <button type="submit" class="btn btn-danger">Keluar</button>
             </form>
-            <div class="nama"><strong>{{ Auth::user()->nama }}</strong></div>
+            <div class="nama"><strong>{{ Auth::user()->nama ?? 'Guest' }}</strong></div>
 
             <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
             <div class="profile-avatar">
