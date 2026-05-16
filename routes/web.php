@@ -29,6 +29,7 @@ use App\Http\Controllers\LoginController;
             return view('admin.dashboard');
         });
     });
+    
 
     // Kalau Role Dokter
     Route::middleware(['auth', 'role:Dokter'])->group(function () {
