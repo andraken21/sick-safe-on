@@ -6,7 +6,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
   .dashboard-header {
-    background: #302929;
+    background: linear-gradient(90deg, #feffff 20%, #b7ede1 80%);
     padding: 10px 20px;
     font-family: 'Poppins', sans-serif;
     height: 70px;
@@ -44,7 +44,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         display: block;
         width: 25px;
         height: 3px;
-        background: white;
+        background: #004369;
         border-radius: 3px;
         transition: all 0.3s ease;
     }
@@ -58,12 +58,12 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     .header-left .text {
         font-weight: 700;
         font-size: 1.1rem;
-        color: white;
+        color: #3FBBA0;
         white-space: nowrap;
     }
 
     .header-left .text .on {
-        color: #3FBBA0;
+        color: #004369;
     }
 
     .header-center {
@@ -75,14 +75,14 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     .tanggal {
         font-size: 15px;
         font-weight: 600;
-        color: #b1ddff;
+        color: #004369;
         line-height: 1.2;
     }
 
     .waktu {
         font-size: 13px;
         font-weight: 500;
-        color: #b1ddff;
+        color: #004369;
         opacity: 0.9;
     }
 
@@ -96,7 +96,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     .header-right .nama {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #3FBBA0;
+        color: #004369;
         white-space: nowrap;
     }
 
