@@ -24,11 +24,23 @@ use App\Http\Controllers\ApotekerController;
     Route::post('/login', [LoginController::class, 'login']);
 
     // Kalau Role Admin
-    Route::middleware(['auth', 'role:Admin'])->group(function () {
-        Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
-    });
+    Route::middleware(['auth','role:Admin'])->group(function () {
+
+    Route::view('/admin/resep-digital', 'admin.resepDigital');
+
+    Route::view('/admin/stok-obat', 'admin.stokObat');
+
+    Route::view('/admin/validasi-apoteker', 'admin.validasiApoteker');
+
+    Route::view('/admin/pembelian', 'admin.pembelian');
+
+    Route::view('/admin/pembayaran', 'admin.pembayaran');
+
+    Route::view('/admin/distribusi-obat', 'admin.distribusiObat');
+
+    Route::view('/admin/pengaturan', 'admin.pengaturan');
+
+});
     
 
     // Kalau Role Dokter
