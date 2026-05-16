@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email',
-        'nama',         // Sesuaikan dengan nama di DB (bukan 'name')
+        'nama',         
         'password',
         'tanggal_lahir',
         'gender',
