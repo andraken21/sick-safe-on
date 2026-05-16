@@ -7,6 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">`
 </head>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Mohon tunggu...</p>
+</div>
 <body>
 
 <div class="register-card">
@@ -322,6 +326,10 @@
     document.getElementById('no_telp').addEventListener('input', function () {
         this.value = this.value.replace(/\D/g, '').slice(0, 13);
     });
+    
+    document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('loadingOverlay').classList.add('show');
+});
 </script>
 
 </body>

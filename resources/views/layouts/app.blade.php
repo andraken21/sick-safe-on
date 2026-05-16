@@ -4,31 +4,51 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>@yield('title', 'Sick Safe ON')</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
-    @stack('styles')
+    <style type="text/css">
+        
+        .main-layout {
+                display: flex;
+            }
 
+            .content {
+                flex: 1;
+                padding: 20px;
+            }
+
+    </style>
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
-<div class="main-layout">
+    {{-- HEADER --}}
+    @include('layouts.partials.header')
 
-    {{-- SIDEBAR --}}
-    @include('layouts.partials.sidebar')
+    <div class="main-layout">
 
-    {{-- CONTENT --}}
-    <main class="content">
-        @yield('content')
-    </main>
+        {{-- MENU SAMPING --}}
+        @include('layouts.partials.sidebar')
 
-</div>
+        {{-- ISI HALAMAN --}}
+        <main class="content">
+            @yield('content')
+        </main>
 
-@stack('scripts')
+    </div>
 
+    {{-- FOOTER --}}
+    @include('layouts.partials.footer')
+
+   <script src="{{ asset('js/app.js') }}"></script>
+   <script src="{{ asset('js/header.js') }}"></script>
+   <script src="{{ asset('js/sidebar.js') }}"></script>
+   <script src="{{ asset('js/footer.js') }}"></script>
 </body>
 </html>

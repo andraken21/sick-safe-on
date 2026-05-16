@@ -1,210 +1,244 @@
 <?php
-// layout/header.php
-
-// Foto profil (jika tidak ada, pakai default)
 $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 ?>
 
 <style>
-    /* Import Font Poppins */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        overflow-x: hidden;
-        /* Mencegah scroll horizontal */
-    }
-
-    .dashboard-header {
-        background: #302929;
-        padding: 10px 0;
-        font-family: 'Poppins', sans-serif;
-        width: 100%;
-        position: relative;
-        left: 0;
-        right: 0;
-        top: 0;
-    }
+  .dashboard-header {
+    background: #302929;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    height: 70px;
+    width: 100%;
+    z-index: 1000;
+}
 
     .header-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        height: 100%;
         width: 100%;
-        padding: 0;
-        margin: 0;
     }
 
-    /* Kiri - Logo + Sick Safe ON */
     .header-left {
         display: flex;
         align-items: center;
-        gap: 12px;
-        min-width: 200px;
-        text-align: left;
-        padding-left: 15px;
+        gap: 15px;
         flex-shrink: 0;
     }
 
+    .sidebar-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 1001;
+    }
+
+    .sidebar-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
     .header-left img {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         object-fit: contain;
     }
 
     .header-left .text {
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 1.1rem;
         color: white;
         white-space: nowrap;
     }
 
-    .header-left .text span {
-        font-weight: 500;
-        color: #b1ddff;
+    .header-left .text .on {
+        color: #3FBBA0;
     }
 
-    /* Tengah - Tanggal & Waktu (2 baris) */
     .header-center {
-        min-width: 180px;
         text-align: center;
-        flex-shrink: 0;
+        flex: 1;
+        max-width: 300px;
     }
 
     .tanggal {
         font-size: 15px;
         font-weight: 600;
         color: #b1ddff;
-        line-height: 1.3;
-        text-align: center;
-        white-space: nowrap;
+        line-height: 1.2;
     }
 
     .waktu {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
         color: #b1ddff;
         opacity: 0.9;
-        line-height: 1.3;
-        text-align: center;
-        white-space: nowrap;
     }
 
-    /* Kanan - Nama User + Foto Profil (style ala Instagram) */
     .header-right {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
         gap: 12px;
-        min-width: 200px;
-        padding-right: 15px;
         flex-shrink: 0;
     }
 
     .header-right .nama {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: #3FBBA0;
         white-space: nowrap;
     }
 
-    /* Profil Avatar ala Instagram (default avatar) - SIZE DIPERBESAR */
+    .profile-wrapper {
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     .profile-avatar {
-        width: 32px;
-        height: 32px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: #dbdbdb;
-        cursor: pointer;
         overflow: hidden;
-        flex-shrink: 0;
     }
 
-    /* SVG Siluet Orang - DIPERBESAR dan FULL di dalam lingkaran */
     .profile-avatar svg {
         width: 28px;
         height: 28px;
         color: #8e8e8e;
-        margin-top: 2px;
-        /* Sedikit adjust agar terlihat pas di tengah */
     }
 
-    /* Foto profil */
-    .header-right .profile-img {
-        display: none;
-        width: 32px;
-        height: 32px;
+    .profile-img {
+        width: 35px;
+        height: 35px;
         object-fit: cover;
         border-radius: 50%;
-        flex-shrink: 0;
-    }
-
-    /* Jika ada foto profil, tampilkan gambar dan sembunyikan avatar default */
-    .header-right.has-photo .profile-avatar {
         display: none;
     }
 
-    .header-right.has-photo .profile-img {
+    .has-photo .profile-avatar {
+        display: none;
+    }
+
+    .has-photo .profile-img {
         display: block;
     }
 
-    /* Responsive untuk layar kecil */
-    @media (max-width: 768px) {
+    .profile-dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        min-width: 150px;
+        z-index: 9999;
+        overflow: hidden;
+    }
 
-        .header-left,
-        .header-center,
-        .header-right {
-            min-width: auto;
+    .profile-dropdown.show {
+        display: block;
+    }
+
+    .profile-dropdown form button {
+        width: 100%;
+        padding: 12px 18px;
+        background: none;
+        border: none;
+        text-align: left;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #e53935;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: background 0.2s;
+    }
+
+    .profile-dropdown form button:hover {
+        background: #fdecea;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header {
+            left: 0 !important;
+            padding: 10px 15px;
         }
 
         .header-left .text {
-            font-size: 0.8rem;
+            display: none;
+        }
+
+        .header-center {
+            max-width: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .tanggal {
-            font-size: 0.7rem;
+            font-size: 13px;
         }
 
         .waktu {
-            font-size: 0.6rem;
+            font-size: 11px;
         }
 
         .header-right .nama {
-            font-size: 0.7rem;
+            display: none;
         }
 
         .profile-avatar,
-        .header-right .profile-img {
-            width: 28px;
-            height: 28px;
-        }
-
-        .profile-avatar svg {
-            width: 24px;
-            height: 24px;
+        .profile-img {
+            width: 32px;
+            height: 32px;
         }
     }
 </style>
 
-<div class="dashboard-header">
+<div class="dashboard-header" id="header">
     <div class="header-row">
-        <!-- Kiri: Logo + Sick Safe ON -->
+        
         <div class="header-left">
-            <img src="{{ asset('image/logo.png') }}" alt="Logo Saya" width="100">
-            <div class="text">Sick <span>Safe</span> ON</div>
+            <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <img src="{{ asset('image/logo.png') }}" alt="Logo Sick Safe ON">
+            
+            <div class="text">
+                Sick Safe <span class="on">ON</span>
+            </div>
         </div>
 
-        <!-- Tengah: Tanggal & Waktu -->
         <div class="header-center">
             <div class="tanggal" id="current-date">
-                <?php echo date('l, d/m/Y'); ?>
+                <?php 
+                $days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                echo $days[date('w')] . ', ' . date('d/m/Y');
+                ?>
             </div>
             <div class="waktu" id="current-time">
                 <?php echo date('H:i:s'); ?>
@@ -217,7 +251,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
                 @csrf
                 <button type="submit" class="btn btn-danger">Keluar</button>
             </form>
-            <div class="nama"><strong>{{ Auth::user()->nama ?? 'Guest' }}</strong></div>
+            <div class="nama"><strong>{{ Auth::user()->nama }}</strong></div>
 
             <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
             <div class="profile-avatar">
@@ -233,39 +267,51 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 </div>
 
 <script>
+    
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const body = document.body;
+        
+        if (sidebar) {
+            sidebar.classList.toggle('collapsed');
+            body.classList.toggle('sidebar-collapsed');
+        }
+    }
+
+    function toggleDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('show');
+    }
+
+
+    document.addEventListener('click', function(event) {
+        const wrapper = document.querySelector('.profile-wrapper');
+        const dropdown = document.getElementById('profileDropdown');
+        
+        if (wrapper && !wrapper.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
     function updateDateTime() {
         const now = new Date();
-
+        
         const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-
         const dayName = days[now.getDay()];
-        const date = now.getDate();
-        const month = now.getMonth() + 1;
+        
+        const date = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
         const year = now.getFullYear();
-
-        const dateString = `${dayName}, ${date < 10 ? '0' + date : date}/${month < 10 ? '0' + month : month}/${year}`;
-
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let seconds = now.getSeconds();
-
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-
-        const timeString = `${hours}:${minutes}:${seconds}`;
-
-        document.getElementById('current-date').innerText = dateString;
-        document.getElementById('current-time').innerText = timeString;
+        
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+        document.getElementById('current-date').textContent = `${dayName}, ${date}/${month}/${year}`;
+        document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
     }
 
     updateDateTime();
     setInterval(updateDateTime, 1000);
-
-    // Handle error untuk gambar profil
-    document.querySelectorAll('.profile-img').forEach(img => {
-        img.addEventListener('error', function() {
-            this.parentElement.classList.remove('has-photo');
-        });
-    });
 </script>

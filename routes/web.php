@@ -88,10 +88,9 @@ use App\Http\Controllers\ApotekerController;
     Route::get('/navapoteker', function () {
         return view('layouts.navApoteker');
     });
-
-    // Route::get('/footer', function () {
-    // return view('layouts/footer'); 
-    // });
+    Route::get('/footer', function () {
+    return view('layouts/footer'); 
+});
 
     // Route::get('/apoteker', function () {
     //     return view('apoteker.apoteker');

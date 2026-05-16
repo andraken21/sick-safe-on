@@ -74,18 +74,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
     .site-footer {
-    background-color: #0A2E3F;
-    color: #E1F1FE;
-    width: calc(100% - 250px);    
-    margin-left: 0px;           
-    transition: margin-left 0.3s ease, width 0.3s ease;
-    border-top: 1px solid rgba(255,255,255,0.06);
-}
-    body.sidebar-collapsed .site-footer {
-         margin-left: 0;
-         width: 100%;
-    
-}
+        background-color: #0A2E3F;
+        color: #E1F1FE;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .site-footer {
+    margin-left: 250px; 
+    transition: margin-left 0.3s ease;
+    }
+
     .footer-main { padding: 36px 28px 26px; }
 
     .footer-container {
@@ -231,18 +229,13 @@
 
     body.sidebar-collapsed .site-footer {
     margin-left: 0;
-    width: 100%;
-}
+    }
 
 
     @media (max-width: 768px) {
-        .site-footer {
-        margin-left: 0;
-        width: 100%;
         .footer-container { flex-direction: column; gap: 22px; }
         .brand-col { min-width: 100%; }
         .footer-col { min-width: 100%; }
         .bottom-container { flex-direction: column; text-align: center; align-items: center; }
-     }
     }
 </style>
