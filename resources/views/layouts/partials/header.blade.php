@@ -1,5 +1,4 @@
 <?php
-$nama_user = $_SESSION['nama_user'] ?? 'Tiara Agnesia';
 $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 ?>
 
@@ -248,8 +247,7 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 
      
         <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png') ? 'has-photo' : ''; ?>">
-            <span class="nama"><?php echo htmlspecialchars($nama_user); ?></span>
-            
+        <span class="nama"><strong>{{ Auth::user()->nama }}</strong></span>            
             <div class="profile-wrapper" onclick="toggleDropdown(event)">
                 <div class="profile-avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

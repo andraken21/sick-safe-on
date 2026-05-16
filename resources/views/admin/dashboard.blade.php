@@ -9,26 +9,6 @@
     {{-- MAIN AREA --}}
     <div class="dash-main">
 
-        {{-- TOPBAR --}}
-        <!-- <header class="dash-topbar">
-            <div>
-                <div class="topbar-title">Ringkasan Sistem</div>
-                <div class="topbar-sub">Selamat datang, <strong>{{ Auth::user()->nama }}</strong> 👋</div>
-            </div>
-            <div class="topbar-right">
-                <div class="topbar-btn">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </div>
-                <div class="topbar-btn">
-                    <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div class="topbar-avatar">
-                    {{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}
-                </div>
-            </div>
-        </header> -->
-
         {{-- CONTENT --}}
         <div class="dash-content">
 
@@ -164,7 +144,7 @@
                             <div class="stok-bar-wrap">
                                 <div class="stok-bar" style="width:32%;background:#004369;"></div>
                             </div>
-                            <span class="stok-badge badge-danger">Kritis</span>
+                            <span class="stok-badge badge-danger">Menipis</span>
                         </div>
 
                         <div class="stok-item">
@@ -176,7 +156,7 @@
                             <div class="stok-bar-wrap">
                                 <div class="stok-bar" style="width:40%;background:#b1ddff;"></div>
                             </div>
-                            <span class="stok-badge badge-danger">Kritis</span>
+                            <span class="stok-badge badge-danger">Menipis</span>
                         </div>
 
                         <div class="stok-item">
@@ -225,10 +205,10 @@
                         <tbody>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0081</span></td>
-                                <td><span class="trx-name">Andi Setiawan</span></td>
+                                <td><span class="trx-name">Kenzi nomik</span></td>
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 125.000</td>
-                                <td class="trx-date">20 Mei 2024</td>
+                                <td class="trx-date">01 Mei 2026</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
@@ -237,10 +217,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0080</span></td>
-                                <td><span class="trx-name">Dinda Permata</span></td>
+                                <td><span class="trx-name">Jawak hiacek</span></td>
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 85.000</td>
-                                <td class="trx-date">20 Mei 2024</td>
+                                <td class="trx-date">10 Mei 2026</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
@@ -249,10 +229,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0079</span></td>
-                                <td><span class="trx-name">Budi Santoso</span></td>
+                                <td><span class="trx-name">Yeeree</span></td>
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 210.000</td>
-                                <td class="trx-date">19 Mei 2024</td>
+                                <td class="trx-date">07 Mei 2026</td>
                                 <td>
                                     <span class="status-badge status-pending">
                                         <i class="fa-solid fa-clock" style="font-size:10px;"></i> Pending
@@ -261,10 +241,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0078</span></td>
-                                <td><span class="trx-name">Rina Marlina</span></td>
+                                <td><span class="trx-name">Regenn</span></td>
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 55.000</td>
-                                <td class="trx-date">19 Mei 2024</td>
+                                <td class="trx-date">10 Mei 2026</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
