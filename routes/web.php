@@ -24,22 +24,10 @@ use App\Http\Controllers\LoginController;
 
     // Kalau Role Admin
     Route::middleware(['auth','role:Admin'])->group(function () {
-
-    Route::view('/admin/resep-digital', 'admin.resepDigital');
-
-    Route::view('/admin/stok-obat', 'admin.stokObat');
-
-    Route::view('/admin/validasi-apoteker', 'admin.validasiApoteker');
-
-    Route::view('/admin/pembelian', 'admin.pembelian');
-
-    Route::view('/admin/pembayaran', 'admin.pembayaran');
-
-    Route::view('/admin/distribusi-obat', 'admin.distribusiObat');
-
-    Route::view('/admin/pengaturan', 'admin.pengaturan');
-
-});
+     Route::get('/admin/dashboard', function () {
+            return view('admin.dashboard');
+        });
+    });
     
 
     // Kalau Role Dokter
