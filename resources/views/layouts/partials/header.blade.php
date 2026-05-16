@@ -245,38 +245,23 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
             </div>
         </div>
 
-     
-        <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png') ? 'has-photo' : ''; ?>">
-        <span class="nama"><strong>{{ Auth::user()->nama }}</strong></span>            
-            <div class="profile-wrapper" onclick="toggleDropdown(event)">
-                <div class="profile-avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </div>
-                
-                <?php if($foto_profil !== 'default-avatar.png'): ?>
-                <img class="profile-img" 
-                     src="{{ asset('image/' . $foto_profil) }}" 
-                     alt="Profile"
-                     onerror="this.parentElement.parentElement.classList.remove('has-photo')">
-                <?php endif; ?>
+        <!-- Kanan: Nama User + Foto Profil (ala Instagram) -->
+        <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png' && file_exists('../public/image/' . $foto_profil)) ? 'has-photo' : ''; ?>">
+            <form action="/logout" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-danger">Keluar</button>
+            </form>
+            <div class="nama"><strong>{{ Auth::user()->nama }}</strong></div>
 
-                <div class="profile-dropdown" id="profileDropdown">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" 
-                                 stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
-                            </svg>
-                            Keluar
-                        </button>
-                    </form>
-                </div>
+            <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
+            <div class="profile-avatar">
+                <svg aria-label="Profil" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
             </div>
+
+            <!-- Gambar profil (jika ada) -->
+            <img class="profile-img" src="../public/image/<?php echo $foto_profil; ?>" alt="Profil" onerror="this.onerror=null; this.parentElement.classList.remove('has-photo');">
         </div>
     </div>
 </div>

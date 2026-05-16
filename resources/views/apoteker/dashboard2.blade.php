@@ -1,13 +1,33 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard Admin - Sick Safe ON')
+@section('title', 'Dashboard Apoteker - Sick Safe ON')
 
 @section('content')
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">  
+<link rel = "stylesheet" href = "{{  asset('css/apoteker.css') }}">
 
     {{-- MAIN AREA --}}
     <div class="dash-main">
+
+        {{-- TOPBAR --}}
+        <header class="dash-topbar">
+            <div>
+                <div class="topbar-title">Dashboard Apoteker</div>
+                <div class="topbar-sub">Selamat datang, <strong>{{ auth()->user()?->nama ?? 'Apoteker' }}</strong> 👋</div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-btn">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </div>
+                <div class="topbar-btn">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="topbar-avatar">
+                    {{ strtoupper(substr(auth()->user()?->nama ?? 'AP', 0, 2)) }}
+                </div>
+            </div>
+        </header>
 
         {{-- CONTENT --}}
         <div class="dash-content">
@@ -19,9 +39,9 @@
                         <i class="fa-solid fa-hospital-user"></i>
                     </div>
                     <div>
-                        <div class="stat-label">Total Pasien</div>
-                        <div class="stat-value">120</div>
-                        <div class="stat-sub">↑ 8 bulan ini</div>
+                        <div class="stat-label">Resep Hari Ini</div>
+                        <div class="stat-value">42</div>
+                        <div class="stat-sub">+6 dari kemarin</div>
                     </div>
                 </div>
 
@@ -30,9 +50,9 @@
                         <i class="fa-solid fa-user-doctor"></i>
                     </div>
                     <div>
-                        <div class="stat-label">Total Dokter</div>
-                        <div class="stat-value">25</div>
-                        <div class="stat-sub">Aktif bertugas</div>
+                        <div class="stat-label">Obat Tersedia</div>
+                        <div class="stat-value">320</div>
+                        <div class="stat-sub">Jenis obat aktif</div>
                     </div>
                 </div>
 
@@ -41,9 +61,9 @@
                         <i class="fa-solid fa-mortar-pestle"></i>
                     </div>
                     <div>
-                        <div class="stat-label">Apoteker</div>
-                        <div class="stat-value">18</div>
-                        <div class="stat-sub">3 jadwal hari ini</div>
+                        <div class="stat-label">Perlu Diracik</div>
+                        <div class="stat-value">15</div>
+                        <div class="stat-sub">Menunggu proses</div>
                     </div>
                 </div>
 
@@ -52,9 +72,9 @@
                         <i class="fa-solid fa-file-prescription"></i>
                     </div>
                     <div>
-                        <div class="stat-label">Resep Bulan Ini</div>
-                        <div class="stat-value">320</div>
-                        <div class="stat-sub">↑ 12% vs bulan lalu</div>
+                        <div class="stat-label">Obat Menipis</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-sub">Perlu restock</div>
                     </div>
                 </div>
             </div>
@@ -67,9 +87,8 @@
                 <div class="dash-card">
                     <div class="dash-card-header">
                         <div>
-                            <div class="dash-card-title">Grafik Resep (30 Hari Terakhir)</div>
-                            <div class="dash-card-sub">Jumlah resep harian</div>
-                        </div>
+                            <div class="dash-card-title">Grafik Pengeluaran Obat</div>
+                            <div class="dash-card-sub">Distribusi obat 30 hari terakhir</div>                          </div>
                         <button class="btn-link">Lihat Detail →</button>
                     </div>
                     <div class="chart-area">
@@ -117,8 +136,8 @@
                 <div class="dash-card">
                     <div class="dash-card-header">
                         <div>
-                            <div class="dash-card-title">Stok Obat Menipis</div>
-                            <div class="dash-card-sub">Perlu segera diisi ulang</div>
+                            <div class="dash-card-title">Obat Mendekati Expired</div>
+                            <div class="dash-card-sub">Perlu pengecekan</div>
                         </div>
                     </div>
                     <div class="stok-list">
@@ -144,7 +163,7 @@
                             <div class="stok-bar-wrap">
                                 <div class="stok-bar" style="width:32%;background:#004369;"></div>
                             </div>
-                            <span class="stok-badge badge-danger">Menipis</span>
+                            <span class="stok-badge badge-danger">Kritis</span>
                         </div>
 
                         <div class="stok-item">
@@ -156,7 +175,7 @@
                             <div class="stok-bar-wrap">
                                 <div class="stok-bar" style="width:40%;background:#b1ddff;"></div>
                             </div>
-                            <span class="stok-badge badge-danger">Menipis</span>
+                            <span class="stok-badge badge-danger">Kritis</span>
                         </div>
 
                         <div class="stok-item">
@@ -185,8 +204,8 @@
             <div class="dash-card">
                 <div class="dash-card-header">
                     <div>
-                        <div class="dash-card-title">Transaksi Terbaru</div>
-                        <div class="dash-card-sub">Data transaksi hari ini</div>
+                        <div class="dash-card-title">Resep Masuk Hari Ini</div>
+                        <div class="dash-card-sub">Antrian resep pasien</div>
                     </div>
                     <button class="btn-link">Lihat Semua →</button>
                 </div>
@@ -194,21 +213,25 @@
                     <table class="dash-table">
                         <thead>
                             <tr>
-                                <th>No. Transaksi</th>
-                                <th>Nama Pasien</th>
-                                <th>Jenis</th>
-                                <th>Total</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
+                                <thead>
+                                    <tr>
+                                        <th>No Resep</th>
+                                        <th>Nama Pasien</th>
+                                        <th>Dokter</th>
+                                        <th>Jenis Obat</th>
+                                        <th>Waktu</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0081</span></td>
-                                <td><span class="trx-name">Kenzi nomik</span></td>
+                                <td><span class="trx-name">Andi Setiawan</span></td>
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 125.000</td>
-                                <td class="trx-date">01 Mei 2026</td>
+                                <td class="trx-date">20 Mei 2024</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
@@ -217,10 +240,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0080</span></td>
-                                <td><span class="trx-name">Jawak hiacek</span></td>
+                                <td><span class="trx-name">Dinda Permata</span></td>
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 85.000</td>
-                                <td class="trx-date">10 Mei 2026</td>
+                                <td class="trx-date">20 Mei 2024</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
@@ -229,10 +252,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0079</span></td>
-                                <td><span class="trx-name">Yeeree</span></td>
+                                <td><span class="trx-name">Budi Santoso</span></td>
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 210.000</td>
-                                <td class="trx-date">07 Mei 2026</td>
+                                <td class="trx-date">19 Mei 2024</td>
                                 <td>
                                     <span class="status-badge status-pending">
                                         <i class="fa-solid fa-clock" style="font-size:10px;"></i> Pending
@@ -241,10 +264,10 @@
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0078</span></td>
-                                <td><span class="trx-name">Regenn</span></td>
+                                <td><span class="trx-name">Rina Marlina</span></td>
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 55.000</td>
-                                <td class="trx-date">10 Mei 2026</td>
+                                <td class="trx-date">19 Mei 2024</td>
                                 <td>
                                     <span class="status-badge status-selesai">
                                         <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
@@ -268,6 +291,5 @@
     </div>
     {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/dashboardAdmin.js') }}"></script>
 </div>
 @endsection
