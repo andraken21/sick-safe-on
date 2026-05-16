@@ -3,9 +3,20 @@
 @section('title', 'Dashboard Apoteker - Sick Safe ON')
 
 @section('content')
-    <div class="container-fluid">
-        <h1>Dashboard Apoteker</h1>
-        <hr>
-        <p>Selamat datang, <strong>{{ Auth::user()->nama }}</strong>. Panel manajemen obat siap digunakan.</p>
+<div class="dashboard-wrap">
+<link rel="stylesheet" href="{{ asset('css/dashboardApoteker.css') }}">  
+
+    {{-- MAIN AREA --}}
+    <div class="dash-main">
+
+        {{-- CONTENT --}}
+        <div class="dash-content">
+            ISI DASHBOARD NYA LETAK SINI
+        </div>
+        {{-- /CONTENT --}}
+
     </div>
+    {{-- /MAIN AREA --}}
+<script src="{{ asset('js/dashboardApoteker.js') }}"></script>
+</div>
 @endsection

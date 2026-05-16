@@ -268,5 +268,6 @@
     </div>
     {{-- /MAIN AREA --}}
 
+<script src="{{ asset('js/dashboardAdmin.js') }}"></script>
 </div>
 @endsection
