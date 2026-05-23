@@ -1,0 +1,473 @@
+/* ===========================
+   Reports & Analytics - SickSafe ON
+   Color Palette: sama dengan dashboard
+=========================== */
+
+@import url('dashboardAdmin.css');
+
+/* ===== REPORT FILTERS ===== */
+.report-filters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--text-dark);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: border-color 0.15s;
+}
+
+.filter-select:hover,
+.filter-select:focus {
+    border-color: var(--tosca);
+    outline: none;
+}
+
+.btn-generate {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background: var(--tosca);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-generate:hover {
+    background: var(--tosca-dark);
+}
+
+/* ===== ANALYTICS SECTION ===== */
+.analytics-section {
+    margin-bottom: 28px;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--tosca);
+    border-radius: 50%;
+}
+
+/* ===== CHARTS GRID ===== */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.chart-card {
+    padding: 20px !important;
+}
+
+.chart-container {
+    height: 200px;
+    margin-top: 12px;
+}
+
+.line-chart {
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== PIE CHART ===== */
+.pie-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.pie-chart {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dark);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+/* ===== BAR CHART ===== */
+.bar-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 24px;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 4px;
+    min-width: 20px;
+    transition: width 0.3s ease;
+}
+
+.bar-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    min-width: 40px;
+    text-align: right;
+}
+
+/* ===== STATS GRID MINI ===== */
+.stats-grid-mini {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.stat-mini {
+    padding: 12px;
+    background: var(--white-ish);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.stat-label-mini {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.stat-value-mini {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.stat-trend {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.stat-trend.up {
+    color: var(--tosca-dark);
+}
+
+.stat-trend.down {
+    color: #c2185b;
+}
+
+.stat-trend.neutral {
+    color: var(--text-muted);
+}
+
+.stat-trend-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ===== SPARKLINE ===== */
+.sparkline-container {
+    height: 60px;
+    margin-top: 12px;
+}
+
+.sparkline {
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== KEY METRICS ===== */
+.key-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    padding: 16px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.metric-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+}
+
+.metric-change {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.metric-change.up {
+    color: var(--tosca-dark);
+}
+
+.metric-change.down {
+    color: #c2185b;
+}
+
+/* ===== REPORTS SECTION ===== */
+.reports-section {
+    margin-bottom: 20px;
+}
+
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.report-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: var(--white-ish);
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+}
+
+.report-item:hover {
+    background: #ddf0ff;
+}
+
+.report-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    color: var(--tosca);
+}
+
+.report-item:nth-child(2) .report-icon {
+    color: #00a86b;
+}
+
+.report-item:nth-child(3) .report-icon {
+    color: var(--navy);
+}
+
+.report-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.report-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+.report-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.report-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-dark);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-small:hover {
+    background: var(--white-ish);
+    border-color: var(--tosca);
+    color: var(--tosca);
+}
+
+.btn-small.btn-download {
+    background: var(--tosca-soft);
+    border-color: var(--tosca);
+    color: var(--tosca-dark);
+}
+
+.btn-small.btn-download:hover {
+    background: var(--tosca);
+    color: var(--white);
+}
+
+/* ===== BTN EXPORT ===== */
+.btn-export {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--tosca);
+    background: var(--tosca-soft);
+    color: var(--tosca-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-export:hover {
+    background: var(--tosca);
+    color: var(--white);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .report-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .key-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid-mini {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .report-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-generate {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .key-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .report-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .report-info {
+        order: -1;
+    }
+
+    .report-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-small {
+        flex: 1;
+        justify-content: center;
+    }
+}

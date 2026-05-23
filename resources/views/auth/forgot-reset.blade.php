@@ -6,19 +6,26 @@
     <title>Reset Password</title>
 
     <link rel="stylesheet" href="{{ asset('css/forgot.css') }}">
+    
+    <style>
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear,
+        input[type="password"]::-webkit-password-reveal {
+            display: none !important;
+        }
+    </style>
 </head>
+<body>
+
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
     <p>Mohon tunggu...</p>
 </div>
-<body>
 
 <div class="card">
 
     <div class="logo-corner">
-        <img src="{{ asset('image/logo.png') }}"
-             width="50"
-             height="50">
+        <img src="{{ asset('image/logo.png') }}" width="50" height="50" alt="Logo">
     </div>
 
     <div class="left"></div>
@@ -26,26 +33,17 @@
     <div class="right">
 
         <h1>Buat Password Baru</h1>
-
-        <p class="subtitle">
-            Gunakan password baru untuk akunmu.
-        </p>
-
-        
-        <form method="POST" action="/reset-password">
-
+        <p class="subtitle">Gunakan password baru untuk akunmu.</p>
 
         <form method="POST" action="/forgot/reset">
-
-
             @csrf
             <input type="hidden" name="email" value="{{ $email }}">
+            
+            {{-- Kolom Kata Sandi Baru --}}
             <div class="form-group">
+                <label for="password">Kata sandi baru</label>
 
-                <label>Kata sandi baru</label>
-
-                <div class="pw-wrap">
-
+                <div class="pw-wrap" style="position: relative; display: flex; align-items: center;">
                     <input type="password"
                         id="password"
                         name="password"
@@ -54,98 +52,111 @@
 
                     <button type="button"
                         class="toggle-btn"
-                        onclick="togglePw('password','eye1','eyeoff1')">
+                        onclick="togglePw('password','eye1','eyeoff1')"
+                        style="background: none; border: none; cursor: pointer;">
 
-                        {{-- Mata terbuka --}}
+                        {{-- Mata terbuka (Kolom 1) --}}
                         <svg id="eye1"
+                            width="20" height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
-                            stroke-linejoin="round">
+                            stroke-linejoin="round"
+                            style="display: block;">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                             <circle cx="12" cy="12" r="3"/>
                         </svg>
 
-                        {{-- Mata dicoret --}}
+                        {{-- Mata dicoret (Kolom 1) --}}
                         <svg id="eyeoff1"
-                            style="display:none"
+                            width="20" height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
-                            stroke-linejoin="round">
+                            stroke-linejoin="round"
+                            style="display: none;">
                             <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
                             <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
                             <line x1="1" y1="1" x2="23" y2="23"/>
                         </svg>
-
                     </button>
-
                 </div>
 
                 <div class="password-rules" id="password-rules">
-
-                    <div class="rule" id="rule-length">
-                        <span class="rule-icon">✗</span>
-                        <span>Minimal 8 karakter</span>
-                    </div>
-
-                    <div class="rule" id="rule-upper">
-                        <span class="rule-icon">✗</span>
-                        <span>Minimal 1 huruf kapital</span>
-                    </div>
-
-                    <div class="rule" id="rule-number">
-                        <span class="rule-icon">✗</span>
-                        <span>Minimal 1 angka</span>
-                    </div>
-
-                    <div class="rule" id="rule-special">
-                        <span class="rule-icon">✗</span>
-                        <span>Minimal 1 karakter spesial</span>
-                    </div>
-
+                    <div class="rule" id="rule-length"><span class="rule-icon">✗</span> <span>Minimal 8 karakter</span></div>
+                    <div class="rule" id="rule-upper"><span class="rule-icon">✗</span> <span>Minimal 1 huruf kapital</span></div>
+                    <div class="rule" id="rule-number"><span class="rule-icon">✗</span> <span>Minimal 1 angka</span></div>
+                    <div class="rule" id="rule-special"><span class="rule-icon">✗</span> <span>Minimal 1 karakter spesial</span></div>
                 </div>
-
             </div>
 
+            {{-- Kolom Konfirmasi Kata Sandi --}}
             <div class="form-group">
+                <label for="password_confirmation">Konfirmasi kata sandi</label>
 
-                <label>Konfirmasi kata sandi</label>
-
-                <div class="pw-wrap">
-
+                <div class="pw-wrap" style="position: relative; display: flex; align-items: center;">
                     <input type="password"
                         id="password_confirmation"
                         name="password_confirmation"
                         placeholder="Ulangi password"
                         required>
+                    
+                    <button type="button"
+                        class="toggle-btn"
+                        onclick="togglePw('password_confirmation','eye2','eyeoff2')"
+                        style="background: none; border: none; cursor: pointer;">
 
+                        {{-- Mata terbuka (Kolom 2) --}}
+                        <svg id="eye2"
+                            width="20" height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            style="display: block;">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+
+                        {{-- Mata dicoret (Kolom 2) --}}
+                        <svg id="eyeoff2"
+                            width="20" height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            style="display: none;">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </button>
                 </div>
 
                 <div class="mismatch-msg" id="mismatch-msg">
                     Kata sandi tidak cocok
                 </div>
-
             </div>
 
             <button type="submit" class="btn-submit">
                 Simpan kata sandi baru
             </button>
-
         </form>
 
     </div>
-
 </div>
 
 <script>
-
+// Fungsi toggle fleksibel menggunakan ID dinamis berdasarkan parameter
 function togglePw(inputId, eyeId, eyeOffId){
-
     const input = document.getElementById(inputId);
     const eye = document.getElementById(eyeId);
     const eyeOff = document.getElementById(eyeOffId);
@@ -154,7 +165,7 @@ function togglePw(inputId, eyeId, eyeOffId){
         input.type = 'text';
         eye.style.display = 'none';
         eyeOff.style.display = 'block';
-    }else{
+    } else {
         input.type = 'password';
         eye.style.display = 'block';
         eyeOff.style.display = 'none';
@@ -167,7 +178,6 @@ const rulesBox = document.getElementById('password-rules');
 const mismatchMsg = document.getElementById('mismatch-msg');
 
 passwordInput.addEventListener('input', function(){
-
     const val = this.value;
 
     val.length > 0
@@ -192,7 +202,6 @@ passwordInput.addEventListener('input', function(){
 confInput.addEventListener('input', checkMatch);
 
 function checkMatch(){
-
     if(confInput.value.length === 0){
         mismatchMsg.classList.remove('show');
         return;
@@ -200,24 +209,25 @@ function checkMatch(){
 
     if(passwordInput.value !== confInput.value){
         mismatchMsg.classList.add('show');
-    }else{
+    } else {
         mismatchMsg.classList.remove('show');
     }
 }
 
 function updateRule(id, valid){
-
     const el = document.getElementById(id);
+    if(!el) return;
     const icon = el.querySelector('.rule-icon');
 
     if(valid){
         el.classList.add('valid');
         icon.textContent = '✓';
-    }else{
+    } else {
         el.classList.remove('valid');
         icon.textContent = '✗';
     }
 }
+
 document.querySelector('form').addEventListener('submit', function() {
     document.getElementById('loadingOverlay').classList.add('show');
 });

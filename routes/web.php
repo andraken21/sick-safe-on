@@ -28,7 +28,6 @@ use App\Http\Controllers\LoginController;
             return view('admin.dashboard');
         });
     });
-    
 
     // Kalau Role Dokter
     Route::middleware(['auth', 'role:Dokter'])->group(function () {
@@ -74,3 +73,18 @@ use App\Http\Controllers\LoginController;
         return view('layouts.app');
     });
 
+    Route::get('/admin/kelolaAkunPengguna', function () {
+        return view('admin.kelolaAkunPengguna');
+    });
+
+    Route::get('/admin/kelolaDataObat', function () {
+        return view('admin.kelolaDataObat');
+    });
+    
+    Route::get('/admin/laporanAnalisisData', function () {
+        return view('admin.laporanAnalisisData');
+    });
+
+    Route::get('/admin/pantauTransaksi', function () {
+        return view('admin.pantauTransaksi');
+    });
