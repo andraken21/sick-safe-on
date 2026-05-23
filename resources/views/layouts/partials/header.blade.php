@@ -5,13 +5,24 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-  .dashboard-header {
-    background: #302929;
+ .dashboard-header {
+    background:  #302929;
     padding: 10px 20px;
     font-family: 'Poppins', sans-serif;
     height: 70px;
     width: 100%;
-    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:  1000;
+    margin-left: 0;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+     background: #0A2E3F; 
+}
+
+body.sidebar-open .dashboard-header {
+    margin-left: 250px;
+    width: calc(100% - 250px);
 }
 
     .header-row {
@@ -245,21 +256,21 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
             </div>
         </div>
 
-        <!-- Kanan: Nama User + Foto Profil (ala Instagram) -->
+    
         <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png' && file_exists('../public/image/' . $foto_profil)) ? 'has-photo' : ''; ?>">
             <form action="/logout" method="POST" style="display: inline;">
                 @csrf
                 <button type="submit" class="btn btn-danger">Keluar</button>
             </form>
             <div class="nama"><strong>{{ Auth::user()->nama ?? 'Guest' }}</strong></div>
-            <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
+    
             <div class="profile-avatar">
                 <svg aria-label="Profil" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
             </div>
 
-            <!-- Gambar profil (jika ada) -->
+            
             <img class="profile-img" src="../public/image/<?php echo $foto_profil; ?>" alt="Profil" onerror="this.onerror=null; this.parentElement.classList.remove('has-photo');">
         </div>
     </div>
@@ -307,8 +318,8 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
         
-        document.getElementById('current-date').textContent = `${dayName}, ${date}/${month}/${year}`;
-        document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('current-date').textContent = ${dayName}, ${date}/${month}/${year};
+        document.getElementById('current-time').textContent = ${hours}:${minutes}:${seconds};
     }
 
     updateDateTime();

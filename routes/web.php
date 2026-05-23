@@ -37,11 +37,14 @@ use App\Http\Controllers\LoginController;
     });
 
     // Kalau Role Pasien
-    Route::middleware(['auth', 'role:Pasien'])->group(function () {
-        Route::get('/pasien/dashboard', function () {
-            return view('pasien.dashboard');
-        });
+    Route::middleware(['auth'])->group(function () {
+     Route::prefix('pasien')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
+        Route::get('/resep', [App\Http\Controllers\PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
+        Route::get('/pembayaran', [App\Http\Controllers\PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
     });
+});
+ 
 
     // Kalau Role Apoteker
     Route::middleware(['auth', 'role:Apoteker'])->group (function () {
