@@ -56,13 +56,13 @@
     }
 
     .nav-label {
-        font-size: 0.63rem;
-        font-weight: 600;
-        color: #4a6a7a;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: #004369;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        padding: 8px 10px 5px;
-        margin-top: 6px;
+        letter-spacing: 5px;
+        padding: 20px 10px 5px;
+        margin-top: 10px;
     }
 
     .nav-item {
@@ -70,12 +70,12 @@
         align-items: center;
         gap: 10px;
         padding: 9px 12px;
-        border-radius: 8px;
-        color: #8DA6B5;
+        border-radius: 80px;
+        color: #004369;
         text-decoration: none;
-        font-size: 0.83rem;
-        transition: all 0.2s;
-        margin-bottom: 2px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        margin-bottom: 5px;
         white-space: nowrap;
     }
 
@@ -89,7 +89,7 @@
 
     .sidebar-user {
         padding: 14px 16px;
-        border-top: 1px solid rgba(255,255,255,0.07);
+        border-top: 1px solid #ffffff12;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -99,13 +99,13 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: rgba(46,204,113,0.2);
+        background: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.72rem;
         font-weight: 600;
-        color: #2ecc71;
+        color: #004369;
         flex-shrink: 0;
     }
 
