@@ -74,8 +74,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
     .site-footer {
-    background-color: #0A2E3F;
-    color: #E1F1FE;
+    background-color: #b7ede1;
+    color: #004369;
     width: calc(100% - 250px);    
     margin-left: 0px;           
     transition: margin-left 0.3s ease, width 0.3s ease;
@@ -121,16 +121,16 @@
         border: 1px solid rgba(46,204,113,0.25);
     }
 
-    .logo-icon i { color: #2ecc71; font-size: 15px; }
+    .logo-icon i { color: #004369; font-size: 15px; }
 
-    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
-    .footer-logo span { color: #2ecc71; }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #004369; }
+    .footer-logo span { color: #004369; }
 
     .brand-description {
         font-size: 0.8rem;
         line-height: 1.7;
         margin-bottom: 12px;
-        color: #B0C4DE;
+        color: #004369;
     }
 
     .security-badge {
@@ -143,10 +143,10 @@
         padding: 4px 11px;
         border-radius: 30px;
         margin-bottom: 16px;
-        color: #a8e6c3;
+        color: #004369;
     }
 
-    .security-badge i { color: #2ecc71; }
+    .security-badge i { color: #004369; }
 
     .footer-col { 
         min-width: 110px;
@@ -159,7 +159,7 @@
         font-weight: 600;
         margin-bottom: 14px;
         padding-top: 0; 
-        color: #fff;
+        color: #004369;
         letter-spacing: 0.6px;
         text-transform: uppercase;
     }
@@ -172,7 +172,7 @@
     .footer-col ul li { margin-bottom: 8px; }
 
     .footer-col ul li a {
-        color: #8DA6B5;
+        color: #004369;
         text-decoration: none;
         font-size: 0.78rem;
         transition: all 0.2s;
@@ -189,7 +189,7 @@
         gap: 8px;
         margin-bottom: 9px;
         font-size: 0.78rem;
-        color: #8DA6B5;
+        color: #004369;
         line-height: 1.5;
     }
 
@@ -227,7 +227,7 @@
         transition: color 0.2s;
     }
 
-    .bottom-links a:hover { color: #2ecc71; }
+    .bottom-links a:hover { color: #004369; }
 
     body.sidebar-collapsed .site-footer {
     margin-left: 0;

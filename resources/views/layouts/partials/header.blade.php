@@ -55,7 +55,7 @@ body.sidebar-open .dashboard-header {
         display: block;
         width: 25px;
         height: 3px;
-        background: white;
+        background: #004369;
         border-radius: 3px;
         transition: all 0.3s ease;
     }
@@ -69,12 +69,12 @@ body.sidebar-open .dashboard-header {
     .header-left .text {
         font-weight: 700;
         font-size: 1.1rem;
-        color: white;
+        color: #3FBBA0;
         white-space: nowrap;
     }
 
     .header-left .text .on {
-        color: #3FBBA0;
+        color: #004369;
     }
 
     .header-center {
@@ -86,14 +86,14 @@ body.sidebar-open .dashboard-header {
     .tanggal {
         font-size: 15px;
         font-weight: 600;
-        color: #b1ddff;
+        color: #004369;
         line-height: 1.2;
     }
 
     .waktu {
         font-size: 13px;
         font-weight: 500;
-        color: #b1ddff;
+        color: #004369;
         opacity: 0.9;
     }
 
@@ -107,7 +107,7 @@ body.sidebar-open .dashboard-header {
     .header-right .nama {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #3FBBA0;
+        color: #004369;
         white-space: nowrap;
     }
 

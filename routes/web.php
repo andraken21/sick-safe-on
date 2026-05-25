@@ -51,6 +51,21 @@ use App\Http\Controllers\LoginController;
         Route::get('/apoteker/dashboard', function(){
         return view('apoteker.dashboard');
         });
+
+        Route::get('/apoteker/diproses', function(){
+        return view('apoteker.diproses');
+        });
+
+        // 1. Menunggu Validasi
+        Route::get('/menunggu-validasi', [ApotekerController::class, 'menungguValidasi'])->name('apoteker.menunggu-validasi');
+        
+        // 2. Menunggu Pembayaran
+        Route::get('/menunggu-pembayaran', [ApotekerController::class, 'menungguPembayaran'])->name('apoteker.menunggu-pembayaran');
+        
+        // 3. Diproses
+        Route::get('/diproses', [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
+        
+    
     });
 
     // Agar saat menekan button forgot akan pergi ke web forgot
