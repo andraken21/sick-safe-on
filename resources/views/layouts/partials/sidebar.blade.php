@@ -1,6 +1,4 @@
 <aside class="sidebar" id="sidebar">
-   
-    </div>
 
     <nav class="sidebar-nav">
         <div class="nav-label">Menu Utama</div>
@@ -29,6 +27,7 @@
 </aside>
 
 <style>
+    /* DEFAULT: sidebar TERSEMBUNYI */
     .sidebar {
         width: 250px;
         min-width: 250px;
@@ -37,47 +36,18 @@
         top: 0;
         left: 0;
         height: 100vh;
-        z-index: 200;
+        z-index: 300;
         display: flex;
         flex-direction: column;
-        transition: transform 0.3s ease;
         border-right: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .sidebar.collapsed {
         transform: translateX(-250px);
+        transition: transform 0.3s ease;
     }
 
-    .sidebar-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 22px 18px 18px;
-        border-bottom: 1px solid rgba(255,255,255,0.07);
+   
+    .sidebar.open {
+        transform: translateX(0);
     }
-
-    .sidebar-logo-icon {
-        width: 34px;
-        height: 34px;
-        background: rgba(46,204,113,0.15);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(46,204,113,0.25);
-        flex-shrink: 0;
-    }
-
-    .sidebar-logo-icon i { color: #2ecc71; font-size: 16px; }
-
-    .sidebar-logo h2 {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #fff;
-        white-space: nowrap;
-    }
-
-    .sidebar-logo h2 span { color: #2ecc71; }
 
     .sidebar-nav {
         flex: 1;
@@ -109,10 +79,9 @@
         white-space: nowrap;
     }
 
-    .nav-item i { width: 17px; font-size: 10px; flex-shrink: 0; }
+    .nav-item i { width: 17px; font-size: 14px; flex-shrink: 0; }
 
     .nav-item:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
-
     .nav-item.active {
         background: rgba(46,204,113,0.12);
         color: #2ecc71;
@@ -141,8 +110,8 @@
         flex-shrink: 0;
     }
 
-    .user-info p { font-size: 0.80rem; font-weight: 500; color: #ffffff; }
-    .user-info span { font-size: 0.90rem; color: #ffffff; }
+    .user-info p { font-size: 0.80rem; font-weight: 500; color: #E1F1FE; }
+    .user-info span { font-size: 0.70rem; color: #5a7a8a; }
 
     @media (max-width: 768px) {
         .sidebar { transform: translateX(-250px); }
