@@ -1,0 +1,380 @@
+/* ===========================
+   Manage Users - SickSafe ON
+   Color Palette: sama dengan dashboard
+=========================== */
+
+@import url('dashboardAdmin.css');
+
+/* ===== FILTER SECTION ===== */
+.filter-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.search-wrap {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0 12px;
+    height: 38px;
+}
+
+.search-wrap i {
+    color: var(--text-muted);
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.filter-group {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--text-dark);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: border-color 0.15s;
+}
+
+.filter-select:hover,
+.filter-select:focus {
+    border-color: var(--tosca);
+    outline: none;
+}
+
+.btn-filter {
+    padding: 8px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-dark);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-filter:hover {
+    background: var(--white-ish);
+    border-color: var(--tosca);
+    color: var(--tosca);
+}
+
+/* ===== USERS TABLE ===== */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--tosca), var(--navy));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-id {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.email-link {
+    font-size: 13px;
+    color: var(--tosca);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.email-link:hover {
+    color: var(--tosca-dark);
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.role-dokter {
+    background: var(--blue-soft);
+    color: var(--navy);
+}
+
+.role-apoteker {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.role-resepsionis {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+.role-admin {
+    background: var(--tosca-soft);
+    color: var(--tosca-dark);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-aktif {
+    background: var(--tosca-soft);
+    color: var(--tosca-dark);
+}
+
+.status-nonaktif {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.action-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-mid);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+
+.btn-action:hover {
+    background: var(--white-ish);
+    color: var(--tosca);
+    border-color: var(--tosca);
+}
+
+.btn-action.btn-view:hover {
+    color: var(--tosca);
+}
+
+.btn-action.btn-edit:hover {
+    color: var(--navy);
+}
+
+.btn-action.btn-more:hover {
+    color: var(--text-dark);
+}
+
+/* ===== PAGINATION ===== */
+.pagination-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.pagination-info {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.pagination-info strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.pagination {
+    display: flex;
+    gap: 4px;
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-dark);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--white-ish);
+    border-color: var(--tosca);
+    color: var(--tosca);
+}
+
+.page-btn.active {
+    background: var(--tosca);
+    color: var(--white);
+    border-color: var(--tosca);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== TOPBAR BUTTONS ===== */
+.btn-add-user {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--tosca);
+    background: var(--tosca-soft);
+    color: var(--tosca-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-add-user:hover {
+    background: var(--tosca);
+    color: var(--white);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .search-wrap {
+        width: 100%;
+    }
+
+    .filter-group {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .btn-filter {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .dash-table {
+        font-size: 12px;
+    }
+
+    .dash-table thead th,
+    .dash-table tbody td {
+        padding: 8px 8px;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .action-buttons {
+        gap: 4px;
+    }
+
+    .btn-action {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .pagination {
+        gap: 2px;
+    }
+
+    .page-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}

@@ -191,7 +191,7 @@
     </div>
 </div>
 
-<script >src="{{ asset('js/login.js') }}";
+<script src="{{ asset('js/login.js') }}";>
     document.querySelector('form').addEventListener('submit', function() {
     document.getElementById('loadingOverlay').classList.add('show');
 });

@@ -136,7 +136,6 @@
     margin-top: 3px;
 }
 
-/* ── FILTER BAR ── */
 .filter-bar {
     background: var(--ss-card);
     border: 1px solid var(--ss-border);
@@ -193,7 +192,7 @@
 
 .filter-select:focus { border-color: var(--ss-primary); }
 
-/* ── TABLE CARD ── */
+
 .table-card {
     background: var(--ss-card);
     border-radius: var(--ss-radius);
@@ -226,7 +225,7 @@
     border-radius: 999px;
 }
 
-/* Table */
+
 .resep-table {
     width: 100%;
     border-collapse: collapse;
@@ -310,7 +309,7 @@
     color: var(--ss-text);
 }
 
-/* Status Badge */
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -326,7 +325,6 @@
 .badge--tunggu   { background: #fef9c3; color: #a16207; }
 .badge--batal    { background: #fee2e2; color: #b91c1c; }
 
-/* Pagination */
 .pagination-wrap {
     display: flex;
     align-items: center;
@@ -375,7 +373,7 @@
     cursor: not-allowed;
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .stat-row { grid-template-columns: repeat(2, 1fr); }
 }
@@ -480,7 +478,7 @@
                 </tr>
             </thead>
             <tbody id="resep-tbody">
-                <!-- Diisi oleh JavaScript -->
+                
             </tbody>
         </table>
 
@@ -494,7 +492,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // ===== DATA RESEP =====
+    
     const allResep = [
         { nomor: 'RSP-2026-0051', tanggal: '2026-05-08', dokter: 'Dr. Budi Santoso', obat: 3, total: 125000, status: 'proses', icon: 'fa-file-prescription', iconClass: 'resep-icon-sm resep-icon-sm--warn' },
         { nomor: 'RSP-2026-0050', tanggal: '2026-05-01', dokter: 'Dr. Sari Dewi', obat: 2, total: 87500, status: 'tunggu', icon: 'fa-file-prescription', iconClass: 'resep-icon-sm' },
@@ -514,7 +512,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPage = 1;
     let filteredResep = [...allResep];
 
-    // ===== FUNGSI FILTER =====
     function applyFilters() {
         const statusSelect = document.querySelector('.filter-status');
         const bulanSelect = document.querySelector('.filter-bulan');
@@ -537,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderTable();
     }
 
-    // ===== RENDER TABEL =====
+    
     function renderTable() {
         const tbody = document.getElementById('resep-tbody');
         if (!tbody) return;
@@ -575,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateResepCount();
     }
 
-    // ===== PAGINATION =====
+    
     function updatePagination() {
         const totalPages = Math.ceil(filteredResep.length / itemsPerPage);
         const paginationInfo = document.getElementById('pagination-info');
@@ -590,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (paginationBtns) {
             paginationBtns.innerHTML = '';
 
-            // Tombol Previous
+        
             const prevBtn = document.createElement('button');
             prevBtn.className = 'pg-btn';
             prevBtn.innerHTML = '‹';
@@ -605,7 +602,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             paginationBtns.appendChild(prevBtn);
 
-            // Tombol Nomor Halaman
             for (let i = 1; i <= totalPages; i++) {
                 const pageBtn = document.createElement('button');
                 pageBtn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
@@ -619,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 paginationBtns.appendChild(pageBtn);
             }
 
-            // Tombol Next
+          
             const nextBtn = document.createElement('button');
             nextBtn.className = 'pg-btn';
             nextBtn.innerHTML = '›';
@@ -635,8 +631,6 @@ document.addEventListener('DOMContentLoaded', function() {
             paginationBtns.appendChild(nextBtn);
         }
     }
-
-    // ===== UPDATE RESEP COUNT =====
     function updateResepCount() {
         const badge = document.getElementById('resep-count');
         if (badge) {
@@ -644,7 +638,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ===== HELPER FUNCTION =====
     function getStatusLabel(status) {
         const labels = {
             'proses': 'Sedang Diproses',
@@ -655,7 +648,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return labels[status] || status;
     }
 
-    // ===== EVENT LISTENERS =====
     const statusSelect = document.querySelector('.filter-status');
     const bulanSelect = document.querySelector('.filter-bulan');
     const searchInput = document.querySelector('.search-wrap input');
@@ -671,8 +663,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchInput) {
         searchInput.addEventListener('keyup', applyFilters);
     }
-
-    // ===== INITIAL RENDER =====
     renderTable();
 });
 </script>
