@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DokterController;
 
     // Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
     Route::get('/', function () {
@@ -106,3 +107,9 @@ use App\Http\Controllers\LoginController;
     Route::get('/admin/pantauTransaksi', function () {
         return view('admin.pantauTransaksi');
     });
+
+    // role dokter niiiieehhh
+    Route::middleware(['auth'])->prefix('dokter')->name('dokter.')->group(function () {
+    Route::get('/pilih-pasien', [DokterController::class, 'pilihPasien'])
+         ->name('pilih-pasien');
+});
