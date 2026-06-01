@@ -1,18 +1,14 @@
-<?php
-$foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
-?>
-
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-  .dashboard-header {
-    background: #302929;
-    padding: 10px 20px;
-    font-family: 'Poppins', sans-serif;
-    height: 70px;
-    width: 100%;
-    z-index: 1000;
-}
+    .dashboard-header {
+        background: #1e1b1b;
+        padding: 0 24px;
+        font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+        height: 70px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
 
     .header-row {
         display: flex;
@@ -25,149 +21,146 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
     .header-left {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 20px;
         flex-shrink: 0;
     }
 
     .sidebar-toggle {
-        background: none;
-        border: none;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
         cursor: pointer;
-        padding: 5px;
+        padding: 10px;
+        border-radius: 10px;
         display: flex;
         flex-direction: column;
         gap: 5px;
-        z-index: 1001;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar-toggle:hover {
+        background: rgba(255,255,255,0.12);
+        transform: scale(1.03);
     }
 
     .sidebar-toggle span {
         display: block;
-        width: 25px;
-        height: 3px;
-        background: white;
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
         border-radius: 3px;
-        transition: all 0.3s ease;
     }
 
-    .header-left img {
-        width: 45px;
-        height: 45px;
+    .header-left img.logo {
+        width: 40px;
+        height: 40px;
         object-fit: contain;
+        filter: drop-shadow(0 2px 8px rgba(63,187,160,0.2));
     }
 
     .header-left .text {
         font-weight: 700;
-        font-size: 1.1rem;
-        color: white;
+        font-size: 1.15rem;
+        color: #ffffff;
         white-space: nowrap;
+        letter-spacing: 0.5px;
     }
 
-    .header-left .text .on {
-        color: #3FBBA0;
-    }
+    .header-left .text .on { color: #3FBBA0; }
 
     .header-center {
         text-align: center;
         flex: 1;
-        max-width: 300px;
+        max-width: 320px;
+        background: rgba(255,255,255,0.04);
+        padding: 6px 16px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.05);
     }
 
     .tanggal {
-        font-size: 15px;
+        font-size: 13.5px;
         font-weight: 600;
-        color: #b1ddff;
-        line-height: 1.2;
+        color: #e2f1ff;
     }
 
     .waktu {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
-        color: #b1ddff;
-        opacity: 0.9;
+        color: #3FBBA0;
+        margin-top: 1px;
     }
 
     .header-right {
         display: flex;
         align-items: center;
-        gap: 12px;
         flex-shrink: 0;
-    }
-
-    .header-right .nama {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #3FBBA0;
-        white-space: nowrap;
+        position: relative;
     }
 
     .profile-wrapper {
-        position: relative;
-        cursor: pointer;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 12px;
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: 12px;
+        transition: background 0.2s ease;
+        user-select: none;
+    }
+
+    .profile-wrapper:hover { background: rgba(255,255,255,0.05); }
+
+    .profile-wrapper .nama {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
     }
 
     .profile-avatar {
-        width: 35px;
-        height: 35px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
+        background: linear-gradient(135deg, #3FBBA0, #2a8874);
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #dbdbdb;
-        overflow: hidden;
+        border: 2px solid rgba(255,255,255,0.1);
+        flex-shrink: 0;
     }
 
     .profile-avatar svg {
-        width: 28px;
-        height: 28px;
-        color: #8e8e8e;
-    }
-
-    .profile-img {
-        width: 35px;
-        height: 35px;
-        object-fit: cover;
-        border-radius: 50%;
-        display: none;
-    }
-
-    .has-photo .profile-avatar {
-        display: none;
-    }
-
-    .has-photo .profile-img {
-        display: block;
+        width: 22px;
+        height: 22px;
+        color: #ffffff;
     }
 
     .profile-dropdown {
         display: none;
         position: absolute;
-        top: 50px;
-        right: 0;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        top: 55px;
+        right: 5px;
+        background: #252121;
+        border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         min-width: 150px;
-        z-index: 9999;
+        z-index: 99999;
         overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
     }
 
-    .profile-dropdown.show {
-        display: block;
-    }
+    .profile-dropdown.show { display: block !important; }
 
     .profile-dropdown form button {
         width: 100%;
-        padding: 12px 18px;
-        background: none;
+        padding: 12px 16px;
+        background: transparent;
         border: none;
         text-align: left;
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.85rem;
+        font-family: inherit;
+        font-size: 0.9rem;
         font-weight: 600;
-        color: #e53935;
+        color: #ff5252;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -175,142 +168,90 @@ $foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
         transition: background 0.2s;
     }
 
-    .profile-dropdown form button:hover {
-        background: #fdecea;
-    }
+    .profile-dropdown form button:hover { background: rgba(229,57,53,0.15); }
 
     @media (max-width: 768px) {
-        .dashboard-header {
-            left: 0 !important;
-            padding: 10px 15px;
-        }
-
-        .header-left .text {
-            display: none;
-        }
-
+        .dashboard-header { padding: 0 16px; }
+        .header-left .text { display: none; }
         .header-center {
             max-width: none;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            background: transparent;
+            border: none;
+            padding: 0;
         }
-
-        .tanggal {
-            font-size: 13px;
-        }
-
-        .waktu {
-            font-size: 11px;
-        }
-
-        .header-right .nama {
-            display: none;
-        }
-
-        .profile-avatar,
-        .profile-img {
-            width: 32px;
-            height: 32px;
-        }
+        .tanggal, .waktu, .profile-wrapper .nama { display: none; }
+        .profile-avatar { width: 34px; height: 34px; }
+        .profile-dropdown { top: 50px; right: 0; }
     }
 </style>
 
 <div class="dashboard-header" id="header">
     <div class="header-row">
-        
+
+        {{-- KIRI: Toggle + Logo --}}
         <div class="header-left">
             <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-            
-            <img src="{{ asset('image/logo.png') }}" alt="Logo Sick Safe ON">
-            
-            <div class="text">
-                Sick Safe <span class="on">ON</span>
-            </div>
+            <img class="logo" src="{{ asset('image/logo.png') }}" alt="Logo Sick Safe ON">
+            <div class="text">Sick Safe <span class="on">ON</span></div>
         </div>
 
+        {{-- TENGAH: Tanggal & Jam --}}
         <div class="header-center">
-            <div class="tanggal" id="current-date">
-                <?php 
-                $days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                echo $days[date('w')] . ', ' . date('d/m/Y');
-                ?>
+            <div class="tanggal" id="current-date"></div>
+            <div class="waktu"   id="current-time"></div>
+        </div>
+
+        {{-- KANAN: Profil + Dropdown --}}
+        <div class="header-right">
+            <div class="profile-wrapper" onclick="toggleDropdown(event)">
+                <div class="nama">{{ Auth::user()->nama ?? 'Guest' }}</div>
+
+                {{-- Avatar anonymous selalu tampil --}}
+                <div class="profile-avatar">
+                    <svg fill="currentColor" viewBox="0 0 24 24" aria-label="Profil">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
             </div>
-            <div class="waktu" id="current-time">
-                <?php echo date('H:i:s'); ?>
+
+            <div class="profile-dropdown" id="profileDropdown">
+                <form action="{{ route('logout') }}" method="POST" style="margin:0">
+                    @csrf
+                    <button type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
+                </form>
             </div>
         </div>
 
-        <!-- Kanan: Nama User + Foto Profil (ala Instagram) -->
-        <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png' && file_exists('../public/image/' . $foto_profil)) ? 'has-photo' : ''; ?>">
-            <form action="/logout" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-danger">Keluar</button>
-            </form>
-            <div class="nama"><strong>{{ Auth::user()->nama ?? 'Guest' }}</strong></div>
-            <!-- Avatar default ala Instagram (siluet orang) - FULL DI LINGKARAN -->
-            <div class="profile-avatar">
-                <svg aria-label="Profil" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
-            </div>
-
-            <!-- Gambar profil (jika ada) -->
-            <img class="profile-img" src="../public/image/<?php echo $foto_profil; ?>" alt="Profil" onerror="this.onerror=null; this.parentElement.classList.remove('has-photo');">
-        </div>
     </div>
 </div>
 
 <script>
-    
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const body = document.body;
-        
-        if (sidebar) {
-            sidebar.classList.toggle('collapsed');
-            body.classList.toggle('sidebar-collapsed');
-        }
-    }
-
     function toggleDropdown(event) {
         event.stopPropagation();
         const dropdown = document.getElementById('profileDropdown');
-        dropdown.classList.toggle('show');
+        if (dropdown) dropdown.classList.toggle('show');
     }
-
-
-    document.addEventListener('click', function(event) {
-        const wrapper = document.querySelector('.profile-wrapper');
-        const dropdown = document.getElementById('profileDropdown');
-        
-        if (wrapper && !wrapper.contains(event.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
 
     function updateDateTime() {
-        const now = new Date();
-        
-        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        const dayName = days[now.getDay()];
-        
-        const date = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        
-        document.getElementById('current-date').textContent = `${dayName}, ${date}/${month}/${year}`;
-        document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
-    }
+        const now  = new Date();
+        const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        const d    = String(now.getDate()).padStart(2,'0');
+        const m    = String(now.getMonth()+1).padStart(2,'0');
+        const y    = now.getFullYear();
+        const h    = String(now.getHours()).padStart(2,'0');
+        const min  = String(now.getMinutes()).padStart(2,'0');
+        const s    = String(now.getSeconds()).padStart(2,'0');
 
+        document.getElementById('current-date').textContent = `${days[now.getDay()]}, ${d}/${m}/${y}`;
+        document.getElementById('current-time').textContent = `${h}:${min}:${s}`;
+    }
     updateDateTime();
     setInterval(updateDateTime, 1000);
 </script>
