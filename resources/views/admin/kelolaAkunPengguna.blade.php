@@ -2,7 +2,12 @@
 
 @section('title', 'Kelola Akun Pengguna - Sick Safe ON')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/kelolaAkunPengguna.css') }}">
+@endpush
+
 @section('content')
+
 <div class="dashboard-wrap">
 <link rel="stylesheet" href="{{ asset('css/kelolaAkunPengguna.css') }}">
 

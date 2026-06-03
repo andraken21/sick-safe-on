@@ -2,6 +2,10 @@
 
 @section('title', 'Kelola Data Obat - Sick Safe ON')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">
+@endpush
+
 @section('content')
 <div class="dashboard-wrap">
 <link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">

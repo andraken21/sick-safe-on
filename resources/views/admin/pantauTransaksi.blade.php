@@ -2,6 +2,10 @@
 
 @section('title', 'Pantau Transaksi - Sick Safe ON')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pantauTransaksi.css') }}">
+@endpush
+
 @section('content')
 <div class="dashboard-wrap">
 <link rel="stylesheet" href="{{ asset('css/pantauTransaksi.css') }}">

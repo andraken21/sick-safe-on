@@ -24,16 +24,16 @@
             </a>
 
             <div class="nav-label">Manajemen</div>
-            <a href="#" class="nav-item">
+            <a href="{{ route('kelolaAkunPengguna') }}" class="nav-item">
                 <i class="fas fa-pills"></i> Kelola Data Obat
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ route('pantauTransaksi') }}" class="nav-item">
                 <i class="fas fa-exchange-alt"></i> Pantau Transaksi
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ route('kelolaAkunPengguna') }}" class="nav-item">
                 <i class="fas fa-users-cog"></i> Kelola Akun Pengguna
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ route('laporanAnalisisData') }}" class="nav-item">
                 <i class="fas fa-chart-bar"></i> Laporan & Analisis
             </a>
 
