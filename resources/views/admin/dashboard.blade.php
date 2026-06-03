@@ -3,13 +3,14 @@
 @section('title', 'Dashboard Admin - Sick Safe ON')
 
 @push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
 @endpush
 
 @section('content')
 
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">  
 
     {{-- MAIN AREA --}}
     <div class="dash-main">
@@ -273,6 +274,9 @@
     </div>
     {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/dashboardAdmin.js') }}"></script>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/dashboardAdmin.js') }}"></script>
+@endpush

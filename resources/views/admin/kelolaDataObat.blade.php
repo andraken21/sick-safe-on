@@ -3,13 +3,13 @@
 @section('title', 'Kelola Data Obat - Sick Safe ON')
 
 @push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">
 @endpush
 
 @section('content')
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">
-
     <div class="dash-main">
         <div class="dash-content">
 
@@ -165,6 +165,9 @@
     {{-- TOAST --}}
     <div class="toast-container" id="toast-container"></div>
 
-<script src="{{ asset('js/kelolaDataObat.js') }}"></script>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/kelolaDataObat.js') }}"></script>
+@endpush

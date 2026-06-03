@@ -2,7 +2,6 @@
 
 @section('title', 'Dashboard Dokter - Sick Safe ON')
 
-{{-- CSS dimuat di <head> via @stack('styles'), bukan di dalam @section('content') --}}
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/dashboardDokter.css') }}">
 @endpush
