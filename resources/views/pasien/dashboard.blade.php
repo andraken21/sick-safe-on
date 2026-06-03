@@ -7,11 +7,20 @@
 @endpush
 
 @section('content')
-<div class="dashboard-wrap">
 
-    <div class="page-header">
-        <h1>Halo, {{ Auth::user()->nama }} 👋</h1>
-        <p>Dashboard Pasien &mdash; Sick Safe ON</p>
+<div class="pasien-dashboard">
+
+    {{-- ===== TOP BAR ===== --}}
+    <div class="dash-topbar">
+        <div class="dash-greeting">
+            <h1 class="greeting-title">Halo, {{ Auth::user()->name ?? 'Andra Kenzie' }} 👋</h1>
+            <p class="greeting-sub">Berikut ringkasan akun Anda</p>
+        </div>
+        <div class="topbar-actions">
+           
+            </button>
+            
+        </div>
     </div>
 
     {{-- STAT CARDS --}}

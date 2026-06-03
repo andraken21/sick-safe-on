@@ -17,6 +17,7 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             overflow-x: hidden;
@@ -81,6 +82,11 @@
             margin-left: 0 !important;
             box-sizing: border-box;
         }
+        .site-footer {
+            width: 100% !important;
+            margin-left: 0 !important;
+            box-sizing: border-box;
+        }
 
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-250px); }
@@ -93,10 +99,7 @@
 
 <body>
 
-    {{-- SIDEBAR (fixed, di luar page-wrapper) --}}
     @include('layouts.partials.sidebar')
-
-    {{-- HEADER (fixed, di luar page-wrapper) --}}
     @include('layouts.partials.header')
 
     {{-- KONTEN + FOOTER --}}

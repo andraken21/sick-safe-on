@@ -109,7 +109,7 @@
         font-size: 0.8rem;
         line-height: 1.7;
         margin-bottom: 12px;
-        color: #B0C4DE;
+        color: #004369;
     }
 
     .security-badge {
@@ -124,7 +124,7 @@
         color: #a8e6c3;
     }
 
-    .security-badge i { color: #2ecc71; }
+    .security-badge i { color: #004369; }
 
     .footer-col { min-width: 110px; }
 
@@ -141,7 +141,7 @@
     .footer-col ul li { margin-bottom: 8px; }
 
     .footer-col ul li a {
-        color: #8DA6B5;
+        color: #004369;
         text-decoration: none;
         font-size: 0.78rem;
         transition: all 0.2s;
@@ -158,7 +158,7 @@
         gap: 8px;
         margin-bottom: 9px;
         font-size: 0.78rem;
-        color: #8DA6B5;
+        color: #004369;
         line-height: 1.5;
     }
 
