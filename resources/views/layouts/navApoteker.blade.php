@@ -11,7 +11,7 @@
     }
 
     .navbar {
-        background: #004369;
+        background: #cadce6;
         width: 260px;
         min-height: 100vh;
         position: sticky;

@@ -46,27 +46,22 @@ use App\Http\Controllers\LoginController;
 });
  
 
-    // Kalau Role Apoteker
-    Route::middleware(['auth', 'role:Apoteker'])->group (function () {
-        Route::get('/apoteker/dashboard', function(){
-        return view('apoteker.dashboard');
-        });
+// Kalau Role Apoteker
+Route::middleware(['auth', 'role:Apoteker'])->group(function () {
 
-        Route::get('/apoteker/diproses', function(){
-        return view('apoteker.diproses');
-        });
-
-        // 1. Menunggu Validasi
-        Route::get('/menunggu-validasi', [ApotekerController::class, 'menungguValidasi'])->name('apoteker.menunggu-validasi');
-        
-        // 2. Menunggu Pembayaran
-        Route::get('/menunggu-pembayaran', [ApotekerController::class, 'menungguPembayaran'])->name('apoteker.menunggu-pembayaran');
-        
-        // 3. Diproses
-        Route::get('/diproses', [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
-        
-    
+    // Dashboard default
+    Route::get('/apoteker/dashboard', function () {
+        return redirect('/apoteker/validasi');
     });
+
+    // Dashboard dynamic
+    Route::get('/apoteker/{status}', function ($status) {
+
+        return view('apoteker.dashboard', compact('status'));
+
+    })->name('apoteker.dashboard');
+
+});
 
     // Agar saat menekan button forgot akan pergi ke web forgot
     Route::get('/forgot', function () {

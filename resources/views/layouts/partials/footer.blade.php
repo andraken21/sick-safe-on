@@ -74,12 +74,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
     .site-footer {
-    background-color: #b7ede1;
+    background: #0A2E3F;
     color: #004369;
     width: calc(100% - 250px);    
     margin-left: 0px;           
     transition: margin-left 0.3s ease, width 0.3s ease;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 0px solid rgba(255,255,255,0.06);
 }
     body.sidebar-collapsed .site-footer {
          margin-left: 0;

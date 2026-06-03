@@ -81,11 +81,11 @@
 
     .nav-item i { width: 17px; font-size: 14px; flex-shrink: 0; }
 
-    .nav-item:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #7659c6; }
     .nav-item.active {
-        background: rgba(46,204,113,0.12);
-        color: #2ecc71;
-        border: 1px solid rgba(46,204,113,0.2);
+        background: #e2d8ff;
+        color: #7659c6;
+        border: 1px solid #7659c694;
     }
 
     .sidebar-user {

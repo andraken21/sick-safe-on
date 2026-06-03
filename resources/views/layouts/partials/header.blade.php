@@ -1,29 +1,30 @@
-<?php
-$foto_profil = $_SESSION['foto_profil'] ?? 'default-avatar.png';
-?>
+@php
+    // Mengambil foto dari objek user yang login, jika tidak ada pakai default
+    $foto_profil = Auth::user()->foto_profil ?? 'default-avatar.png';
+@endphp
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=400;500;600;700&display=swap');
 
- .dashboard-header {
-    background:  #302929;
-    padding: 10px 20px;
-    font-family: 'Poppins', sans-serif;
-    height: 70px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index:  1000;
-    margin-left: 0;
-    transition: margin-left 0.3s ease, width 0.3s ease;
-     background: #0A2E3F; 
-}
+    .dashboard-header {
+        /* Memperbaiki background agar warna teks gelap di bawah bisa terbaca */
+        background: #302929;    
+        padding: 10px 20px;
+        font-family: 'Poppins', sans-serif;
+        height: 70px;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        margin-left: 0;
+        transition: margin-left 0.3s ease, width 0.3s ease;
+    }
 
-body.sidebar-open .dashboard-header {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-}
+    body.sidebar-open .dashboard-header {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
 
     .header-row {
         display: flex;
@@ -55,7 +56,7 @@ body.sidebar-open .dashboard-header {
         display: block;
         width: 25px;
         height: 3px;
-        background: #004369;
+        background: #004369;        
         border-radius: 3px;
         transition: all 0.3s ease;
     }
@@ -144,50 +145,13 @@ body.sidebar-open .dashboard-header {
         display: none;
     }
 
+    /* Mengaktifkan tampilan foto jika user punya foto asli selain default */
     .has-photo .profile-avatar {
         display: none;
     }
 
     .has-photo .profile-img {
         display: block;
-    }
-
-    .profile-dropdown {
-        display: none;
-        position: absolute;
-        top: 50px;
-        right: 0;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-        min-width: 150px;
-        z-index: 9999;
-        overflow: hidden;
-    }
-
-    .profile-dropdown.show {
-        display: block;
-    }
-
-    .profile-dropdown form button {
-        width: 100%;
-        padding: 12px 18px;
-        background: none;
-        border: none;
-        text-align: left;
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #e53935;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: background 0.2s;
-    }
-
-    .profile-dropdown form button:hover {
-        background: #fdecea;
     }
 
     @media (max-width: 768px) {
@@ -246,38 +210,39 @@ body.sidebar-open .dashboard-header {
 
         <div class="header-center">
             <div class="tanggal" id="current-date">
-                <?php 
-                $days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                echo $days[date('w')] . ', ' . date('d/m/Y');
-                ?>
+                {{-- Di-render awal oleh server, nanti di-update oleh JS --}}
+                @textIndoHari(date('w')), {{ date('d/m/Y') }}
             </div>
             <div class="waktu" id="current-time">
-                <?php echo date('H:i:s'); ?>
+                {{ date('H:i:s') }}
             </div>
         </div>
 
-    
-        <div class="header-right <?php echo ($foto_profil !== 'default-avatar.png' && file_exists('../public/image/' . $foto_profil)) ? 'has-photo' : ''; ?>">
+        <div class="header-right {{ $foto_profil !== 'default-avatar.png' ? 'has-photo' : '' }}">
             <form action="/logout" method="POST" style="display: inline;">
                 @csrf
-                <button type="submit" class="btn btn-danger">Keluar</button>
+                <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8rem;">Keluar</button>
             </form>
+            
             <div class="nama"><strong>{{ Auth::user()->nama ?? 'Guest' }}</strong></div>
     
+            {{-- Default Avatar (SVG) --}}
             <div class="profile-avatar">
                 <svg aria-label="Profil" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
             </div>
 
-            
-            <img class="profile-img" src="../public/image/<?php echo $foto_profil; ?>" alt="Profil" onerror="this.onerror=null; this.parentElement.classList.remove('has-photo');">
+            {{-- Foto Profil User Sebenarnya (Menggunakan Helper Asset Laravel agar path aman) --}}
+            <img class="profile-img" 
+                 src="{{ asset('image/' . $foto_profil) }}" 
+                 alt="Profil" 
+                 onerror="this.onerror=null; this.parentElement.classList.remove('has-photo');">
         </div>
     </div>
 </div>
 
 <script>
-    
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const body = document.body;
@@ -287,22 +252,6 @@ body.sidebar-open .dashboard-header {
             body.classList.toggle('sidebar-collapsed');
         }
     }
-
-    function toggleDropdown(event) {
-        event.stopPropagation();
-        const dropdown = document.getElementById('profileDropdown');
-        dropdown.classList.toggle('show');
-    }
-
-
-    document.addEventListener('click', function(event) {
-        const wrapper = document.querySelector('.profile-wrapper');
-        const dropdown = document.getElementById('profileDropdown');
-        
-        if (wrapper && !wrapper.contains(event.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
 
     function updateDateTime() {
         const now = new Date();
@@ -318,10 +267,12 @@ body.sidebar-open .dashboard-header {
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
         
-        document.getElementById('current-date').textContent = ${dayName}, ${date}/${month}/${year};
-        document.getElementById('current-time').textContent = ${hours}:${minutes}:${seconds};
+        // Memperbaiki string interpolation JavaScript dengan Backtick (`)
+        document.getElementById('current-date').textContent = `${dayName}, ${date}/${month}/${year}`;
+        document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
     }
 
+    // Jalankan saat halaman di-load dan set interval per 1 detik
     updateDateTime();
     setInterval(updateDateTime, 1000);
 </script>
