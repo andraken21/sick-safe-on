@@ -4,112 +4,69 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DokterController;
 
-    // Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
-    Route::get('/', function () {
-        return view('homepage');    
-    });
-
-    // Agar saat menekan button daftar akan pergi ke web registrasi
-    Route::get('/register', function () {
-        return view('auth.registrasi');
-    });
-
-    // Membuat akun pasien baru dengan role Pasien secara otomatis, dan menyimpan data ke database
-    Route::post('/register', [LoginController::class, 'register']);
-
-    // Agar saat menekan button masuk akan pergi ke web login
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-
-    // Memproses data login
-    Route::post('/login', [LoginController::class, 'login']);
-
-    // Kalau Role Admin
-    Route::middleware(['auth','role:Admin'])->group(function () {
-     Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
-    });
-
-    // Kalau Role Dokter
-    Route::middleware(['auth', 'role:Dokter'])->group(function () {
-        Route::get('/dokter/dashboard', function () {
-            return view('dokter.dashboard');
-        });
-    });
-
-    // Kalau Role Pasien
-    Route::middleware(['auth'])->group(function () {
-     Route::prefix('pasien')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
-        Route::get('/resep', [App\Http\Controllers\PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
-        Route::get('/pembayaran', [App\Http\Controllers\PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
-    });
+// ─── Homepage ───────────────────────────────────────────────
+Route::get('/', function () {
+    return view('homepage');
 });
- 
 
-    // Kalau Role Apoteker
-    Route::middleware(['auth', 'role:Apoteker'])->group (function () {
-        Route::get('/apoteker/dashboard', function(){
-        return view('apoteker.dashboard');
-        });
-
-        Route::get('/apoteker/diproses', function(){
-        return view('apoteker.diproses');
-        });
-
-        // 1. Menunggu Validasi
-        Route::get('/menunggu-validasi', [ApotekerController::class, 'menungguValidasi'])->name('apoteker.menunggu-validasi');
-        
-        // 2. Menunggu Pembayaran
-        Route::get('/menunggu-pembayaran', [ApotekerController::class, 'menungguPembayaran'])->name('apoteker.menunggu-pembayaran');
-        
-        // 3. Diproses
-        Route::get('/diproses', [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
-        
-    
-    });
-
-    // Agar saat menekan button forgot akan pergi ke web forgot
-    Route::get('/forgot', function () {
-        return view('auth.forgot');
-    });
-        
-    // Halaman Input Email (Gambar 1)
-    Route::post('/forgot-password', [LoginController::class, 'checkEmail']);
-
-    // Halaman Buat Password Baru (Gambar 2)
-    Route::get('/reset-password/{email}', [LoginController::class, 'showResetForm'])->name('password.reset');
-    Route::post('/reset-password', [LoginController::class, 'updatePassword']);
-
-    // Memproses logout
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-
-
-
-    // Agar saat menekan button app akan pergi ke web app
-    Route::get('/app', function () {
-        return view('layouts.app');
-    });
-
-    Route::get('/admin/kelolaAkunPengguna', function () {
-        return view('admin.kelolaAkunPengguna');
-    });
-
-    Route::get('/admin/kelolaDataObat', function () {
-        return view('admin.kelolaDataObat');
-    });
-    
-    Route::get('/admin/laporanAnalisisData', function () {
-        return view('admin.laporanAnalisisData');
-    });
-
-    Route::get('/admin/pantauTransaksi', function () {
-        return view('admin.pantauTransaksi');
-    });
-
-    // role dokter niiiieehhh
-    Route::middleware(['auth'])->prefix('dokter')->name('dokter.')->group(function () {
-    Route::get('/pilih-pasien', [DokterController::class, 'pilihPasien'])
-         ->name('pilih-pasien');
+// ─── Auth ───────────────────────────────────────────────────
+Route::get('/register', function () {
+    return view('auth.registrasi');
 });
+Route::post('/register', [LoginController::class, 'register']);
+
+Route::get('/login',  [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
+
+Route::get('/forgot', function () { return view('auth.forgot'); });
+Route::post('/forgot-password',           [LoginController::class, 'checkEmail']);
+Route::get('/reset-password/{email}',     [LoginController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password',            [LoginController::class, 'updatePassword']);
+
+// ─── Admin ──────────────────────────────────────────────────
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/dashboard',               fn() => view('admin.dashboard'));
+    Route::get('/admin/kelolaAkunPengguna',      fn() => view('admin.kelolaAkunPengguna'));
+    Route::get('/admin/kelolaDataObat',          fn() => view('admin.kelolaDataObat'));
+    Route::get('/admin/laporanAnalisisData',     fn() => view('admin.laporanAnalisisData'));
+    Route::get('/admin/pantauTransaksi',         fn() => view('admin.pantauTransaksi'));
+});
+
+// ─── Dokter ─────────────────────────────────────────────────
+Route::middleware(['auth', 'role:Dokter'])->prefix('dokter')->name('dokter.')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard',            [DokterController::class, 'dashboard'])    ->name('dashboard');
+    Route::get('/api/antrian-count',    [DokterController::class, 'antrianCount']) ->name('api.antrian-count');
+
+    // Pilih Pasien
+    Route::get('/pilih-pasien',         [DokterController::class, 'pilihPasien'])  ->name('pilih-pasien');
+
+    // Resep — CRUD
+    Route::get('/resep',                [DokterController::class, 'daftarResep'])  ->name('resep.index');
+    Route::get('/resep/buat/{pasien}',  [DokterController::class, 'buatResep'])    ->name('resep.buat');
+    Route::post('/resep/store',         [DokterController::class, 'storeResep'])   ->name('resep.store');
+    Route::get('/resep/{resep}',        [DokterController::class, 'detailResep'])  ->name('resep.show');
+    Route::get('/resep/{resep}/edit',   [DokterController::class, 'editResep'])    ->name('resep.edit');
+    Route::put('/resep/{resep}',        [DokterController::class, 'updateResep'])  ->name('resep.update');
+    Route::delete('/resep/{resep}',     [DokterController::class, 'hapusResep'])   ->name('resep.destroy');
+});
+
+// ─── Pasien ─────────────────────────────────────────────────
+Route::middleware(['auth'])->prefix('pasien')->group(function () {
+    Route::get('/dashboard',   [App\Http\Controllers\PasienDashboardController::class, 'dashboard'])  ->name('pasien.dashboard');
+    Route::get('/resep',       [App\Http\Controllers\PasienDashboardController::class, 'resep'])       ->name('pasien.resep.index');
+    Route::get('/pembayaran',  [App\Http\Controllers\PasienDashboardController::class, 'pembayaran'])  ->name('pasien.pembayaran.index');
+});
+
+// ─── Apoteker ───────────────────────────────────────────────
+Route::middleware(['auth', 'role:Apoteker'])->prefix('apoteker')->name('apoteker.')->group(function () {
+    Route::get('/dashboard',           fn() => view('apoteker.dashboard'));
+    Route::get('/menunggu-validasi',   [App\Http\Controllers\ApotekerController::class, 'menungguValidasi'])  ->name('menunggu-validasi');
+    Route::get('/menunggu-pembayaran', [App\Http\Controllers\ApotekerController::class, 'menungguPembayaran'])->name('menunggu-pembayaran');
+    Route::get('/diproses',            [App\Http\Controllers\ApotekerController::class, 'diproses'])          ->name('diproses');
+});
+
+// ─── Misc ────────────────────────────────────────────────────
+Route::get('/app', fn() => view('layouts.app'));
