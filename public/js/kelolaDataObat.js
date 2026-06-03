@@ -1,168 +1,86 @@
 /**
  * manageMedicine.js
  * Kelola Data Obat — SickSafe ON
- * Fitur: search (case-insensitive), filter card summary, filter kategori & status,
- *         pagination, modal detail, modal edit, restock, hapus, toast
+ *
+ * Perubahan:
+ * - Aksi tabel: hanya 2 tombol (Detail, Lebih Lanjut)
+ * - Lebih Lanjut: context menu berisi Edit, Restock, Hapus
+ * - Context menu posisi FIXED — tidak ikut scroll
+ * - Modal Detail: hanya tombol Tutup (tidak ada tombol Edit)
+ * - Nuansa warna oranye pastel
  */
 
 /* ============================
    DATA DUMMY
 ============================ */
 let medicineData = [
-    {
-        id: 1, code: 'PAR-001', name: 'Paracetamol 500mg',
-        category: 'analgesik', stock: 45, min: 100,
-        price: 2500, supplier: 'PT Dexa Medica',
-        exp: '2026-12-15', status: 'rendah'
-    },
-    {
-        id: 2, code: 'AMX-001', name: 'Amoxicillin 500mg',
-        category: 'antibiotik', stock: 32, min: 100,
-        price: 8500, supplier: 'PT Kimia Farma',
-        exp: '2026-11-22', status: 'menipis'
-    },
-    {
-        id: 3, code: 'CTM-001', name: 'CTM 4mg',
-        category: 'antihistamin', stock: 20, min: 50,
-        price: 1200, supplier: 'PT Fahrenheit',
-        exp: '2026-10-10', status: 'menipis'
-    },
-    {
-        id: 4, code: 'VIT-001', name: 'Vitamin C 500mg',
-        category: 'vitamin', stock: 250, min: 100,
-        price: 3500, supplier: 'PT Bayer',
-        exp: '2027-01-05', status: 'aman'
-    },
-    {
-        id: 5, code: 'IBU-001', name: 'Ibuprofen 200mg',
-        category: 'analgesik', stock: 0, min: 75,
-        price: 4500, supplier: 'PT Mepro',
-        exp: '2026-09-20', status: 'habis'
-    },
-    {
-        id: 6, code: 'KLR-001', name: 'Kalium Klorida 250mg',
-        category: 'vitamin', stock: 120, min: 100,
-        price: 5000, supplier: 'PT Sanbe Farma',
-        exp: '2026-08-08', status: 'aman'
-    },
-    {
-        id: 7, code: 'DXM-001', name: 'Dexamethasone 0.5mg',
-        category: 'analgesik', stock: 0, min: 50,
-        price: 3200, supplier: 'PT Dexa Medica',
-        exp: '2026-07-30', status: 'habis'
-    },
-    {
-        id: 8, code: 'ANT-001', name: 'Antasida DOEN',
-        category: 'antihistamin', stock: 180, min: 80,
-        price: 1800, supplier: 'PT Kimia Farma',
-        exp: '2027-03-15', status: 'aman'
-    },
-    {
-        id: 9, code: 'CIP-001', name: 'Ciprofloxacin 500mg',
-        category: 'antibiotik', stock: 15, min: 60,
-        price: 12000, supplier: 'PT Sanbe Farma',
-        exp: '2026-12-01', status: 'menipis'
-    },
-    {
-        id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',
-        category: 'vitamin', stock: 300, min: 100,
-        price: 6000, supplier: 'PT Bayer',
-        exp: '2027-06-20', status: 'aman'
-    },
-    {
-        id: 11, code: 'MET-001', name: 'Metformin 500mg',
-        category: 'analgesik', stock: 55, min: 80,
-        price: 4000, supplier: 'PT Mepro',
-        exp: '2026-11-10', status: 'rendah'
-    },
-    {
-        id: 12, code: 'LOR-001', name: 'Loratadine 10mg',
-        category: 'antihistamin', stock: 0, min: 60,
-        price: 5500, supplier: 'PT Fahrenheit',
-        exp: '2027-02-28', status: 'habis'
-    },
+    { id: 1,  code: 'PAR-001', name: 'Paracetamol 500mg',    category: 'analgesik',   stock: 45,  min: 100, price: 2500,  supplier: 'PT Dexa Medica',  exp: '2026-12-15', status: 'rendah'  },
+    { id: 2,  code: 'AMX-001', name: 'Amoxicillin 500mg',    category: 'antibiotik',  stock: 32,  min: 100, price: 8500,  supplier: 'PT Kimia Farma',  exp: '2026-11-22', status: 'menipis' },
+    { id: 3,  code: 'CTM-001', name: 'CTM 4mg',              category: 'antihistamin',stock: 20,  min: 50,  price: 1200,  supplier: 'PT Fahrenheit',   exp: '2026-10-10', status: 'menipis' },
+    { id: 4,  code: 'VIT-001', name: 'Vitamin C 500mg',      category: 'vitamin',     stock: 250, min: 100, price: 3500,  supplier: 'PT Bayer',        exp: '2027-01-05', status: 'aman'    },
+    { id: 5,  code: 'IBU-001', name: 'Ibuprofen 200mg',      category: 'analgesik',   stock: 0,   min: 75,  price: 4500,  supplier: 'PT Mepro',        exp: '2026-09-20', status: 'habis'   },
+    { id: 6,  code: 'KLR-001', name: 'Kalium Klorida 250mg', category: 'vitamin',     stock: 120, min: 100, price: 5000,  supplier: 'PT Sanbe Farma',  exp: '2026-08-08', status: 'aman'    },
+    { id: 7,  code: 'DXM-001', name: 'Dexamethasone 0.5mg',  category: 'analgesik',   stock: 0,   min: 50,  price: 3200,  supplier: 'PT Dexa Medica',  exp: '2026-07-30', status: 'habis'   },
+    { id: 8,  code: 'ANT-001', name: 'Antasida DOEN',        category: 'antihistamin',stock: 180, min: 80,  price: 1800,  supplier: 'PT Kimia Farma',  exp: '2027-03-15', status: 'aman'    },
+    { id: 9,  code: 'CIP-001', name: 'Ciprofloxacin 500mg',  category: 'antibiotik',  stock: 15,  min: 60,  price: 12000, supplier: 'PT Sanbe Farma',  exp: '2026-12-01', status: 'menipis' },
+    { id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',    category: 'vitamin',     stock: 300, min: 100, price: 6000,  supplier: 'PT Bayer',        exp: '2027-06-20', status: 'aman'    },
+    { id: 11, code: 'MET-001', name: 'Metformin 500mg',      category: 'analgesik',   stock: 55,  min: 80,  price: 4000,  supplier: 'PT Mepro',        exp: '2026-11-10', status: 'rendah'  },
+    { id: 12, code: 'LOR-001', name: 'Loratadine 10mg',      category: 'antihistamin',stock: 0,   min: 60,  price: 5500,  supplier: 'PT Fahrenheit',   exp: '2027-02-28', status: 'habis'   },
 ];
 
 /* ============================
    STATE
 ============================ */
 const ROWS_PER_PAGE = 6;
-let state = {
-    search: '',
-    cardFilter: 'all',
-    category: '',
-    status: '',
-    page: 1,
-    contextTargetId: null,
-};
+let state = { search: '', cardFilter: 'all', category: '', status: '', page: 1, contextTargetId: null };
 
 /* ============================
    HELPERS
 ============================ */
-function fmtPrice(n) {
-    return 'Rp ' + n.toLocaleString('id-ID');
-}
+function fmtPrice(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
 
 function fmtDate(iso) {
     const d = new Date(iso);
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
     return `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 function isNearExpiry(iso) {
-    const exp = new Date(iso);
-    const now = new Date();
-    const diff = (exp - now) / (1000 * 60 * 60 * 24);
+    const diff = (new Date(iso) - new Date()) / (1000 * 60 * 60 * 24);
     return diff <= 90 && diff > 0;
 }
 
-function isExpired(iso) {
-    return new Date(iso) < new Date();
-}
+function isExpired(iso) { return new Date(iso) < new Date(); }
 
 function statusLabel(s) {
-    const map = { aman: '✓ Aman', rendah: '⚠ Rendah', menipis: '⚠ Menipis', habis: '✗ Habis' };
-    return map[s] || s;
+    return { aman: '✓ Aman', rendah: '⚠ Rendah', menipis: '⚠ Menipis', habis: '✗ Habis' }[s] || s;
 }
 
 function categoryLabel(c) {
-    const map = {
-        analgesik: 'Analgesik',
-        antibiotik: 'Antibiotik',
-        antihistamin: 'Antihistamin',
-        vitamin: 'Vitamin',
-    };
-    return map[c] || c;
+    return { analgesik: 'Analgesik', antibiotik: 'Antibiotik', antihistamin: 'Antihistamin', vitamin: 'Vitamin' }[c] || c;
+}
+
+function computeStatus(m) {
+    if (m.stock === 0) return 'habis';
+    const ratio = m.stock / m.min;
+    if (ratio < 0.3) return 'menipis';
+    if (ratio < 0.7) return 'rendah';
+    return 'aman';
 }
 
 /* ============================
-   FILTER LOGIC
+   FILTER
 ============================ */
 function getFiltered() {
     const q = state.search.toLowerCase();
     return medicineData.filter(m => {
-        // search: case-insensitive, match name, code, or supplier
-        const matchSearch = !q ||
-            m.name.toLowerCase().includes(q) ||
-            m.code.toLowerCase().includes(q) ||
-            m.supplier.toLowerCase().includes(q);
-
-        // card filter
+        const matchSearch = !q || m.name.toLowerCase().includes(q) || m.code.toLowerCase().includes(q) || m.supplier.toLowerCase().includes(q);
         let matchCard = true;
-        if (state.cardFilter === 'rendah') {
-            matchCard = m.status === 'rendah' || m.status === 'menipis';
-        } else if (state.cardFilter === 'habis') {
-            matchCard = m.status === 'habis';
-        } else if (state.cardFilter === 'expired') {
-            matchCard = isNearExpiry(m.exp) || isExpired(m.exp);
-        }
-
-        // category filter
-        const matchCat = !state.category || m.category === state.category;
-
-        // status filter
-        const matchStatus = !state.status || m.status === state.status;
-
+        if (state.cardFilter === 'rendah')  matchCard = m.status === 'rendah' || m.status === 'menipis';
+        if (state.cardFilter === 'habis')   matchCard = m.status === 'habis';
+        if (state.cardFilter === 'expired') matchCard = isNearExpiry(m.exp) || isExpired(m.exp);
+        const matchCat    = !state.category || m.category === state.category;
+        const matchStatus = !state.status   || m.status   === state.status;
         return matchSearch && matchCard && matchCat && matchStatus;
     });
 }
@@ -171,18 +89,16 @@ function getFiltered() {
    RENDER TABLE
 ============================ */
 function renderTable() {
-    const filtered = getFiltered();
-    const total = filtered.length;
+    const filtered   = getFiltered();
+    const total      = filtered.length;
     const totalPages = Math.max(1, Math.ceil(total / ROWS_PER_PAGE));
-
-    // clamp page
     if (state.page > totalPages) state.page = totalPages;
 
-    const start = (state.page - 1) * ROWS_PER_PAGE;
-    const end = Math.min(start + ROWS_PER_PAGE, total);
+    const start    = (state.page - 1) * ROWS_PER_PAGE;
+    const end      = Math.min(start + ROWS_PER_PAGE, total);
     const pageData = filtered.slice(start, end);
 
-    const tbody = document.getElementById('medicine-tbody');
+    const tbody      = document.getElementById('medicine-tbody');
     const emptyState = document.getElementById('empty-state');
 
     if (pageData.length === 0) {
@@ -194,7 +110,7 @@ function renderTable() {
             const expLabel = isExpired(m.exp)
                 ? `<span style="color:#c2185b;font-weight:700;">${fmtDate(m.exp)}</span>`
                 : isNearExpiry(m.exp)
-                ? `<span style="color:#e65100;font-weight:700;">${fmtDate(m.exp)}</span>`
+                ? `<span style="color:#C2540A;font-weight:700;">${fmtDate(m.exp)}</span>`
                 : fmtDate(m.exp);
 
             return `
@@ -222,9 +138,6 @@ function renderTable() {
                         <button class="btn-action btn-view" data-id="${m.id}" title="Lihat Detail">
                             <i class="fa-solid fa-eye"></i>
                         </button>
-                        <button class="btn-action btn-edit" data-id="${m.id}" title="Edit">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
                         <button class="btn-action btn-more" data-id="${m.id}" title="Lebih Lanjut">
                             <i class="fa-solid fa-ellipsis-v"></i>
                         </button>
@@ -234,9 +147,8 @@ function renderTable() {
         }).join('');
     }
 
-    // pagination info
-    document.getElementById('pag-from').textContent = total === 0 ? 0 : start + 1;
-    document.getElementById('pag-to').textContent = end;
+    document.getElementById('pag-from').textContent  = total === 0 ? 0 : start + 1;
+    document.getElementById('pag-to').textContent    = end;
     document.getElementById('pag-total').textContent = total;
 
     renderPagination(totalPages);
@@ -248,48 +160,28 @@ function renderTable() {
 ============================ */
 function renderPagination(totalPages) {
     const ctrl = document.getElementById('pagination-controls');
-    let html = '';
+    let html = `<button class="page-btn" id="page-prev" ${state.page<=1?'disabled':''}><i class="fa-solid fa-chevron-left"></i></button>`;
 
-    // prev
-    html += `<button class="page-btn" id="page-prev" ${state.page <= 1 ? 'disabled' : ''}>
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>`;
-
-    // pages (show max 5 around current, with ellipsis)
     const pages = [];
-    if (totalPages <= 7) {
-        for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
+    if (totalPages <= 7) { for (let i=1; i<=totalPages; i++) pages.push(i); }
+    else {
         pages.push(1);
         if (state.page > 3) pages.push('...');
-        for (let i = Math.max(2, state.page - 1); i <= Math.min(totalPages - 1, state.page + 1); i++) {
-            pages.push(i);
-        }
-        if (state.page < totalPages - 2) pages.push('...');
+        for (let i=Math.max(2,state.page-1); i<=Math.min(totalPages-1,state.page+1); i++) pages.push(i);
+        if (state.page < totalPages-2) pages.push('...');
         pages.push(totalPages);
     }
 
     pages.forEach(p => {
-        if (p === '...') {
-            html += `<button class="page-btn page-ellipsis" disabled>...</button>`;
-        } else {
-            html += `<button class="page-btn ${p === state.page ? 'active' : ''}" data-page="${p}">${p}</button>`;
-        }
+        if (p === '...') html += `<button class="page-btn page-ellipsis" disabled>...</button>`;
+        else html += `<button class="page-btn ${p===state.page?'active':''}" data-page="${p}">${p}</button>`;
     });
 
-    // next
-    html += `<button class="page-btn" id="page-next" ${state.page >= totalPages ? 'disabled' : ''}>
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>`;
-
+    html += `<button class="page-btn" id="page-next" ${state.page>=totalPages?'disabled':''}><i class="fa-solid fa-chevron-right"></i></button>`;
     ctrl.innerHTML = html;
 
-    // bind page buttons
     ctrl.querySelectorAll('.page-btn[data-page]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            state.page = parseInt(btn.dataset.page);
-            renderTable();
-        });
+        btn.addEventListener('click', () => { state.page = parseInt(btn.dataset.page); renderTable(); });
     });
 
     const prev = document.getElementById('page-prev');
@@ -302,15 +194,14 @@ function renderPagination(totalPages) {
    UPDATE SUMMARY CARDS
 ============================ */
 function updateSummaryCards() {
-    const all = medicineData;
-    document.getElementById('count-total').textContent  = all.length;
-    document.getElementById('count-rendah').textContent = all.filter(m => m.status === 'rendah' || m.status === 'menipis').length;
-    document.getElementById('count-habis').textContent  = all.filter(m => m.status === 'habis').length;
-    document.getElementById('count-expired').textContent = all.filter(m => isNearExpiry(m.exp) || isExpired(m.exp)).length;
+    document.getElementById('count-total').textContent   = medicineData.length;
+    document.getElementById('count-rendah').textContent  = medicineData.filter(m => m.status === 'rendah' || m.status === 'menipis').length;
+    document.getElementById('count-habis').textContent   = medicineData.filter(m => m.status === 'habis').length;
+    document.getElementById('count-expired').textContent = medicineData.filter(m => isNearExpiry(m.exp) || isExpired(m.exp)).length;
 }
 
 /* ============================
-   MODAL DETAIL
+   MODAL DETAIL — hanya tombol Tutup
 ============================ */
 function openDetail(id) {
     const m = medicineData.find(x => x.id === id);
@@ -332,7 +223,7 @@ function openDetail(id) {
             </div>
             <div class="detail-item">
                 <label>Stok Saat Ini</label>
-                <span style="color:${m.stock === 0 ? '#c2185b' : 'var(--navy)'};">${m.stock} unit</span>
+                <span style="color:${m.stock===0?'#c2185b':'var(--navy)'};">${m.stock} unit</span>
             </div>
             <div class="detail-item">
                 <label>Stok Minimum</label>
@@ -340,7 +231,7 @@ function openDetail(id) {
             </div>
             <div class="detail-item">
                 <label>Harga Satuan</label>
-                <span style="color:var(--tosca-dark);">${fmtPrice(m.price)}</span>
+                <span style="color:var(--or-dark);">${fmtPrice(m.price)}</span>
             </div>
             <div class="detail-item">
                 <label>Status</label>
@@ -356,14 +247,8 @@ function openDetail(id) {
             </div>
         </div>`;
 
-    // edit button in detail modal opens edit modal
-    document.getElementById('modal-detail-edit-btn').onclick = () => {
-        closeModal('modal-detail');
-        openEdit(id);
-    };
-    document.getElementById('modal-detail-close-btn').onclick = () => closeModal('modal-detail');
     document.getElementById('modal-detail-close').onclick    = () => closeModal('modal-detail');
-
+    document.getElementById('modal-detail-close-btn').onclick = () => closeModal('modal-detail');
     showModal('modal-detail');
 }
 
@@ -378,15 +263,15 @@ function openEdit(id) {
         <div class="form-row">
             <div class="form-group">
                 <label>Kode Obat</label>
-                <input class="form-control" id="edit-code" value="${m.code}" readonly style="background:var(--white-ish);color:var(--text-muted);">
+                <input class="form-control" value="${m.code}" readonly style="background:var(--white-ish);color:var(--text-muted);">
             </div>
             <div class="form-group">
                 <label>Kategori <span class="req">*</span></label>
                 <select class="form-control" id="edit-category">
-                    <option value="analgesik"   ${m.category==='analgesik'?'selected':''}>Analgesik</option>
-                    <option value="antibiotik"  ${m.category==='antibiotik'?'selected':''}>Antibiotik</option>
-                    <option value="antihistamin"${m.category==='antihistamin'?'selected':''}>Antihistamin</option>
-                    <option value="vitamin"     ${m.category==='vitamin'?'selected':''}>Vitamin</option>
+                    <option value="analgesik"    ${m.category==='analgesik'?'selected':''}>Analgesik</option>
+                    <option value="antibiotik"   ${m.category==='antibiotik'?'selected':''}>Antibiotik</option>
+                    <option value="antihistamin" ${m.category==='antihistamin'?'selected':''}>Antihistamin</option>
+                    <option value="vitamin"      ${m.category==='vitamin'?'selected':''}>Vitamin</option>
                 </select>
             </div>
         </div>
@@ -438,7 +323,6 @@ function openEdit(id) {
 
         const idx = medicineData.findIndex(x => x.id === id);
         medicineData[idx] = { ...medicineData[idx], name, category, stock, min, price, exp, supplier };
-        // recalculate status
         medicineData[idx].status = computeStatus(medicineData[idx]);
 
         closeModal('modal-edit');
@@ -449,57 +333,40 @@ function openEdit(id) {
     showModal('modal-edit');
 }
 
-function computeStatus(m) {
-    if (m.stock === 0) return 'habis';
-    const ratio = m.stock / m.min;
-    if (ratio < 0.3) return 'menipis';
-    if (ratio < 0.7) return 'rendah';
-    return 'aman';
-}
-
 /* ============================
-   CONTEXT MENU (More)
+   CONTEXT MENU — posisi fixed berdasarkan viewport
+   Isi: Edit, Restock, Hapus
 ============================ */
 function openContextMenu(id, btn) {
     state.contextTargetId = id;
     const menu = document.getElementById('context-menu');
-    const rect = btn.getBoundingClientRect();
+
+    // Tampilkan dulu agar bisa ukur dimensinya
     menu.style.display = 'block';
-    menu.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
-    menu.style.left = (rect.left + window.scrollX - menu.offsetWidth + btn.offsetWidth) + 'px';
+    menu.style.top  = '-9999px';
+    menu.style.left = '-9999px';
+
+    const rect      = btn.getBoundingClientRect();  // posisi relatif viewport
+    const menuH     = menu.offsetHeight;
+    const menuW     = menu.offsetWidth;
+    const vpH       = window.innerHeight;
+    const vpW       = window.innerWidth;
+
+    // Tentukan posisi: default di bawah tombol, geser ke atas kalau mepet bawah
+    let top  = rect.bottom + 4;
+    let left = rect.right - menuW;
+
+    if (top + menuH > vpH - 8) top = rect.top - menuH - 4;
+    if (left < 8) left = 8;
+    if (left + menuW > vpW - 8) left = vpW - menuW - 8;
+
+    menu.style.top  = top  + 'px';
+    menu.style.left = left + 'px';
 }
 
 function closeContextMenu() {
     document.getElementById('context-menu').style.display = 'none';
     state.contextTargetId = null;
-}
-
-/* ============================
-   MODAL HELPERS
-============================ */
-function showModal(id) {
-    document.getElementById(id).style.display = 'flex';
-}
-
-function closeModal(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-/* ============================
-   TOAST
-============================ */
-function showToast(msg, type = 'info') {
-    const container = document.getElementById('toast-container');
-    const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i> ${msg}`;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.transition = 'opacity 0.3s';
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
 }
 
 /* ============================
@@ -509,13 +376,10 @@ function doRestock(id) {
     const m = medicineData.find(x => x.id === id);
     if (!m) return;
     const added = parseInt(prompt(`Tambah stok untuk "${m.name}"\nMasukkan jumlah yang ditambahkan:`, 50));
-    if (isNaN(added) || added <= 0) {
-        showToast('Jumlah tidak valid.', 'error');
-        return;
-    }
+    if (isNaN(added) || added <= 0) { showToast('Jumlah tidak valid.', 'error'); return; }
     const idx = medicineData.findIndex(x => x.id === id);
-    medicineData[idx].stock += added;
-    medicineData[idx].status = computeStatus(medicineData[idx]);
+    medicineData[idx].stock  += added;
+    medicineData[idx].status  = computeStatus(medicineData[idx]);
     renderTable();
     showToast(`Stok "${m.name}" ditambah ${added} unit. Total: ${medicineData[idx].stock}`, 'success');
 }
@@ -528,32 +392,50 @@ function doDelete(id) {
     if (!m) return;
     if (!confirm(`Yakin ingin menghapus obat "${m.name}"?\nTindakan ini tidak dapat dibatalkan.`)) return;
     medicineData = medicineData.filter(x => x.id !== id);
-    if (state.page > Math.ceil(medicineData.length / ROWS_PER_PAGE)) {
+    if (state.page > Math.ceil(medicineData.length / ROWS_PER_PAGE))
         state.page = Math.max(1, Math.ceil(medicineData.length / ROWS_PER_PAGE));
-    }
     renderTable();
     showToast(`Obat "${m.name}" berhasil dihapus.`, 'success');
+}
+
+/* ============================
+   MODAL & TOAST HELPERS
+============================ */
+function showModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+function showToast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<i class="fa-solid ${icons[type]||icons.info}"></i> ${msg}`;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 
 /* ============================
    CHECK-ALL
 ============================ */
 function bindCheckAll() {
-    const checkAll = document.getElementById('check-all');
-    if (!checkAll) return;
-    checkAll.addEventListener('change', function () {
+    const ca = document.getElementById('check-all');
+    if (!ca) return;
+    ca.addEventListener('change', function () {
         document.querySelectorAll('.check-row').forEach(cb => cb.checked = this.checked);
     });
 }
 
 /* ============================
-   INIT & EVENT BINDING
+   INIT
 ============================ */
 document.addEventListener('DOMContentLoaded', () => {
-
     renderTable();
 
-    // --- Search ---
+    // Search
     const searchInput = document.getElementById('search-input');
     const searchClear = document.getElementById('search-clear');
 
@@ -573,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.focus();
     });
 
-    // --- Summary card filters ---
+    // Card filters
     document.querySelectorAll('.filter-card').forEach(card => {
         card.addEventListener('click', () => {
             document.querySelectorAll('.filter-card').forEach(c => c.classList.remove('active'));
@@ -584,34 +466,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Category & Status dropdowns ---
+    // Dropdowns
     document.getElementById('filter-category').addEventListener('change', function () {
-        state.category = this.value;
-        state.page = 1;
-        renderTable();
+        state.category = this.value; state.page = 1; renderTable();
     });
-
     document.getElementById('filter-status').addEventListener('change', function () {
-        state.status = this.value;
-        state.page = 1;
-        renderTable();
+        state.status = this.value; state.page = 1; renderTable();
     });
 
-    // --- Table actions (delegated) ---
+    // Table delegation — hanya btn-view dan btn-more
     document.getElementById('medicine-tbody').addEventListener('click', e => {
         const btnView = e.target.closest('.btn-view');
-        const btnEdit = e.target.closest('.btn-edit');
         const btnMore = e.target.closest('.btn-more');
 
         if (btnView) openDetail(parseInt(btnView.dataset.id));
-        if (btnEdit) openEdit(parseInt(btnEdit.dataset.id));
-        if (btnMore) {
-            e.stopPropagation();
-            openContextMenu(parseInt(btnMore.dataset.id), btnMore);
-        }
+        if (btnMore) { e.stopPropagation(); openContextMenu(parseInt(btnMore.dataset.id), btnMore); }
     });
 
-    // --- Context menu actions ---
+    // Context menu: Edit, Restock, Hapus
+    document.getElementById('ctx-edit').addEventListener('click', () => {
+        const id = state.contextTargetId;
+        closeContextMenu();
+        if (id) openEdit(id);
+    });
+
     document.getElementById('ctx-restock').addEventListener('click', () => {
         const id = state.contextTargetId;
         closeContextMenu();
@@ -624,18 +502,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (id) doDelete(id);
     });
 
-    // --- Close context menu on outside click ---
+    // Tutup context menu saat klik di luar
     document.addEventListener('click', () => closeContextMenu());
 
-    // --- Close modals on overlay click ---
+    // Tutup modals saat klik overlay
     ['modal-detail', 'modal-edit'].forEach(id => {
         document.getElementById(id).addEventListener('click', function (e) {
             if (e.target === this) closeModal(id);
         });
     });
 
-    // --- Check-all (re-bind after every render via MutationObserver) ---
+    // Check-all
     bindCheckAll();
-    const observer = new MutationObserver(bindCheckAll);
-    observer.observe(document.getElementById('medicine-tbody'), { childList: true });
+    new MutationObserver(bindCheckAll).observe(document.getElementById('medicine-tbody'), { childList: true });
 });
