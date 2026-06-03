@@ -19,34 +19,6 @@ Route::post('/register', [LoginController::class, 'register']);
 Route::get('/login',  [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-    // Kalau Role Admin
-    Route::middleware(['auth','role:Admin'])->group(function () {
-     Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
-    });
-
-    // Kalau Role Dokter
-    Route::middleware(['auth', 'role:Dokter'])->group(function () {
-        Route::get('/dokter/dashboard', function () {
-            return view('dokter.dashboard');
-        });
-    });
-
-    // Kalau Role Pasien
-    Route::middleware(['auth', 'role:Pasien'])->group(function () {
-        Route::get('/pasien/dashboard', function () {
-            return view('pasien.dashboard');
-        });
-    });
-
-    // Kalau Role Apoteker
-    Route::middleware(['auth', 'role:Apoteker'])->group (function () {
-        Route::get('/apoteker/dashboard', function(){
-        return view('apoteker.dashboard');
-        });
-    });
-
     // Agar saat menekan button forgot akan pergi ke web forgot
     Route::get('/forgot', function () {
         return view('auth.forgot');
@@ -118,20 +90,22 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
         return view('pasien.pembayaran');
     })->name('pasien.pembayaran.index');
 });
-
 // ─────────────────────────────────────────────
 // PROTECTED ROUTES — Apoteker
-// {status?} — opsional, default 'validasi'
 // ─────────────────────────────────────────────
 
 Route::middleware(['auth', 'role:Apoteker'])->group(function () {
 
     Route::get('/apoteker/dashboard/{status?}', function ($status = 'validasi') {
+
         $allowed = ['validasi', 'pembayaran', 'diproses'];
+
         if (!in_array($status, $allowed)) {
             $status = 'validasi';
         }
+
         return view('apoteker.dashboard', compact('status'));
+
     })->name('apoteker.dashboard');
 
     Route::get('/apoteker/melihatResep', function () {

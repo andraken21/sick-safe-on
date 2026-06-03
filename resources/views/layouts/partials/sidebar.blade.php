@@ -83,13 +83,13 @@
             </a>
 
             <div class="nav-label">Resep</div>
-            <a href="#" class="nav-item">
+            <a href="{{ route('apoteker.dashboard', 'validasi') }}" class="nav-item">
                 <i class="fas fa-hourglass-half"></i> Menunggu Validasi
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ route('apoteker.dashboard', 'pembayaran') }}" class="nav-item">
                 <i class="fas fa-money-bill-wave"></i> Menunggu Pembayaran
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ route('apoteker.dashboard', 'diproses') }}" class="nav-item">
                 <i class="fas fa-cogs"></i> Diproses
             </a>
 

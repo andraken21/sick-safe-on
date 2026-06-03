@@ -4,28 +4,21 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/dashboardApoteker.css') }}">
+
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/dashboardApoteker.css') }}">
+    @endpush
 
 @section('content')
+
+@php
+    $status = $status ?? 'validasi';
+@endphp
 
 <div class="dashboard-wrapper">
 
     {{-- ==================== CARD 1 : RESEP MASUK ==================== --}}
     <div class="dashboard-card">
-
-        {{-- SIDEBAR --}}
-        <aside class="sidebar">
-            <div class="sidebar-header">Sick Safe ON</div>
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active">Dashboard</a>
-                <a href="#" class="nav-item">Resep Masuk</a>
-                <a href="#" class="nav-item">Validasi Resep</a>
-                <a href="#" class="nav-item">Obat</a>
-                <a href="#" class="nav-item">Pesanan</a>
-                <a href="#" class="nav-item">Profil</a>
-            </nav>
-        </aside>
-
         {{-- MAIN --}}
         <main class="main-content">
 
