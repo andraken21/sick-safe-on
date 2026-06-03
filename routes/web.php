@@ -19,32 +19,20 @@ Route::post('/register', [LoginController::class, 'register']);
 Route::get('/login',  [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/forgot',             function () { return view('auth.forgot'); });
-Route::post('/forgot-password',   [LoginController::class, 'checkEmail']);
-Route::get('/reset-password/{email}', [LoginController::class, 'showResetForm'])->name('password.reset');
-Route::post('/reset-password',    [LoginController::class, 'updatePassword']);
+    // Kalau Role Admin
+    Route::middleware(['auth','role:Admin'])->group(function () {
+     Route::get('/admin/dashboard', function () {
+            return view('admin.dashboard');
+        });
+    });
+    
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// ─────────────────────────────────────────────
-// PROTECTED ROUTES — Admin
-// ─────────────────────────────────────────────
-
-Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-});
-
-// ─────────────────────────────────────────────
-// PROTECTED ROUTES — Dokter
-// ─────────────────────────────────────────────
-
-Route::middleware(['auth', 'role:Dokter'])->group(function () {
-    Route::get('/dokter/dashboard', function () {
-        return view('dokter.dashboard');
-    })->name('dokter.dashboard');
-});
+    // Kalau Role Dokter
+    Route::middleware(['auth', 'role:Dokter'])->group(function () {
+        Route::get('/dokter/dashboard', function () {
+            return view('dokter.dashboard');
+        });
+    });
 
 // ─────────────────────────────────────────────
 // PROTECTED ROUTES — Pasien
@@ -76,5 +64,29 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
 Route::middleware(['auth', 'role:Apoteker'])->group(function () {
     Route::get('/apoteker/dashboard', function () {
         return view('apoteker.dashboard');
-    })->name('apoteker.dashboard');
-});
+        });
+    });
+
+    // Agar saat menekan button forgot akan pergi ke web forgot
+    Route::get('/forgot', function () {
+        return view('auth.forgot');
+    });
+        
+    // Halaman Input Email (Gambar 1)
+    Route::post('/forgot-password', [LoginController::class, 'checkEmail']);
+
+    // Halaman Buat Password Baru (Gambar 2)
+    Route::get('/reset-password/{email}', [LoginController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [LoginController::class, 'updatePassword']);
+
+    // Memproses logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+
+    // Agar saat menekan button app akan pergi ke web app
+    Route::get('/app', function () {
+        return view('layouts.app');
+    });
+
