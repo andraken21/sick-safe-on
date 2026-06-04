@@ -166,6 +166,11 @@
     outline: none;
     transition: border-color .2s;
 }
+.header-right img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+    }
 
 .search-wrap input:focus { border-color: var(--ss-primary); }
 
@@ -374,6 +379,7 @@
 }
 
 
+
 @media (max-width: 900px) {
     .stat-row { grid-template-columns: repeat(2, 1fr); }
 }
@@ -384,16 +390,10 @@
     {{-- PAGE HEADER --}}
     <div class="page-header">
         <div class="page-title-wrap">
-            <h1>Resep Saya 💊</h1>
+            <h1>Resep Saya </h1>
             <p>Kelola semua resep digital Anda di sini</p>
         </div>
-        <a href="#" class="btn-primary">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-            Ajukan Resep Baru
-        </a>
+        
     </div>
 
     {{-- STAT CARDS --}}

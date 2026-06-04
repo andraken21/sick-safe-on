@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class PasienDashboardController extends Controller
@@ -126,7 +127,7 @@ class PasienDashboardController extends Controller
             ]
         ];
         
-        return view('pasien.resep.index', compact('pasien', 'resepList'));
+        return view('pasien.resep', compact('pasien', 'resepList'));
     }
     
     public function pembayaran()
@@ -215,6 +216,94 @@ class PasienDashboardController extends Controller
         // Detail pembayaran terbaru (untuk sidebar)
         $detailPembayaran = $pembayaranList[0];
         
-        return view('pasien.pembayaran.index', compact('pasien', 'pembayaranList', 'detailPembayaran'));
+        return view('pasien.pembayaran', compact('pasien', 'pembayaranList', 'detailPembayaran'));
+    }
+
+    /**
+     * Halaman pembayaran barcode
+     * GET /pasien/pembayaran/bayar/{invoice}
+     */
+    public function halamanBayar(Request $request, $invoice)
+    {
+        $pasien = Auth::user();
+
+        // Baca metode dari query string (dikirim dari halaman pembayaran)
+        $metode = $request->query('metode', 'Mandiri'); // default Mandiri
+        $totalDariUrl = (int) $request->query('total', 0);
+
+        // Kalau BPJS, total bayar = 0 (ditanggung pemerintah)
+        $subtotal_obat  = 75000;
+        $biaya_layanan  = 12500;
+        $total_normal   = $subtotal_obat + $biaya_layanan; // 87500
+        $total_bayar    = $metode === 'BPJS' ? 0 : $total_normal;
+
+        // Data dummy — nanti diganti query dari database
+        $detail = [
+            'nomor_invoice' => $invoice,
+            'resep_id'      => 'RSP-2026-0051',
+            'tanggal'       => '08 Des 2026',
+            'dokter'        => 'Dr. Budi Santoso',
+            'jumlah_obat'   => 3,
+            'subtotal_obat' => $subtotal_obat,
+            'biaya_layanan' => $biaya_layanan,
+            'diskon'        => $metode === 'BPJS' ? $total_normal : 0,
+            'total_bayar'   => $total_bayar,
+            'status'        => 'Menunggu',
+            'metode'        => $metode,
+        ];
+
+        return view('pasien.bayar', compact('pasien', 'detail'));
+    }
+
+
+    public function prosesBayar(Request $request)
+    {
+        $request->validate([
+            'invoice_id'  => 'required|string',
+            'metode'      => 'required|in:BPJS,Mandiri',
+            'total_bayar' => 'required|numeric|min:0',
+        ]);
+
+        $pasien  = Auth::user();
+        $metode  = $request->metode;
+        $invoice = $request->invoice_id;
+        $total   = $request->total_bayar;
+
+        // Generate referensi unik
+        $refCode = strtoupper(substr($metode, 0, 3))
+                 . '-' . Carbon::now()->format('ymdHi')
+                 . '-' . strtoupper(substr(uniqid(), -6));
+
+        // -------------------------------------------------------
+        // Di sini nanti disambungkan ke tabel pembayaran / transaksi
+        // Contoh:
+        // Pembayaran::create([
+        //     'pasien_id'  => $pasien->id,
+        //     'invoice_id' => $invoice,
+        //     'metode'     => $metode,
+        //     'total'      => $total,
+        //     'kode_ref'   => $refCode,
+        //     'status'     => 'menunggu_konfirmasi',
+        // ]);
+        // -------------------------------------------------------
+
+        $responseData = [
+            'success'    => true,
+            'invoice_id' => $invoice,
+            'metode'     => $metode,
+            'total'      => $total,
+            'kode_ref'   => $refCode,
+            'waktu'      => Carbon::now()->locale('id')->isoFormat('D MMMM YYYY, HH:mm'),
+        ];
+
+        // Jika request AJAX (dari fetch JS), kembalikan JSON
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json($responseData);
+        }
+
+        // Jika request biasa, redirect balik dengan flash data
+        return redirect()
+            ->route('pasien.pembayaran.index')
+            ->with('bayar_sukses', $responseData);
     }
 }

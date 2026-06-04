@@ -362,6 +362,137 @@
 }
 .btn-bayar:hover { background: var(--ss-primary-dark); transform: translateY(-1px); }
 
+/* ── MODAL PAYMENT ── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn .2s ease;
+}
+.modal-overlay.open { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 420px;
+    margin: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    overflow: hidden;
+    animation: slideUp .25s ease;
+}
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal-header {
+    background: linear-gradient(135deg, var(--ss-primary), var(--ss-primary-dark));
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: #fff;
+}
+.modal-header-left h2 { font-size: 1rem; font-weight: 800; margin: 0; }
+.modal-header-left p  { font-size: .75rem; opacity: .8; margin: 2px 0 0; }
+.modal-close {
+    background: rgba(255,255,255,.2); border: none; color: #fff;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+}
+.modal-close:hover { background: rgba(255,255,255,.35); }
+.modal-body { padding: 20px 24px; }
+.modal-invoice {
+    background: #f8fafc; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 18px; font-size: .8rem;
+}
+.modal-invoice-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 6px; color: var(--ss-muted);
+}
+.modal-invoice-row:last-child { margin-bottom: 0; }
+.modal-invoice-row span:last-child { font-weight: 600; color: var(--ss-text); }
+.modal-invoice-total {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 10px; border-top: 1px solid var(--ss-border); margin-top: 8px;
+}
+.modal-invoice-total .lbl { font-weight: 700; font-size: .88rem; }
+.modal-invoice-total .val { font-size: 1.15rem; font-weight: 800; color: var(--ss-primary); }
+.panel-bpjs { display: none; }
+.panel-bpjs.show { display: block; }
+.bpjs-number-wrap {
+    background: linear-gradient(135deg, #e6f9f4, #d0f5ea);
+    border: 2px solid var(--ss-primary-mid);
+    border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 16px;
+}
+.bpjs-label {
+    font-size: .72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--ss-primary-dark); margin-bottom: 8px;
+}
+.bpjs-number {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem; font-weight: 800; letter-spacing: .15em; color: var(--ss-text);
+}
+.bpjs-name { font-size: .8rem; color: var(--ss-muted); margin-top: 6px; }
+.bpjs-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #dcfce7; color: #15803d;
+    font-size: .72rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 999px; margin-top: 10px;
+}
+.bpjs-info {
+    background: #fffbeb; border: 1px solid #fcd34d;
+    border-radius: 10px; padding: 12px 14px;
+    font-size: .78rem; color: #92400e; line-height: 1.5;
+}
+.panel-mandiri { display: none; }
+.panel-mandiri.show { display: block; }
+.barcode-dashed {
+    border: 2px dashed #cbd5e1; border-radius: 12px;
+    padding: 18px; text-align: center;
+    background: linear-gradient(to bottom, #f8fafc, #fff); margin-bottom: 14px;
+}
+.barcode-lbl {
+    font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--ss-muted); margin-bottom: 12px;
+}
+.barcode-img-wrap {
+    width: 200px; height: 200px; margin: 0 auto 12px;
+    border-radius: 8px; overflow: hidden; border: 1px solid var(--ss-border);
+    display: flex; align-items: center; justify-content: center; background: #f0f9ff;
+}
+.barcode-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.barcode-placeholder { color: var(--ss-muted); font-size: .75rem; text-align: center; padding: 12px; }
+.barcode-ref {
+    font-family: 'Courier New', monospace;
+    font-size: .82rem; font-weight: 700; letter-spacing: .12em;
+    color: var(--ss-text); margin-bottom: 4px;
+}
+.barcode-hint { font-size: .72rem; color: var(--ss-muted); }
+.modal-processing { display: none; text-align: center; padding: 24px 0; }
+.modal-processing.show { display: block; }
+.modal-spinner {
+    width: 44px; height: 44px;
+    border: 4px solid var(--ss-border); border-top-color: var(--ss-primary);
+    border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 14px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.modal-success { display: none; text-align: center; padding: 24px 0; }
+.modal-success.show { display: block; }
+.modal-success .icon { font-size: 3rem; margin-bottom: 10px; }
+.modal-success .title { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+.modal-success .sub { font-size: .8rem; color: var(--ss-muted); }
+.btn-konfirmasi {
+    display: block; width: 100%; padding: 13px;
+    background: var(--ss-primary); color: #fff; border: none;
+    border-radius: 10px; font-size: .9rem; font-weight: 700;
+    font-family: var(--ss-font); cursor: pointer; margin-top: 4px;
+    transition: background .2s, transform .15s;
+}
+.btn-konfirmasi:hover { background: var(--ss-primary-dark); transform: translateY(-1px); }
+
 /* Responsive */
 @media (max-width: 1000px) {
     .main-grid { grid-template-columns: 1fr; }
@@ -447,7 +578,7 @@
                 <select class="filter-select">
                     <option>Semua Metode</option>
                     <option>BPJS</option>
-                    <option>Mandiri</option>`
+                    <option>Mandiri</option>
                 </select>
             </div>
 
@@ -480,7 +611,14 @@
                     <h3>Tagihan Aktif</h3>
                 </div>
                 <div class="side-card-body">
-                    <div class="tagihan-list">
+                    {{-- Data tagihan aktif disimpan sebagai data attributes --}}
+                    <div class="tagihan-list"
+                         id="tagihanData"
+                         data-subtotal="75000"
+                         data-layanan="12500"
+                         data-total-normal="87500"
+                         data-invoice="INV-2026-0077"
+                         data-status="menunggu">
                         <div class="tagihan-row">
                             <span class="lbl">NO. INVOICE</span>
                             <span class="val" style="color:var(--ss-primary);">INV-2026-0077</span>
@@ -490,29 +628,31 @@
                             <span class="val">RSP-2026–0051</span>
                         </div>
                         <div class="tagihan-row">
-                            <span class="lbl">Dokter & Obat</span>
+                            <span class="lbl">Dokter &amp; Obat</span>
                             <span class="val">Dr. Budi Santoso • 3 Obat</span>
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-row">
                             <span class="lbl">Subtotal obat</span>
-                            <span class="val">Rp 75.000</span>
+                            <span class="val" id="tagihanSubtotal">Rp 75.000</span>
                         </div>
                         <div class="tagihan-row">
                             <span class="lbl">Biaya layanan</span>
-                            <span class="val">Rp 12.500</span>
+                            <span class="val" id="tagihanLayanan">Rp 12.500</span>
                         </div>
-                        <div class="tagihan-row">
+                        <div class="tagihan-row" id="tagihanDiskonRow">
                             <span class="lbl">Diskon BPJS</span>
-                            <span class="val">– Rp 0</span>
+                            <span class="val" id="tagihanDiskon">– Rp 0</span>
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-total">
                             <span class="lbl">Total Bayar</span>
-                            <span class="val">Rp 87.500</span>
+                            <span class="val" id="tagihanTotal">Rp 87.500</span>
                         </div>
                     </div>
-                    <button class="btn-bayar">Bayar Sekarang</button>
+                    {{-- Tombol Bayar Sekarang: hanya aktif kalau status = menunggu --}}
+                    <a href="#" id="btnBayarSekarang" class="btn-bayar" style="margin-top:12px;">Bayar Sekarang</a>
+                    <p id="btnBayarInfo" style="display:none; text-align:center; font-size:.78rem; color:var(--ss-muted); margin-top:8px;"></p>
                 </div>
             </div>
 
@@ -537,28 +677,102 @@
                             <div class="metode-item-left">
                                 <div class="metode-badge metode-badge--mandiri">🏦</div>
                                 <div>
-                                    <div class="metode-name">Bank Mandiri</div>
-                                    <div class="metode-desc">Transfer mudah</div>
+                                    <div class="metode-name">Mandiri</div>
+                                   
                                 </div>
                             </div>
                             <div class="metode-check"></div>
                         </div>
-                        <div class="metode-item" data-metode="Tunai">
-                            <div class="metode-item-left">
-                                <div class="metode-badge metode-badge--tunai">💵</div>
-                                <div>
-                                    <div class="metode-name">Tunai / Kasir</div>
-                                    <div class="metode-desc">Bayar langsung</div>
-                                </div>
-                            </div>
-                            <div class="metode-check"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
 
         </div>
 
+    </div>
+
+    {{-- MODAL PEMBAYARAN --}}
+    <div class="modal-overlay" id="modalPayment">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <h2 id="modalTitle">Konfirmasi Pembayaran</h2>
+                    <p id="modalSubtitle">INV-2026-0077</p>
+                </div>
+                <button class="modal-close" id="modalCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
+
+                {{-- Ringkasan invoice --}}
+                <div class="modal-invoice" id="modalInvoice">
+                    <div class="modal-invoice-row">
+                        <span>Resep</span><span>RSP-2026-0051</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Dokter</span><span>Dr. Budi Santoso</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Subtotal Obat</span><span>Rp 75.000</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Biaya Layanan</span><span>Rp 12.500</span>
+                    </div>
+                    <div class="modal-invoice-total">
+                        <span class="lbl">Total Bayar</span>
+                        <span class="val">Rp 87.500</span>
+                    </div>
+                </div>
+
+                {{-- Panel BPJS --}}
+                <div class="panel-bpjs" id="panelBpjs">
+                    <div class="bpjs-number-wrap">
+                        <div class="bpjs-label">📋 Nomor BPJS Kesehatan</div>
+                        <div class="bpjs-number" id="bpjsNumber">0001 2345 6789 01</div>
+                        <div class="bpjs-name" id="bpjsName">Nama Peserta Aktif</div>
+                        <div class="bpjs-status">✅ Peserta Aktif</div>
+                    </div>
+                    <div class="bpjs-info">
+                        ℹ️ Tunjukkan nomor BPJS ini kepada petugas apotek. Biaya ditanggung sesuai ketentuan BPJS Kesehatan.
+                    </div>
+                </div>
+
+                {{-- Panel Mandiri Barcode --}}
+                <div class="panel-mandiri" id="panelMandiri">
+                    <div class="barcode-dashed">
+                        <div class="barcode-lbl">Barcode Pembayaran Mandiri</div>
+                        <div class="barcode-img-wrap">
+                            {{-- Ganti src dengan path gambar barcode kamu --}}
+                            <img id="barcodeImg" src="" alt="Barcode" style="display:none;">
+                            <div class="barcode-placeholder" id="barcodePlaceholder">
+                                🖼️<br>Tambahkan gambar barcode<br>di sini
+                            </div>
+                        </div>
+                        <div class="barcode-ref" id="barcodeRef">MDR-00000000-000000</div>
+                        <div class="barcode-hint">Scan barcode untuk transfer via Bank Mandiri</div>
+                    </div>
+                </div>
+
+                {{-- Processing state --}}
+                <div class="modal-processing" id="modalProcessing">
+                    <div class="modal-spinner"></div>
+                    <div style="font-weight:700;margin-bottom:4px;">Memproses Pembayaran…</div>
+                    <div style="font-size:.8rem;color:var(--ss-muted);">Mohon tunggu sebentar</div>
+                </div>
+
+                {{-- Success state --}}
+                <div class="modal-success" id="modalSuccess">
+                    <div class="icon">✅</div>
+                    <div class="title">Pembayaran Dikonfirmasi!</div>
+                    <div class="sub">Invoice Anda telah berhasil diproses</div>
+                    <div style="font-size:1.2rem;font-weight:800;color:var(--ss-primary);margin-top:12px;">Rp 87.500</div>
+                </div>
+
+                {{-- Tombol konfirmasi --}}
+                <button class="btn-konfirmasi" id="btnKonfirmasi">Konfirmasi Bayar</button>
+
+            </div>
+        </div>
     </div>
 
 </div>
@@ -570,11 +784,11 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'INV-2026-0077', date: '08 Des 2026', ref: 'RSP-0051', metode: 'BPJS', total: 87500, status: 'menunggu', icon: 'fa-clock', iconClass: 'inv-icon--pend' },
         { id: 'INV-2026-0070', date: '20 Nov 2026', ref: 'RSP-0048', metode: 'BPJS', total: 85000, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' },
         { id: 'INV-2026-0065', date: '10 Nov 2026', ref: 'RSP-0045', metode: 'Mandiri', total: 210000, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' },
-        { id: 'INV-2026-0058', date: '02 Nov 2026', ref: 'RSP-0040', metode: 'Tunai', total: 0, status: 'gagal', icon: 'fa-times', iconClass: 'inv-icon--fail' },
+        { id: 'INV-2026-0058', date: '02 Nov 2026', ref: 'RSP-0040', metode: 'Mandiri', total: 0, status: 'gagal', icon: 'fa-times', iconClass: 'inv-icon--fail' },
         { id: 'INV-2026-0050', date: '15 Okt 2026', ref: 'RSP-0038', metode: 'BPJS', total: 125000, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' },
         { id: 'INV-2026-0045', date: '05 Okt 2026', ref: 'RSP-0035', metode: 'Mandiri', total: 92500, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' },
         { id: 'INV-2026-0040', date: '25 Sep 2026', ref: 'RSP-0032', metode: 'BPJS', total: 67000, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' },
-        { id: 'INV-2026-0035', date: '15 Sep 2026', ref: 'RSP-0028', metode: 'Tunai', total: 156000, status: 'proses', icon: 'fa-sync-alt', iconClass: 'inv-icon--proc' },
+        { id: 'INV-2026-0035', date: '15 Sep 2026', ref: 'RSP-0028', metode: 'Mandiri', total: 156000, status: 'proses', icon: 'fa-sync-alt', iconClass: 'inv-icon--proc' },
         { id: 'INV-2026-0030', date: '05 Sep 2026', ref: 'RSP-0025', metode: 'BPJS', total: 94500, status: 'lunas', icon: 'fa-check', iconClass: 'inv-icon--done' }
     ];
 
@@ -583,6 +797,73 @@ document.addEventListener('DOMContentLoaded', function() {
     let filteredTransactions = [...allTransactions];
     let selectedPaymentMethod = 'BPJS';
 
+    // ===== HELPER FORMAT RUPIAH =====
+    function formatRp(num) {
+        if (num === 0) return 'Rp 0';
+        return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    // ===== UPDATE TAGIHAN AKTIF BERDASARKAN METODE =====
+    function updateTagihan(metode) {
+        const tagihanEl = document.getElementById('tagihanData');
+        if (!tagihanEl) return;
+        const subtotal  = parseInt(tagihanEl.dataset.subtotal);
+        const layanan   = parseInt(tagihanEl.dataset.layanan);
+        const totalNormal = parseInt(tagihanEl.dataset.totalNormal);
+        const status    = tagihanEl.dataset.status;
+        const invoice   = tagihanEl.dataset.invoice;
+
+        const elSubtotal = document.getElementById('tagihanSubtotal');
+        const elLayanan  = document.getElementById('tagihanLayanan');
+        const elDiskon   = document.getElementById('tagihanDiskon');
+        const elDiskonRow = document.getElementById('tagihanDiskonRow');
+        const elTotal    = document.getElementById('tagihanTotal');
+        const btnBayar   = document.getElementById('btnBayarSekarang');
+        const btnInfo    = document.getElementById('btnBayarInfo');
+
+        if (metode === 'BPJS') {
+            // BPJS: semua ditanggung pemerintah → total 0
+            if (elSubtotal) elSubtotal.textContent = formatRp(subtotal);
+            if (elLayanan)  elLayanan.textContent  = formatRp(layanan);
+            if (elDiskon)   elDiskon.textContent   = '– ' + formatRp(subtotal + layanan);
+            if (elDiskonRow) elDiskonRow.style.display = '';
+            if (elTotal)    elTotal.textContent    = 'Rp 0';
+            if (elTotal)    elTotal.style.color    = 'var(--ss-success)';
+        } else {
+            // Mandiri/lainnya: total normal, tidak ada diskon BPJS
+            if (elSubtotal) elSubtotal.textContent = formatRp(subtotal);
+            if (elLayanan)  elLayanan.textContent  = formatRp(layanan);
+            if (elDiskon)   elDiskon.textContent   = '– Rp 0';
+            if (elDiskonRow) elDiskonRow.style.display = 'none';
+            if (elTotal)    elTotal.textContent    = formatRp(totalNormal);
+            if (elTotal)    elTotal.style.color    = '';
+        }
+
+        // Hitung total aktual untuk dikirim ke halaman bayar
+        const totalAktual = metode === 'BPJS' ? 0 : totalNormal;
+
+        // Tombol Bayar Sekarang — hanya bisa diklik kalau status = menunggu
+        if (btnBayar) {
+            if (status === 'menunggu') {
+                const url = `{{ url('pasien/pembayaran/bayar') }}/${invoice}?metode=${metode}&total=${totalAktual}`;
+                btnBayar.href = url;
+                btnBayar.style.opacity = '1';
+                btnBayar.style.pointerEvents = 'auto';
+                btnBayar.style.cursor = 'pointer';
+                if (btnInfo) btnInfo.style.display = 'none';
+            } else {
+                btnBayar.href = '#';
+                btnBayar.style.opacity = '0.45';
+                btnBayar.style.pointerEvents = 'none';
+                btnBayar.style.cursor = 'not-allowed';
+                if (btnInfo) {
+                    btnInfo.style.display = 'block';
+                    btnInfo.textContent = 'Menunggu konfirmasi apoteker sebelum dapat dibayar';
+                }
+            }
+        }
+    }
+
     // ===== METODE PEMBAYARAN =====
     const metodeItems = document.querySelectorAll('.metode-item');
     metodeItems.forEach(item => {
@@ -590,9 +871,12 @@ document.addEventListener('DOMContentLoaded', function() {
             metodeItems.forEach(m => m.classList.remove('active'));
             this.classList.add('active');
             selectedPaymentMethod = this.dataset.metode;
-            console.log('Metode dipilih:', selectedPaymentMethod);
+            updateTagihan(selectedPaymentMethod);
         });
     });
+
+    // Init tagihan saat halaman pertama dibuka
+    updateTagihan(selectedPaymentMethod);
 
     // ===== FILTER SELECT =====
     const filterSelects = document.querySelectorAll('.filter-select');
@@ -600,30 +884,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const metodeSelect = filterSelects[1];
 
     if (statusSelect) {
-        statusSelect.addEventListener('change', function() {
-            currentPage = 1;
-            applyFilters();
-        });
+        statusSelect.addEventListener('change', function() { currentPage = 1; applyFilters(); });
     }
-
     if (metodeSelect) {
-        metodeSelect.addEventListener('change', function() {
-            currentPage = 1;
-            applyFilters();
-        });
+        metodeSelect.addEventListener('change', function() { currentPage = 1; applyFilters(); });
     }
 
     // ===== FUNGSI FILTER =====
     function applyFilters() {
         const selectedMetode = metodeSelect ? metodeSelect.value : 'Semua Metode';
         const selectedStatus = statusSelect ? statusSelect.value : 'Semua Status';
-
         filteredTransactions = allTransactions.filter(trans => {
             let metodeMatch = selectedMetode === 'Semua Metode' || trans.metode === selectedMetode;
             let statusMatch = selectedStatus === 'Semua Status' || trans.status === selectedStatus;
             return metodeMatch && statusMatch;
         });
-
         renderTable();
     }
 
@@ -631,11 +906,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderTable() {
         const tbody = document.querySelector('.bayar-table tbody');
         if (!tbody) return;
-
         const start = (currentPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
         const pageItems = filteredTransactions.slice(start, end);
-
         tbody.innerHTML = pageItems.map(trans => `
             <tr>
                 <td>
@@ -658,7 +931,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td><span class="badge badge--${trans.status}">${getStatusLabel(trans.status)}</span></td>
             </tr>
         `).join('');
-
         updatePagination();
     }
 
@@ -667,78 +939,48 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
         const paginationInfo = document.querySelector('.pagination-info');
         const paginationBtns = document.querySelector('.pagination-btns');
-
         if (paginationInfo) {
             const start = (currentPage - 1) * itemsPerPage + 1;
             const end = Math.min(currentPage * itemsPerPage, filteredTransactions.length);
             paginationInfo.textContent = `Menampilkan ${start}–${end} dari ${filteredTransactions.length} transaksi`;
         }
-
         if (paginationBtns) {
             paginationBtns.innerHTML = '';
-
-            // Tombol Previous
             const prevBtn = document.createElement('button');
             prevBtn.className = 'pg-btn';
             prevBtn.innerHTML = '‹';
             prevBtn.disabled = currentPage === 1;
-            prevBtn.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                if (currentPage > 1) { 
-                    currentPage--; 
-                    renderTable(); 
-                } 
-            });
+            prevBtn.addEventListener('click', (e) => { e.preventDefault(); if (currentPage > 1) { currentPage--; renderTable(); } });
             paginationBtns.appendChild(prevBtn);
-
-            // Tombol Nomor Halaman
             for (let i = 1; i <= totalPages; i++) {
                 const pageBtn = document.createElement('button');
                 pageBtn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
                 pageBtn.textContent = i;
-                pageBtn.addEventListener('click', (e) => { 
-                    e.preventDefault(); 
-                    currentPage = i; 
-                    renderTable(); 
-                });
+                pageBtn.addEventListener('click', (e) => { e.preventDefault(); currentPage = i; renderTable(); });
                 paginationBtns.appendChild(pageBtn);
             }
-
-            // Tombol Next
             const nextBtn = document.createElement('button');
             nextBtn.className = 'pg-btn';
             nextBtn.innerHTML = '›';
             nextBtn.disabled = currentPage === totalPages;
-            nextBtn.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                if (currentPage < totalPages) { 
-                    currentPage++; 
-                    renderTable(); 
-                } 
-            });
+            nextBtn.addEventListener('click', (e) => { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderTable(); } });
             paginationBtns.appendChild(nextBtn);
         }
     }
 
-    // ===== HELPER FUNCTION =====
+    // ===== HELPER =====
     function getStatusLabel(status) {
-        const labels = {
-            'lunas': 'Lunas',
-            'menunggu': 'Menunggu',
-            'gagal': 'Gagal',
-            'proses': 'Diproses'
-        };
+        const labels = { 'lunas': 'Lunas', 'menunggu': 'Menunggu', 'gagal': 'Gagal', 'proses': 'Diproses' };
         return labels[status] || status;
     }
 
-    // ===== SEARCH FUNCTIONALITY =====
+    // ===== SEARCH =====
     const searchInput = document.querySelector('.search-wrap input');
     if (searchInput) {
         searchInput.addEventListener('keyup', function() {
             const query = this.value.toLowerCase();
             const selectedMetode = metodeSelect ? metodeSelect.value : 'Semua Metode';
             const selectedStatus = statusSelect ? statusSelect.value : 'Semua Status';
-            
             filteredTransactions = allTransactions.filter(trans => {
                 let metodeMatch = selectedMetode === 'Semua Metode' || trans.metode === selectedMetode;
                 let statusMatch = selectedStatus === 'Semua Status' || trans.status === selectedStatus;
@@ -749,6 +991,144 @@ document.addEventListener('DOMContentLoaded', function() {
             renderTable();
         });
     }
+
+    // ===== MODAL PEMBAYARAN =====
+    const modal          = document.getElementById('modalPayment');
+    const modalTitle     = document.getElementById('modalTitle');
+    const modalSubtitle  = document.getElementById('modalSubtitle');
+    const modalInvoice   = document.getElementById('modalInvoice');
+    const panelBpjs      = document.getElementById('panelBpjs');
+    const panelMandiri   = document.getElementById('panelMandiri');
+    const modalProcessing= document.getElementById('modalProcessing');
+    const modalSuccess   = document.getElementById('modalSuccess');
+    const btnKonfirmasi  = document.getElementById('btnKonfirmasi');
+    const barcodeRef     = document.getElementById('barcodeRef');
+
+    // State pembayaran aktif
+    let activeInvoice = 'INV-2026-0077';
+    let activeTotal   = 87500;
+
+    // Generate referensi barcode Mandiri
+    function genMandiriRef() {
+        const ts = Date.now().toString().slice(-8);
+        const rand = Math.random().toString(36).substring(2,8).toUpperCase();
+        return `MDR-${ts}-${rand}`;
+    }
+
+    function resetModal() {
+        modalInvoice.style.display  = '';
+        panelBpjs.classList.remove('show');
+        panelMandiri.classList.remove('show');
+        modalProcessing.classList.remove('show');
+        modalSuccess.classList.remove('show');
+        btnKonfirmasi.style.display = '';
+        btnKonfirmasi.textContent   = 'Konfirmasi Bayar';
+        btnKonfirmasi.disabled      = false;
+    }
+
+    function openModal(invoiceId, total) {
+        activeInvoice = invoiceId;
+        activeTotal   = total;
+        resetModal();
+        const metode = selectedPaymentMethod;
+
+        if (metode === 'BPJS') {
+            modalTitle.textContent    = 'Pembayaran BPJS';
+            modalSubtitle.textContent = 'Ditanggung Pemerintah';
+            panelBpjs.classList.add('show');
+            btnKonfirmasi.textContent = 'Konfirmasi & Selesai';
+        } else {
+            modalTitle.textContent    = 'Pembayaran Bank Mandiri';
+            modalSubtitle.textContent = 'Tidak ditanggung pemerintah';
+            barcodeRef.textContent    = genMandiriRef();
+            panelMandiri.classList.add('show');
+            btnKonfirmasi.textContent = 'Konfirmasi Pembayaran';
+        }
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Tombol "Bayar Sekarang" → navigasi ke halaman bayar (tidak dibuka modal lagi)
+
+    // Tombol tutup modal
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+    });
+
+    // Tombol Konfirmasi → kirim ke route pasien.pembayaran.proses
+    btnKonfirmasi.addEventListener('click', async function() {
+        btnKonfirmasi.disabled = true;
+        modalInvoice.style.display  = 'none';
+        panelBpjs.classList.remove('show');
+        panelMandiri.classList.remove('show');
+        btnKonfirmasi.style.display = 'none';
+        modalProcessing.classList.add('show');
+
+        try {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+                           || document.cookie.match(/XSRF-TOKEN=([^;]+)/)?.[1]
+                           || '';
+
+            const res = await fetch('{{ route("pasien.pembayaran.proses") }}', {
+                method : 'POST',
+                headers: {
+                    'Content-Type'    : 'application/json',
+                    'Accept'          : 'application/json',
+                    'X-CSRF-TOKEN'    : csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    invoice_id : activeInvoice,
+                    metode     : selectedPaymentMethod,
+                    total_bayar: activeTotal,
+                }),
+            });
+
+            const data = await res.json();
+
+            modalProcessing.classList.remove('show');
+
+            if (data.success) {
+                // Update kode referensi di success state jika ada
+                const successEl = document.getElementById('modalSuccess');
+                successEl.querySelector('.sub').textContent =
+                    `Ref: ${data.kode_ref} • ${data.waktu}`;
+                successEl.classList.add('show');
+                setTimeout(() => { closeModal(); }, 3000);
+            } else {
+                // Gagal — tampilkan kembali form
+                alert('Pembayaran gagal diproses. Silakan coba lagi.');
+                resetModal();
+                if (selectedPaymentMethod === 'BPJS') {
+                    panelBpjs.classList.add('show');
+                } else {
+                    panelMandiri.classList.add('show');
+                }
+            }
+        } catch (err) {
+            console.error('Bayar error:', err);
+            modalProcessing.classList.remove('show');
+            alert('Terjadi kesalahan jaringan. Silakan coba lagi.');
+            resetModal();
+            if (selectedPaymentMethod === 'BPJS') {
+                panelBpjs.classList.add('show');
+            } else {
+                panelMandiri.classList.add('show');
+            }
+        }
+    });
+
+    // Escape key untuk tutup modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
 
     // ===== INITIAL RENDER =====
     renderTable();

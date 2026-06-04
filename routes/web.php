@@ -37,11 +37,13 @@ use App\Http\Controllers\LoginController;
     });
 
     // Kalau Role Pasien
-    Route::middleware(['auth'])->group(function () {
-     Route::prefix('pasien')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('pasien')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
         Route::get('/resep', [App\Http\Controllers\PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
         Route::get('/pembayaran', [App\Http\Controllers\PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
+        Route::get('/pembayaran/bayar/{invoice}', [App\Http\Controllers\PasienDashboardController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
+        Route::post('/pembayaran/proses', [App\Http\Controllers\PasienDashboardController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
     });
 });
  
