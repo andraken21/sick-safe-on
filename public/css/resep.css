@@ -160,6 +160,11 @@
     outline: none;
     transition: border-color .2s;
 }
+.header-right img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+    }
 
 .search-wrap input:focus { border-color: var(--ss-primary); }
 
@@ -366,6 +371,7 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
 
 
 @media (max-width: 900px) {

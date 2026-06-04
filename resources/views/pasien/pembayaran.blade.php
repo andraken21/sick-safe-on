@@ -9,7 +9,6 @@
 @endpush
 
 @section('content')
-
 <div class="bayar-page">
 
     {{-- PAGE HEADER --}}
@@ -88,7 +87,7 @@
                 <select class="filter-select">
                     <option>Semua Metode</option>
                     <option>BPJS</option>
-                    <option>Mandiri</option>`
+                    <option>Mandiri</option>
                 </select>
             </div>
 
@@ -121,7 +120,14 @@
                     <h3>Tagihan Aktif</h3>
                 </div>
                 <div class="side-card-body">
-                    <div class="tagihan-list">
+                    {{-- Data tagihan aktif disimpan sebagai data attributes --}}
+                    <div class="tagihan-list"
+                         id="tagihanData"
+                         data-subtotal="75000"
+                         data-layanan="12500"
+                         data-total-normal="87500"
+                         data-invoice="INV-2026-0077"
+                         data-status="menunggu">
                         <div class="tagihan-row">
                             <span class="lbl">NO. INVOICE</span>
                             <span class="val" style="color:var(--ss-primary);">INV-2026-0077</span>
@@ -131,29 +137,31 @@
                             <span class="val">RSP-2026–0051</span>
                         </div>
                         <div class="tagihan-row">
-                            <span class="lbl">Dokter & Obat</span>
+                            <span class="lbl">Dokter &amp; Obat</span>
                             <span class="val">Dr. Budi Santoso • 3 Obat</span>
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-row">
                             <span class="lbl">Subtotal obat</span>
-                            <span class="val">Rp 75.000</span>
+                            <span class="val" id="tagihanSubtotal">Rp 75.000</span>
                         </div>
                         <div class="tagihan-row">
                             <span class="lbl">Biaya layanan</span>
-                            <span class="val">Rp 12.500</span>
+                            <span class="val" id="tagihanLayanan">Rp 12.500</span>
                         </div>
-                        <div class="tagihan-row">
+                        <div class="tagihan-row" id="tagihanDiskonRow">
                             <span class="lbl">Diskon BPJS</span>
-                            <span class="val">– Rp 0</span>
+                            <span class="val" id="tagihanDiskon">– Rp 0</span>
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-total">
                             <span class="lbl">Total Bayar</span>
-                            <span class="val">Rp 87.500</span>
+                            <span class="val" id="tagihanTotal">Rp 87.500</span>
                         </div>
                     </div>
-                    <button class="btn-bayar">Bayar Sekarang</button>
+                    {{-- Tombol Bayar Sekarang: hanya aktif kalau status = menunggu --}}
+                    <a href="#" id="btnBayarSekarang" class="btn-bayar" style="margin-top:12px;">Bayar Sekarang</a>
+                    <p id="btnBayarInfo" style="display:none; text-align:center; font-size:.78rem; color:var(--ss-muted); margin-top:8px;"></p>
                 </div>
             </div>
 
@@ -178,22 +186,13 @@
                             <div class="metode-item-left">
                                 <div class="metode-badge metode-badge--mandiri">🏦</div>
                                 <div>
-                                    <div class="metode-name">Bank Mandiri</div>
-                                    <div class="metode-desc">Transfer mudah</div>
+                                    <div class="metode-name">Mandiri</div>
+                                   
                                 </div>
                             </div>
                             <div class="metode-check"></div>
                         </div>
-                        <div class="metode-item" data-metode="Tunai">
-                            <div class="metode-item-left">
-                                <div class="metode-badge metode-badge--tunai">💵</div>
-                                <div>
-                                    <div class="metode-name">Tunai / Kasir</div>
-                                    <div class="metode-desc">Bayar langsung</div>
-                                </div>
-                            </div>
-                            <div class="metode-check"></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -202,11 +201,94 @@
 
     </div>
 
-</div>
+    {{-- MODAL PEMBAYARAN --}}
+    <div class="modal-overlay" id="modalPayment">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <h2 id="modalTitle">Konfirmasi Pembayaran</h2>
+                    <p id="modalSubtitle">INV-2026-0077</p>
+                </div>
+                <button class="modal-close" id="modalCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
 
+                {{-- Ringkasan invoice --}}
+                <div class="modal-invoice" id="modalInvoice">
+                    <div class="modal-invoice-row">
+                        <span>Resep</span><span>RSP-2026-0051</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Dokter</span><span>Dr. Budi Santoso</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Subtotal Obat</span><span>Rp 75.000</span>
+                    </div>
+                    <div class="modal-invoice-row">
+                        <span>Biaya Layanan</span><span>Rp 12.500</span>
+                    </div>
+                    <div class="modal-invoice-total">
+                        <span class="lbl">Total Bayar</span>
+                        <span class="val">Rp 87.500</span>
+                    </div>
+                </div>
+
+                {{-- Panel BPJS --}}
+                <div class="panel-bpjs" id="panelBpjs">
+                    <div class="bpjs-number-wrap">
+                        <div class="bpjs-label">📋 Nomor BPJS Kesehatan</div>
+                        <div class="bpjs-number" id="bpjsNumber">0001 2345 6789 01</div>
+                        <div class="bpjs-name" id="bpjsName">Nama Peserta Aktif</div>
+                        <div class="bpjs-status">✅ Peserta Aktif</div>
+                    </div>
+                    <div class="bpjs-info">
+                        ℹ️ Tunjukkan nomor BPJS ini kepada petugas apotek. Biaya ditanggung sesuai ketentuan BPJS Kesehatan.
+                    </div>
+                </div>
+
+                {{-- Panel Mandiri Barcode --}}
+                <div class="panel-mandiri" id="panelMandiri">
+                    <div class="barcode-dashed">
+                        <div class="barcode-lbl">Barcode Pembayaran Mandiri</div>
+                        <div class="barcode-img-wrap">
+                            {{-- Ganti src dengan path gambar barcode kamu --}}
+                            <img id="barcodeImg" src="" alt="Barcode" style="display:none;">
+                            <div class="barcode-placeholder" id="barcodePlaceholder">
+                                🖼️<br>Tambahkan gambar barcode<br>di sini
+                            </div>
+                        </div>
+                        <div class="barcode-ref" id="barcodeRef">MDR-00000000-000000</div>
+                        <div class="barcode-hint">Scan barcode untuk transfer via Bank Mandiri</div>
+                    </div>
+                </div>
+
+                {{-- Processing state --}}
+                <div class="modal-processing" id="modalProcessing">
+                    <div class="modal-spinner"></div>
+                    <div style="font-weight:700;margin-bottom:4px;">Memproses Pembayaran…</div>
+                    <div style="font-size:.8rem;color:var(--ss-muted);">Mohon tunggu sebentar</div>
+                </div>
+
+                {{-- Success state --}}
+                <div class="modal-success" id="modalSuccess">
+                    <div class="icon"
+                    \
+                     >✅</div>
+                    <div class="title">Pembayaran Dikonfirmasi!</div>
+                    <div class="sub">Invoice Anda telah berhasil diproses</div>
+                    <div style="font-size:1.2rem;font-weight:800;color:var(--ss-primary);margin-top:12px;">Rp 87.500</div>
+                </div>
+
+                {{-- Tombol konfirmasi --}}
+                <button class="btn-konfirmasi" id="btnKonfirmasi">Konfirmasi Bayar</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 @endsection
 
 @push('scripts')
 <script src="{{ asset('js/pembayaran.js') }}"></script>
 @endpush
-    
