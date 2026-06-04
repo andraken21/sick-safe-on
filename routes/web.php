@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
         Route::get('/pasien/dashboard', [App\Http\Controllers\PasienController::class, 'dashboard'])->name('pasien.dashboard');
         Route::get('/pasien/resep', [App\Http\Controllers\PasienController::class, 'resep'])->name('pasien.resep');
         Route::get('/pasien/pembayaran', [App\Http\Controllers\PasienController::class, 'pembayaran'])->name('pasien.pembayaran');
-        Route::get('/pembayaran/bayar/{invoice}', [App\Http\Controllers\PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
+        Route::get('/pasien/pembayaran/bayar/{invoice}', [App\Http\Controllers\PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
         Route::post('/pasien/pembayaran/proses', [App\Http\Controllers\PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
 });
 

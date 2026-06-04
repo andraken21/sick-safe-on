@@ -80,7 +80,7 @@
                     </div>
                     <span>Daftar Resep</span>
                 </a>
-                <a href="#" class="shortcut-card">
+                <a href="{{ route('dokter.antrian') }}" class="shortcut-card">
                     <div class="shortcut-icon pink">
                         <i class="fas fa-chart-bar"></i>
                     </div>

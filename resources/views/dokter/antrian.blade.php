@@ -5,6 +5,8 @@
 @push('styles')
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/antrian.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardDokter.css') }}">
+
 @endpush
 
 @section('content')

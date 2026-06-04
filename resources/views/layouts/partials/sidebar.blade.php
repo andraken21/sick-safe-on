@@ -56,10 +56,6 @@
                class="nav-item {{ request()->is('dokter/antrian') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-list"></i> Antrian
             </a>
-            <div class="nav-label">Monitoring</div>
-            <a href="#" class="nav-item">
-                <i class="fas fa-chart-bar"></i> Riwayat Kunjungan
-            </a>
 
         @elseif($role === 'Pasien')
             <div class="nav-label">Menu Utama</div>
@@ -137,6 +133,20 @@
         padding: 22px 18px 18px;
         border-bottom: 1px solid rgba(255,255,255,0.07);
     }
+
+/* BENAR: Menghilangkan scrollbar di navigasi utama sidebar */
+.sidebar-nav::-webkit-scrollbar {
+    display: none !important;
+}
+
+.sidebar-nav {
+    flex: 1; 
+    padding: 14px 10px; 
+    overflow-y: auto; /* Konten tetap bisa di-scroll jika menu sedang penuh */
+    -ms-overflow-style: none !important;  /* IE dan Edge */
+    scrollbar-width: none !important;  /* Firefox */
+}
+
     .sidebar-logo-icon {
         width: 34px; height: 34px;
         background: rgba(46,204,113,0.15);

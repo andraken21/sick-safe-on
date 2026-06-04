@@ -19,6 +19,38 @@
     --ss-transition:   0.2s ease;
 }
 
+/* buat ubah header  */
+.dashboard-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: green !important;
+}
+
+/* buat ubah sidebar  */
+.sidebar {
+    width: 220px;
+    background: red !important;
+    border-right: 1px solid var(--border);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* buat ubah footer */
+.site-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: purple !important;
+}
+
+
 .pasien-dashboard {
     font-family: var(--ss-font);
     color: var(--ss-text);

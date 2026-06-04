@@ -34,6 +34,38 @@
     --shadow-md:    0 4px 20px rgba(0,67,105,0.12);
 }
 
+/* buat ubah header  */
+.dashboard-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: green !important;
+}
+
+/* buat ubah sidebar  */
+.sidebar {
+    width: 220px;
+    background: red !important;
+    border-right: 1px solid var(--border);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* buat ubah footer */
+.site-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: purple !important;
+}
+
+
 body, .dashboard-wrap {
     font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
     background: var(--bg-page);
@@ -112,6 +144,7 @@ body, .dashboard-wrap {
     margin-bottom: 20px;
 }
 .dash-card:last-child { margin-bottom: 0; }
+
 
 .dash-card-header {
     display: flex;

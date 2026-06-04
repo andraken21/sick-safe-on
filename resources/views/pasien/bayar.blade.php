@@ -6,6 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/bayar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/dashboardPasien.css') }}">
 @endpush
 
 @section('content')
@@ -24,7 +25,19 @@
     </a>
 
     {{-- Card utama --}}
-    <div class="bayar-card">
+    {{--
+        Semua nilai PHP disimpan di data-* pada elemen #bayarApp
+        agar bayar.js (file .js murni) bisa membacanya tanpa Blade syntax.
+    --}}
+    <div class="bayar-card"
+         id="bayarApp"
+         data-invoice="{{ $detail['nomor_invoice'] }}"
+         data-metode="{{ $detail['metode'] }}"
+         data-subtotal="{{ $detail['subtotal_obat'] }}"
+         data-layanan="{{ $detail['biaya_layanan'] }}"
+         data-total-bayar="{{ $detail['total_bayar'] }}"
+         data-proses-url="{{ route('pasien.pembayaran.proses') }}"
+         data-kembali-url="{{ route('pasien.pembayaran') }}">
 
         {{-- Invoice detail --}}
         <div class="inv-head">
@@ -55,51 +68,45 @@
         <div class="price-list">
             <div class="price-row">
                 <span>Subtotal obat</span>
-                <span>Rp {{ number_format($detail['subtotal_obat'], 0, ',', '.') }}</span>
+                <span id="priceSubtotal">Rp {{ number_format($detail['subtotal_obat'], 0, ',', '.') }}</span>
             </div>
             <div class="price-row">
                 <span>Biaya layanan</span>
-                <span>Rp {{ number_format($detail['biaya_layanan'], 0, ',', '.') }}</span>
+                <span id="priceLayanan">Rp {{ number_format($detail['biaya_layanan'], 0, ',', '.') }}</span>
             </div>
-            @if($detail['metode'] === 'BPJS')
-            <div class="price-row" style="color:#15803d;">
-                <span>Diskon BPJS</span>
-                <span>- Rp {{ number_format($detail['diskon'], 0, ',', '.') }}</span>
+            <div class="price-row" id="priceDiskonRow" style="{{ $detail['metode'] === 'BPJS' ? 'color:#15803d;' : 'display:none;' }}">
+                <span id="priceDiskonLbl">Diskon {{ $detail['metode'] }}</span>
+                <span id="priceDiskon">- Rp {{ number_format($detail['diskon'], 0, ',', '.') }}</span>
             </div>
-            @endif
         </div>
 
         {{-- Total --}}
         <div class="total-row">
             <span class="lbl">Total Bayar</span>
-            <span class="val" @if($detail['metode']==='BPJS') style="color:#1fa85c;" @endif>
+            <span class="val" id="priceTotal" style="{{ $detail['metode'] === 'BPJS' ? 'color:#1fa85c;' : '' }}">
                 Rp {{ number_format($detail['total_bayar'], 0, ',', '.') }}
             </span>
         </div>
 
-        {{-- Panel BPJS (muncul kalau metode BPJS dipilih) --}}
-        <div class="panel-bpjs" id="panelBpjs">
+        {{-- Panel BPJS --}}
+        <div class="panel-bpjs" id="panelBpjs" style="{{ $detail['metode'] === 'BPJS' ? '' : 'display:none;' }}">
             <div class="bpjs-box">
                 <div class="lbl">📋 Nomor BPJS Kesehatan</div>
                 <div class="bpjs-number">0001 2345 6789 01</div>
                 <div class="bpjs-name">{{ $pasien->name ?? 'Andra Kenzie' }}</div>
                 <div class="bpjs-badge">✅ Peserta Aktif</div>
             </div>
-            
-            
         </div>
 
-        {{-- Panel Barcode Mandiri (muncul kalau Mandiri dipilih) --}}
-        <div class="panel-mandiri" id="panelMandiri">
+        {{-- Panel Barcode Mandiri --}}
+        <div class="panel-mandiri" id="panelMandiri" style="{{ $detail['metode'] === 'Mandiri' ? '' : 'display:none;' }}">
             <div class="barcode-box">
                 <div class="lbl">Barcode Pembayaran Mandiri</div>
                 <div class="barcode-img-wrap">
-                    {{-- Ganti src dengan path gambar barcode kamu, lalu hapus style="display:none" dan div placeholder --}}
-                    <img id="barcodeImg" src="{{ asset('image/barcode.png') }}" alt="Barcode Mandiri" style="width:100%; height:100%; object-fit:contain;"
-                        
-                    </div>
+                    <img id="barcodeImg" src="{{ asset('image/barcode.png') }}" alt="Barcode Mandiri"
+                         style="width:100%; height:100%; object-fit:contain;">
                 </div>
-                <div class="barcode-ref" id="barcodeRef"></div>
+                <div class="barcode-ref" id="barcodeRef">MDR-{{ time() }}</div>
                 <div class="barcode-hint">Scan barcode ini</div>
             </div>
         </div>
@@ -108,11 +115,11 @@
         <div class="metode-selector" id="metodeSelector">
             <div class="ttl">Pilih Metode Pembayaran</div>
             <div class="metode-grid">
-                <button class="metode-btn" data-metode="BPJS">
+                <button class="metode-btn {{ $detail['metode'] === 'BPJS' ? 'active' : '' }}" data-metode="BPJS">
                     <div class="icon">🏥</div>
                     <div class="name">BPJS Kesehatan</div>
                 </button>
-                <button class="metode-btn active" data-metode="Mandiri">
+                <button class="metode-btn {{ $detail['metode'] === 'Mandiri' ? 'active' : '' }}" data-metode="Mandiri">
                     <div class="icon">🏦</div>
                     <div class="name">Mandiri</div>
                 </button>
@@ -120,14 +127,14 @@
         </div>
 
         {{-- Processing state --}}
-        <div class="state-processing" id="stateProcessing">
+        <div class="state-processing" id="stateProcessing" style="display:none;">
             <div class="spinner"></div>
             <div class="state-title">Memproses Pembayaran…</div>
             <div class="state-sub">Mohon tunggu sebentar</div>
         </div>
 
-        {{-- State: menunggu konfirmasi apoteker --}}
-        <div class="state-success" id="stateSuccess">
+        {{-- State: sukses / menunggu konfirmasi --}}
+        <div class="state-success" id="stateSuccess" style="display:none;">
             <div class="success-icon">⏳</div>
             <div class="state-title">Pembayaran Dikirim!</div>
             <div class="state-sub">Menunggu konfirmasi dari apoteker</div>
@@ -140,7 +147,7 @@
         {{-- Tombol bayar --}}
         <button class="btn-bayar-now" id="btnBayarNow">Bayar Sekarang</button>
 
-    </div>
+    </div>{{-- /.bayar-card --}}
 
     {{-- Footer --}}
     <div class="bayar-footer">
@@ -150,6 +157,7 @@
 
 </div>
 
+{{-- CSRF untuk AJAX --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @endsection
@@ -157,4 +165,3 @@
 @push('scripts')
 <script src="{{ asset('js/bayar.js') }}"></script>
 @endpush
-    
