@@ -2,11 +2,6 @@
 
 <aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-logo">
-        <div class="sidebar-logo-icon"><i class="fas fa-shield-alt"></i></div>
-        <h2>Sick Safe <span>ON</span></h2>
-    </div>
-
     <nav class="sidebar-nav">
 
         @if($role === 'Admin')
@@ -179,12 +174,8 @@
         font-family: inherit; text-align: left;
     }
     .nav-item i { width: 17px; font-size: 14px; flex-shrink: 0; }
-<<<<<<< HEAD
-    .nav-item:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
-=======
     .nav-item:hover,
     .nav-item-btn:hover { background: rgba(255,255,255,0.05); color: #E1F1FE; }
->>>>>>> Kenzie
     .nav-item.active {
         background: rgba(46,204,113,0.12);
         color: #2ecc71;
@@ -202,11 +193,6 @@
         display: flex; align-items: center; justify-content: center;
         font-size: 0.72rem; font-weight: 600; color: #2ecc71; flex-shrink: 0;
     }
-<<<<<<< HEAD
-
-    .user-info p   { font-size: 0.80rem; font-weight: 500; color: #E1F1FE; }
-=======
     .user-info p    { font-size: 0.80rem; font-weight: 500; color: #E1F1FE; }
->>>>>>> Kenzie
     .user-info span { font-size: 0.70rem; color: #5a7a8a; }
 </style>
