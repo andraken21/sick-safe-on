@@ -164,5 +164,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/dashboardApoteker.js') }}"></script>
+    <script src="{{ asset('js/menungguPembayaran.js') }}"></script>
 @endpush
