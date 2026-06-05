@@ -4,7 +4,7 @@
 
 @push('styles')
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
 @endpush
 
@@ -12,13 +12,19 @@
 
 <div class="dashboard-wrap">
 
-    {{-- MAIN AREA --}}
     <div class="dash-main">
-
-        {{-- CONTENT --}}
         <div class="dash-content">
 
-            {{-- STAT CARDS --}}
+            {{-- GREETING --}}
+            <div class="dashboard-greeting">
+                <div>
+                    <div class="greeting-title">Hallo, Admin!</div>
+                    <div class="greeting-sub">Selamat datang. Periksa statistik dan akses cepat di bawah.</div>
+                </div>
+                {{-- Tanggal & hari — warna lebih terang & kontras --}}
+            </div>
+
+            {{-- STAT CARDS — 3 kolom: Pasien, Dokter, Apoteker --}}
             <div class="stat-grid">
                 <div class="stat-card">
                     <div class="stat-icon pasien">
@@ -52,74 +58,79 @@
                         <div class="stat-sub">3 jadwal hari ini</div>
                     </div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon resep">
-                        <i class="fa-solid fa-file-prescription"></i>
-                    </div>
-                    <div>
-                        <div class="stat-label">Resep Bulan Ini</div>
-                        <div class="stat-value">320</div>
-                        <div class="stat-sub">↑ 12% vs bulan lalu</div>
-                    </div>
-                </div>
             </div>
-            {{-- /STAT CARDS --}}
 
-            {{-- MID GRID: CHART + STOK --}}
+            {{-- MID GRID --}}
             <div class="mid-grid">
 
-                {{-- GRAFIK RESEP --}}
-                <div class="dash-card">
+                {{-- AKSES CEPAT — preview card style --}}
+                <div class="dash-card dash-card-halo">
                     <div class="dash-card-header">
-                        <div>
-                            <div class="dash-card-title">Grafik Resep (30 Hari Terakhir)</div>
-                            <div class="dash-card-sub">Jumlah resep harian</div>
-                        </div>
-                        <button class="btn-link">Lihat Detail →</button>
+                    
                     </div>
-                    <div class="chart-area">
-                        <svg class="chart-svg" viewBox="0 0 560 160" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%"   stop-color="#3FBBA0" stop-opacity="0.25"/>
-                                    <stop offset="100%" stop-color="#3FBBA0" stop-opacity="0.02"/>
-                                </linearGradient>
-                            </defs>
-                            {{-- Grid lines --}}
-                            <line x1="0" y1="32"  x2="560" y2="32"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="64"  x2="560" y2="64"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="96"  x2="560" y2="96"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="128" x2="560" y2="128" stroke="#E1F1FE" stroke-width="1"/>
-                            {{-- Y labels --}}
-                            <text x="0" y="30"  font-size="9" fill="#6a9ab5">60</text>
-                            <text x="0" y="62"  font-size="9" fill="#6a9ab5">40</text>
-                            <text x="0" y="94"  font-size="9" fill="#6a9ab5">20</text>
-                            <text x="0" y="126" font-size="9" fill="#6a9ab5">0</text>
-                            {{-- Area fill --}}
-                            <path d="M20,100 C50,90 80,115 110,95 C140,75 160,60 190,50 C220,40 240,70 270,55 C300,40 330,45 360,30 C390,18 420,35 450,28 C480,20 510,15 540,10 L540,140 L20,140 Z"
-                                  fill="url(#areaGrad)"/>
-                            {{-- Line --}}
-                            <polyline
-                                points="20,100 50,90 80,115 110,95 140,75 160,60 190,50 220,40 240,70 270,55 300,40 330,45 360,30 390,18 420,35 450,28 480,20 510,15 540,10"
-                                fill="none" stroke="#3FBBA0" stroke-width="2.5"
-                                stroke-linejoin="round" stroke-linecap="round"/>
-                            {{-- Highlight dots --}}
-                            <circle cx="360" cy="30" r="4" fill="#004369" stroke="white" stroke-width="1.5"/>
-                            <circle cx="540" cy="10" r="4" fill="#3FBBA0" stroke="white" stroke-width="1.5"/>
-                        </svg>
-                    </div>
-                    <div class="chart-labels">
-                        <span>20 Apr</span>
-                        <span>27 Apr</span>
-                        <span>4 Mei</span>
-                        <span>11 Mei</span>
-                        <span>18 Mei</span>
+
+                    <div class="shortcut-links">
+
+                        {{-- Card: Kelola Akun Pengguna --}}
+                        <a href="{{ route('kelolaAkunPengguna') }}" class="shortcut-item">
+                            <div class="shortcut-dot" style="background: linear-gradient(135deg,#F97316,#EA580C);">
+                                <i class="fa-solid fa-users-cog"></i>
+                            </div>
+                            <div class="shortcut-info">
+                                <div class="shortcut-name">Kelola Akun Pengguna</div>
+                                <div class="shortcut-preview">
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#F97316"></div>
+                                        Dokter aktif
+                                        <span class="preview-val">25 akun</span>
+                                    </div>
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#FB923C"></div>
+                                        Apoteker aktif
+                                        <span class="preview-val">18 akun</span>
+                                    </div>
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#FED7AA"></div>
+                                        Admin aktif
+                                        <span class="preview-val">3 akun</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shortcut-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        </a>
+
+                        {{-- Card: Laporan & Analisis --}}
+                        <a href="{{ route('laporanAnalisisData') }}" class="shortcut-item">
+                            <div class="shortcut-dot" style="background: linear-gradient(135deg,#FB923C,#F59E0B);">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <div class="shortcut-info">
+                                <div class="shortcut-name">Laporan &amp; Analisis Data</div>
+                                <div class="shortcut-preview">
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#F97316"></div>
+                                        Transaksi bulan ini
+                                        <span class="preview-val">320</span>
+                                    </div>
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#34D399"></div>
+                                        Transaksi selesai
+                                        <span class="preview-badge badge-ok">Selesai</span>
+                                    </div>
+                                    <div class="preview-row">
+                                        <div class="preview-dot" style="background:#FCD34D"></div>
+                                        Transaksi pending
+                                        <span class="preview-badge badge-warning">Pending</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shortcut-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        </a>
+
                     </div>
                 </div>
-                {{-- /GRAFIK RESEP --}}
 
-                {{-- STOK MENIPIS --}}
+                {{-- STOK OBAT MENIPIS --}}
                 <div class="dash-card">
                     <div class="dash-card-header">
                         <div>
@@ -128,61 +139,55 @@
                         </div>
                     </div>
                     <div class="stok-list">
-
                         <div class="stok-item">
-                            <div class="stok-dot" style="background:#3FBBA0;"></div>
+                            <div class="stok-dot" style="background:#F97316;"></div>
                             <div class="stok-info">
                                 <div class="stok-name">Paracetamol 500mg</div>
                                 <div class="stok-detail">Stok: 45 &nbsp;·&nbsp; Min: 100</div>
                             </div>
                             <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:45%;background:#3FBBA0;"></div>
+                                <div class="stok-bar" style="width:45%;background:#F97316;"></div>
                             </div>
-                            <span class="stok-badge badge-warning">Rendah</span>
+                            <span class="stok-badge badge-warning">Menipis</span>
                         </div>
-
                         <div class="stok-item">
-                            <div class="stok-dot" style="background:#004369;"></div>
+                            <div class="stok-dot" style="background:#EA580C;"></div>
                             <div class="stok-info">
                                 <div class="stok-name">Amoxicillin 500mg</div>
                                 <div class="stok-detail">Stok: 32 &nbsp;·&nbsp; Min: 100</div>
                             </div>
                             <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:32%;background:#004369;"></div>
+                                <div class="stok-bar" style="width:32%;background:#EA580C;"></div>
                             </div>
                             <span class="stok-badge badge-danger">Menipis</span>
                         </div>
-
                         <div class="stok-item">
-                            <div class="stok-dot" style="background:#b1ddff;"></div>
+                            <div class="stok-dot" style="background:#FCD34D;"></div>
                             <div class="stok-info">
                                 <div class="stok-name">CTM 4mg</div>
                                 <div class="stok-detail">Stok: 20 &nbsp;·&nbsp; Min: 50</div>
                             </div>
                             <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:40%;background:#b1ddff;"></div>
+                                <div class="stok-bar" style="width:40%;background:#FCD34D;"></div>
                             </div>
                             <span class="stok-badge badge-danger">Menipis</span>
                         </div>
-
                         <div class="stok-item">
-                            <div class="stok-dot" style="background:#3FBBA0;"></div>
+                            <div class="stok-dot" style="background:#34D399;"></div>
                             <div class="stok-info">
                                 <div class="stok-name">Vitamin C 500mg</div>
                                 <div class="stok-detail">Stok: 80 &nbsp;·&nbsp; Min: 100</div>
                             </div>
                             <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:80%;background:#3FBBA0;"></div>
+                                <div class="stok-bar" style="width:80%;background:#34D399;"></div>
                             </div>
                             <span class="stok-badge badge-ok">Aman</span>
                         </div>
-
                     </div>
-                    <button class="btn-all full">
+                    <a href="{{ route('kelolaDataObat') }}" class="btn-all full">
                         <i class="fa-solid fa-box-open"></i> Lihat Semua Obat
-                    </button>
+                    </a>
                 </div>
-                {{-- /STOK MENIPIS --}}
 
             </div>
             {{-- /MID GRID --}}
@@ -194,7 +199,6 @@
                         <div class="dash-card-title">Transaksi Terbaru</div>
                         <div class="dash-card-sub">Data transaksi hari ini</div>
                     </div>
-                    <button class="btn-link">Lihat Semua →</button>
                 </div>
                 <div class="table-wrap">
                     <table class="dash-table">
@@ -215,11 +219,7 @@
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 125.000</td>
                                 <td class="trx-date">01 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
+                                <td><span class="status-badge status-selesai"><i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai</span></td>
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0080</span></td>
@@ -227,11 +227,7 @@
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 85.000</td>
                                 <td class="trx-date">10 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
+                                <td><span class="status-badge status-selesai"><i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai</span></td>
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0079</span></td>
@@ -239,11 +235,7 @@
                                 <td><span class="trx-type type-bpjs">BPJS</span></td>
                                 <td class="trx-amount">Rp 210.000</td>
                                 <td class="trx-date">07 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-pending">
-                                        <i class="fa-solid fa-clock" style="font-size:10px;"></i> Pending
-                                    </span>
-                                </td>
+                                <td><span class="status-badge status-pending"><i class="fa-solid fa-clock" style="font-size:10px;"></i> Pending</span></td>
                             </tr>
                             <tr>
                                 <td><span class="trx-id">TRX-2024-0078</span></td>
@@ -251,32 +243,39 @@
                                 <td><span class="trx-type type-mandiri">Mandiri</span></td>
                                 <td class="trx-amount">Rp 55.000</td>
                                 <td class="trx-date">10 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
+                                <td><span class="status-badge status-selesai"><i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="btn-all-wrap">
-                    <button class="btn-all">
+                    <a href="{{ route('pantauTransaksi') }}" class="btn-all">
                         <i class="fa-solid fa-list"></i> Lihat Semua Transaksi
-                    </button>
+                    </a>
                 </div>
             </div>
-            {{-- /TRANSAKSI TERBARU --}}
 
         </div>
-        {{-- /CONTENT --}}
-
     </div>
-    {{-- /MAIN AREA --}}
-
 </div>
+
 @endsection
 
 @push('scripts')
 <script src="{{ asset('js/dashboardAdmin.js') }}"></script>
+<script>
+    // Tanggal & jam live di greeting
+    function updateDatetime() {
+        const el = document.getElementById('greeting-datetime');
+        if (!el) return;
+        const now  = new Date();
+        const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        const mons = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        const hh   = String(now.getHours()).padStart(2,'0');
+        const mm   = String(now.getMinutes()).padStart(2,'0');
+        el.textContent = `${days[now.getDay()]}, ${now.getDate()} ${mons[now.getMonth()]} ${now.getFullYear()} — ${hh}:${mm}`;
+    }
+    updateDatetime();
+    setInterval(updateDatetime, 30000);
+</script>
 @endpush

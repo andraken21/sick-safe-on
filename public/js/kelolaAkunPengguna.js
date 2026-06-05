@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentPage  = 1;
     const perPage    = 5;
     let filterRole   = '';
-    let filterStatus = '';
     let searchQuery  = '';
     let editingId    = null;
 
@@ -40,8 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const tbody          = document.getElementById('usersTableBody');
     const searchInput    = document.getElementById('searchInput');
     const selectRole     = document.getElementById('filterRole');
-    const selectStatus   = document.getElementById('filterStatus');
-    const checkAll       = document.getElementById('checkAll');
     const paginationEl   = document.getElementById('pagination');
     const paginationInfo = document.getElementById('paginationInfo');
 
@@ -53,9 +50,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputEmail         = document.getElementById('inputEmail');
     const inputPhone         = document.getElementById('inputPhone');
     const inputRole          = document.getElementById('inputRole');
-    const inputStatus        = document.getElementById('inputStatus');
     const inputPassword      = document.getElementById('inputPassword');
     const btnPwdToggle       = document.getElementById('btnPwdToggle');
+
+    function normalizePhone(value) {
+        let digits = value.replace(/\D/g, '');
+        if (digits.startsWith('0')) {
+            digits = '62' + digits.slice(1);
+        } else if (digits.startsWith('8')) {
+            digits = '62' + digits;
+        }
+        return digits ? ('+' + digits) : '';
+    }
+
+    if (inputPhone && inputPhone.value) {
+        inputPhone.value = normalizePhone(inputPhone.value);
+    }
+
+    if (inputPhone) {
+        inputPhone.addEventListener('input', function () {
+            this.value = normalizePhone(this.value);
+        });
+    }
 
     const modalDetail = document.getElementById('modalDetail');
     const modalConfirm  = document.getElementById('modalConfirm');
@@ -146,9 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 normalize(u.name).includes(q) ||
                 normalize(u.email).includes(q) ||
                 normalize(u.id).includes(q);
-            const matchRole   = !filterRole   || u.role   === filterRole;
-            const matchStatus = !filterStatus || u.status === filterStatus;
-            return matchSearch && matchRole && matchStatus;
+            const matchRole   = !filterRole || u.role === filterRole;
+            return matchSearch && matchRole;
         });
     }
 
@@ -207,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (slice.length === 0) {
             tbody.innerHTML = `
-                <tr><td colspan="8">
+                <tr><td colspan="7">
                     <div class="empty-state">
                         <i class="fa-solid fa-users-slash"></i>
                         Tidak ada pengguna yang sesuai filter.
@@ -216,10 +231,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             tbody.innerHTML = slice.map(u => `
                 <tr data-id="${u.id}">
-                    <td><input type="checkbox" class="check-row"></td>
                     <td>
                         <div class="user-cell">
-                            <div class="user-avatar">${u.initials}</div>
                             <div class="user-info">
                                 <div class="user-name">${u.name}</div>
                                 <div class="user-id">ID: ${u.id}</div>
@@ -230,7 +243,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${roleBadge(u.role)}</td>
                     <td>${u.phone}</td>
                     <td>${u.created}</td>
-                    <td>${statusBadge(u.status)}</td>
                     <td>
                         <div class="action-buttons">
                             <button class="btn-action btn-view" title="Lihat Detail" data-action="view" data-id="${u.id}">
@@ -246,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         renderPagination(pages);
-        checkAll.checked = false;
     }
 
     /* ================================================
@@ -276,14 +287,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ================================================ */
     searchInput.addEventListener('input', () => { searchQuery = searchInput.value; currentPage=1; renderTable(); });
     selectRole.addEventListener('change',  () => { filterRole   = selectRole.value;  currentPage=1; renderTable(); });
-    selectStatus.addEventListener('change',() => { filterStatus = selectStatus.value;currentPage=1; renderTable(); });
 
-    /* ================================================
-       SELECT ALL
-    ================================================ */
-    checkAll.addEventListener('change', () => {
-        tbody.querySelectorAll('.check-row').forEach(cb => { cb.checked = checkAll.checked; });
-    });
+    /* Select-all removed (checkboxes disabled) */
 
     /* ================================================
        ACTION BUTTONS (delegasi)
@@ -311,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalAddEditSub.textContent   = 'Isi data pengguna dengan lengkap';
         modalAddEditIcon.innerHTML    = '<i class="fa-solid fa-user-plus"></i>';
         inputName.value = inputEmail.value = inputPhone.value = inputPassword.value = '';
-        inputRole.value = ''; inputStatus.value = 'aktif';
+        inputRole.value = '';
         document.getElementById('passwordGroup').style.display = '';
         openModal(modalAddEdit);
         setTimeout(() => inputName.focus(), 100);
@@ -329,7 +334,6 @@ document.addEventListener('DOMContentLoaded', function () {
         inputEmail.value  = user.email;
         inputPhone.value  = user.phone;
         inputRole.value   = user.role;
-        inputStatus.value = user.status;
         inputPassword.value = '';
         document.getElementById('passwordGroup').style.display = 'none';
         openModal(modalAddEdit);
@@ -341,9 +345,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('btnSaveUser').addEventListener('click', () => {
         const name   = inputName.value.trim();
         const email  = inputEmail.value.trim();
-        const phone  = inputPhone.value.trim();
+        const phone  = normalizePhone(inputPhone.value.trim());
         const role   = inputRole.value;
-        const status = inputStatus.value;
+        const status = editingId ? (users.find(u => u.id === editingId)?.status || 'aktif') : 'aktif';
 
         if (!name || !email || !role) {
             showToast('Nama, email, dan role wajib diisi.', 'error'); return;
@@ -379,7 +383,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detailEmail').textContent      = user.email;
         document.getElementById('detailPhone').textContent      = user.phone;
         document.getElementById('detailRole').innerHTML         = roleBadge(user.role);
-        document.getElementById('detailStatus').innerHTML       = statusBadge(user.status);
         document.getElementById('detailCreated').textContent    = user.created;
         openModal(modalDetail);
     }

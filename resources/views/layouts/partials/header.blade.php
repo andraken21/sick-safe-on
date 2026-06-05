@@ -2,12 +2,23 @@
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
     .dashboard-header {
-        background: #1e1b1b;
+        background: linear-gradient(135deg, #fff5eb 0%, #ffe2c8 55%, #f5b68b 100%);
         padding: 0 24px;
         font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
         height: 70px;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        border-bottom: 1px solid rgba(255,255,255,0.35);
+        box-shadow: 0 8px 24px rgba(245, 141, 54, 0.12);
+        position: fixed;
+        top: 0;
+        left: 220px;
+        width: calc(100% - 220px);
+        z-index: 1000;
+        transition: left 0.3s ease, width 0.3s ease;
+    }
+
+    body.sidebar-collapsed .dashboard-header {
+        left: 0;
+        width: 100%;
     }
 
     .header-row {
@@ -46,7 +57,7 @@
         display: block;
         width: 20px;
         height: 2px;
-        background: #ffffff;
+        background: #4b2b10;
         border-radius: 3px;
     }
 
@@ -60,12 +71,12 @@
     .header-left .text {
         font-weight: 700;
         font-size: 1.15rem;
-        color: #ffffff;
+        color: #4b2b10;
         white-space: nowrap;
         letter-spacing: 0.5px;
     }
 
-    .header-left .text .on { color: #3FBBA0; }
+    .header-left .text .on { color: #f97316; }
 
     .header-center {
         text-align: center;

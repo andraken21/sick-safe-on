@@ -132,7 +132,7 @@
                 <div class="form-group">
                     <label for="no_telp" class="label-required">No. Telepon</label>
                     <input type="tel" id="no_telp" name="no_telp"
-                        placeholder="08xxxxxxxxxx"
+                        placeholder="+628xxxxxxxxxx"
                         value="{{ old('no_telp') }}"
                         class="{{ $errors->has('no_telp') ? 'is-invalid' : '' }}"
                         required>
@@ -323,13 +323,30 @@
         this.value = this.value.replace(/\D/g, '').slice(0, 16);
     });
 
-    document.getElementById('no_telp').addEventListener('input', function () {
-        this.value = this.value.replace(/\D/g, '').slice(0, 13);
+    function normalizePhone(value) {
+        let digits = value.replace(/\D/g, '');
+        if (digits.startsWith('0')) {
+            digits = '62' + digits.slice(1);
+        } else if (digits.startsWith('8')) {
+            digits = '62' + digits;
+        }
+        return digits ? ('+' + digits) : '';
+    }
+
+    const phoneInput = document.getElementById('no_telp');
+    if (phoneInput.value) {
+        phoneInput.value = normalizePhone(phoneInput.value);
+    }
+
+    phoneInput.addEventListener('input', function () {
+        const normalized = normalizePhone(this.value);
+        this.value = normalized;
+        this.setSelectionRange(this.value.length, this.value.length);
     });
-    
+
     document.querySelector('form').addEventListener('submit', function() {
-    document.getElementById('loadingOverlay').classList.add('show');
-});
+        document.getElementById('loadingOverlay').classList.add('show');
+    });
 </script>
 
 </body>
