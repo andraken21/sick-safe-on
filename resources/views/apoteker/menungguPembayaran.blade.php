@@ -15,7 +15,7 @@
         <main class="main-content">
 
             <div class="page-header">
-                <h2 class="section-title">Resep Masuk</h2>
+                <h2 class="section-title">Menunggu Pembayaran</h2>
                 <p class="section-subtitle">Kelola dan validasi resep yang masuk dari dokter</p>
             </div>
 
@@ -59,8 +59,8 @@
             {{-- DETAIL --}}
             <div class="detail-section">
                 <div class="detail-header">
-                    <h3>Detail Resep</h3>
-                    <span class="detail-id">RSP-2024-0048</span>
+                    <h2>Detail Resep</h2><br
+                    <span class="detail-id">RSP-2024-0048</span><br>
                 </div>
                 <div class="detail-grid">
                     <div class="detail-info">

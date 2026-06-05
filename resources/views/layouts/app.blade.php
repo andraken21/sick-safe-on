@@ -79,15 +79,16 @@
 
         .site-footer {
             width: 100% !important;
-            margin-left: 0 !important;
-            box-sizing: border-box;
-        }
-        .site-footer {
-            width: 100% !important;
-            margin-left: 0 !important;
+            padding-left: 250px !important;
             box-sizing: border-box;
         }
 
+        .site-footer.footer-collapsed {
+            padding-left: 0 !important;
+        }
+
+         /* Tambahan untuk footer */
+        
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-220px); }
             .dashboard-header { left: 0; }
@@ -103,21 +104,23 @@
     @include('layouts.partials.header')
 
     {{-- KONTEN + FOOTER --}}
-    <div class="page-wrapper">
-        <main class="content">
-            @yield('content')
-        </main>
+   <div class="page-wrapper">
+    <main class="content">
+        @yield('content')
+    </main>
 
-        @include('layouts.partials.footer')
-    </div>
+    @include('layouts.partials.footer')  {{-- ✅ di dalam --}}
+</div>
 
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            const footer = document.getElementById('site-footer');
             const isCollapsed = sidebar.classList.toggle('collapsed');
             document.body.classList.toggle('sidebar-collapsed', isCollapsed);
+            footer.classList.toggle('footer-collapsed', isCollapsed);
         }
 
         // Tutup dropdown profil saat klik di luar
