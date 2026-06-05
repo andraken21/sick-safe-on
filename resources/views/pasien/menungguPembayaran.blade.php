@@ -3,8 +3,6 @@
 @section('title', 'Menunggu Pembayaran - Sick Safe ON')
 
 @push('styles')
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboardApoteker.css') }}">
 @endpush
 
@@ -18,6 +16,18 @@
                 <h2 class="section-title">Resep Masuk</h2>
                 <p class="section-subtitle">Kelola dan validasi resep yang masuk dari dokter</p>
             </div>
+
+            {{-- Flash messages --}}
+            @if(session('success'))
+            <div style="padding:12px 16px; background:#dcfce7; border:1px solid #86efac; border-radius:8px; color:#15803d; font-size:.85rem; font-weight:600; margin-bottom:16px;">
+                ✅ {{ session('success') }}
+            </div>
+            @endif
+            @if(session('error'))
+            <div style="padding:12px 16px; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; color:#b91c1c; font-size:.85rem; font-weight:600; margin-bottom:16px;">
+                ❌ {{ session('error') }}
+            </div>
+            @endif
 
             {{-- TABS --}}
             <div class="tabs">
@@ -128,14 +138,22 @@
 
                 {{-- ACTIONS --}}
                 <div class="actions">
-                    <button class="btn-custom btn-outline">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                        Batalkan
-                    </button>
-                    <button class="btn-custom btn-dark">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                        Konfirmasi Pembayaran
-                    </button>
+                    <form method="POST" action="{{ route('apoteker.batalkan-pembayaran') }}" style="margin:0;">
+                        @csrf
+                        <input type="hidden" name="resep_id" value="RSP-2024-0048">
+                        <button type="submit" class="btn-custom btn-outline" onclick="return confirm('Batalkan pembayaran ini?')">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            Batalkan
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ route('apoteker.konfirmasi-pembayaran') }}" style="margin:0;">
+                        @csrf
+                        <input type="hidden" name="resep_id" value="RSP-2024-0048">
+                        <button type="submit" class="btn-custom btn-dark">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                            Konfirmasi Pembayaran
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -146,5 +164,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/dashboardApoteker.js') }}"></script>
+    <script src="{{ asset('js/menungguPembayaran.js') }}"></script>
 @endpush
