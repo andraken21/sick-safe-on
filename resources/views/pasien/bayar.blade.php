@@ -291,9 +291,8 @@
                 <div class="lbl">Barcode Pembayaran Mandiri</div>
                 <div class="barcode-img-wrap">
                     {{-- Ganti src dengan path gambar barcode kamu, lalu hapus style="display:none" dan div placeholder --}}
-                    <img id="barcodeImg" src="{{ asset('image/barcode.png') }}" alt="Barcode Mandiri" style="width:100%; height:100%; object-fit:contain;"
+                    <img id="barcodeImg" src="{{ asset('image/barcode.jpg') }}" alt="Barcode Mandiri" style="width:100%; height:100%; object-fit:contain;">
                         
-                    </div>
                 </div>
                 <div class="barcode-ref" id="barcodeRef"></div>
                 <div class="barcode-hint">Scan barcode ini</div>
