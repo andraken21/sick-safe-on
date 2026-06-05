@@ -1,10 +1,6 @@
 /* ===========================
    Dashboard Admin - Sick Safe ON
-   Palette:
-   Tosca      : #3FBBA0
-   Navy       : #004369
-   Blue Muda  : #b1ddff
-   Light BG   : #E1F1FE
+   Palette: Warm Peach / Orange Pastel
 =========================== */
 
 *, *::before, *::after {
@@ -14,37 +10,35 @@
 }
 
 :root {
-    /* ── Warna utama ── */
-    --tosca:        #3FBBA0;
-    --tosca-dark:   #2a8874;
-    --tosca-soft:   #e8f8f5;
+    --primary:      #F7B16A;
+    --primary-light:#FFD5A4;
+    --primary-soft: #FFF3E6;
+    --primary-pale: #FFF8F2;
+    --primary-mid:  #FFE1C1;
+    --primary-dark: #D87A34;
 
-    --navy:         #004369;
-    --navy-light:   #005a8e;
+    --accent:       #F4A15D;
 
-    --blue-soft:    #ddeeff;
+    --text-dark:    #4B2B10;
+    --text-mid:     #7C4B20;
+    --text-muted:   #A57A5C;
 
-    /* ── Teks ── */
-    --text-dark:    #1a2e3b;
-    --text-mid:     #3a5568;
-    --text-muted:   #6a8fa5;
-
-    /* ── Background & border ── */
-    --bg-page:      #f0f7fb;
+    --bg-page:      #FFF8F3;
     --white:        #ffffff;
-    --white-ish:    #f5fafd;
-    --border:       #d4e8f5;
+    --white-ish:    #FFFAF7;
+    --border:       #F5C9A3;
 
-    /* ── Radius & shadow ── */
     --radius-sm:    8px;
     --radius:       10px;
     --radius-md:    12px;
 
-    --shadow-sm:    0 1px 4px rgba(0,67,105,0.08);
-    --shadow-md:    0 4px 20px rgba(0,67,105,0.12);
+    --shadow-sm:    0 1px 4px rgba(249,115,22,0.10);
+    --shadow-md:    0 4px 20px rgba(249,115,22,0.13);
+
+    /* Nav font color — dipakai sidebar & header */
+    --nav-fg:       #7C3D12;
 }
 
-/* ── Font ── */
 body,
 .dashboard-wrap {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -60,36 +54,100 @@ body,
     min-height: 100vh;
 }
 
-/* buat ubah header  */
+/* ── HEADER ── */
 .dashboard-header {
     padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255,255,255,0.28);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #d19885 !important;
+    background: linear-gradient(135deg, #FFF2E5 0%, #FFD6A8 55%, #F7B16A 100%);
+    color: var(--nav-fg);
+    box-shadow: 0 12px 30px rgba(243,147,78,0.12);
 }
 
-/* buat ubah sidebar  */
+/* Semua teks di header */
+.dashboard-header *,
+.dashboard-header a,
+.dashboard-header button,
+.dashboard-header span,
+.dashboard-header .brand-name,
+.dashboard-header .topbar-title,
+.dashboard-header .topbar-sub {
+    color: var(--nav-fg) !important;
+}
+
+/* ── SIDEBAR ── */
 .sidebar {
     width: 220px;
-    background: #d19885 !important;
-    border-right: 1px solid var(--border);
+    background: linear-gradient(180deg, #FFF7F0 0%, #FFE3C6 45%, #FFD1A4 100%);
+    border-right: 1px solid rgba(255,255,255,0.38);
     padding: 24px 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    color: var(--nav-fg);
 }
 
-/* buat ubah footer */
+/* Semua teks di sidebar */
+.sidebar *,
+.sidebar a,
+.sidebar span,
+.sidebar .nav-label,
+.sidebar .nav-item,
+.sidebar .nav-section-title,
+.sidebar .brand-name,
+.sidebar .brand-sub {
+    color: var(--nav-fg) !important;
+}
+
+/* Icon sidebar */
+.sidebar .nav-icon,
+.sidebar i {
+    color: var(--primary-dark) !important;
+}
+
+/* Active nav item */
+.sidebar .nav-item,
+.sidebar .nav-link {
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+.sidebar .nav-item.active,
+.sidebar .nav-link.active {
+    background: var(--primary-soft);
+    color: var(--primary-dark) !important;
+    font-weight: 700;
+    border-color: rgba(204,128,47,0.25);
+}
+
+/* Hover nav item */
+.sidebar .nav-item:hover,
+.sidebar .nav-link:hover {
+    background: var(--primary-mid);
+    color: var(--primary-dark) !important;
+}
+
+/* Fix sidebar icon/text alignment */
+.sidebar .nav-item i,
+.sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+    min-width: 20px;
+}
+
+/* ── FOOTER ── */
 .site-footer {
     padding: 16px 20px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255,255,255,0.28);
     text-align: center;
     font-size: 11px;
-    color: var(--text-muted);
-    background: #d19885 !important;
+    color: var(--nav-fg);
+    background: linear-gradient(135deg, #FFF0E2 0%, #FFD8B4 100%);
 }
+
+.site-footer * { color: var(--nav-fg) !important; }
 
 .dash-main {
     flex: 1;
@@ -104,12 +162,79 @@ body,
     flex: 1;
 }
 
+/* ── TOPBAR (halaman dalam) ── */
+.dash-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-title { font-size: 15px; font-weight: 800; color: #7C3D12; }
+.topbar-sub   { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+
+.topbar-btn {
+    width: 38px; height: 38px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: #D87A34;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; cursor: pointer; transition: all 0.15s;
+}
+
+.topbar-btn:hover {
+    background: linear-gradient(135deg, #F97316, #EA580C);
+    color: #fff;
+    border-color: #F97316;
+    box-shadow: 0 2px 10px rgba(249,115,22,0.28);
+}
+
+/* ── GREETING ── */
+.dashboard-greeting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(255,232,210,0.95), rgba(255,244,230,0.98));
+    border: 1px solid rgba(249,115,22,0.14);
+    box-shadow: var(--shadow-sm);
+}
+
+.greeting-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 4px;
+}
+
+.greeting-sub { font-size: 13px; color: var(--text-muted); }
+
+/* ── Tanggal / jam di greeting ── */
+.greeting-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: #C2410C;
+    background: #FFF0E6;
+    padding: 6px 14px;
+    border-radius: 99px;
+    border: 1px solid #FED7AA;
+    white-space: nowrap;
+}
+
 /* ═══════════════════════════════
-   STAT CARDS
+   STAT CARDS  (hanya 3)
 ═══════════════════════════════ */
 .stat-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     margin-bottom: 22px;
 }
@@ -124,43 +249,23 @@ body,
     gap: 14px;
     transition: box-shadow 0.2s;
 }
+
 .stat-card:hover { box-shadow: var(--shadow-md); }
 
 .stat-icon {
-    width: 46px;
-    height: 46px;
+    width: 46px; height: 46px;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
 }
 
-/* Warna ikon per kategori — semua variabel sudah terdefinisi */
-.stat-icon.pasien   { background: var(--tosca-soft);  color: var(--tosca-dark); }
-.stat-icon.dokter   { background: var(--blue-soft);   color: var(--navy); }
-.stat-icon.apoteker { background: #fff3e0;             color: #e65100; }
-.stat-icon.resep    { background: #fce4ec;             color: #c2185b; }
+.stat-icon.pasien   { background: var(--primary-soft);  color: var(--primary-dark); }
+.stat-icon.dokter   { background: var(--primary-pale);  color: var(--primary-dark); }
+.stat-icon.apoteker { background: var(--primary-mid);   color: var(--primary-dark); }
 
-.stat-label {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-.stat-value {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1;
-}
-.stat-sub {
-    font-size: 11px;
-    color: var(--tosca);
-    margin-top: 4px;
-    font-weight: 600;
-}
+.stat-label { font-size: 11.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+.stat-value { font-size: 26px; font-weight: 700; color: var(--primary-dark); line-height: 1; }
+.stat-sub   { font-size: 11px; color: var(--primary-dark); margin-top: 4px; font-weight: 600; }
 
 /* ═══════════════════════════════
    MID GRID
@@ -176,13 +281,23 @@ body,
    CARD
 ═══════════════════════════════ */
 .dash-card {
+    position: relative;
     background: var(--white);
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 30px;
+    box-shadow: 0 14px 36px rgba(249,115,22,0.10);
+    overflow: visible;
 }
 .dash-card:last-child { margin-bottom: 0; }
+
+.dash-card-halo::before {
+    content: '';
+    padding: 40px;
+    inset: -14px;
+    background: radial-gradient(circle, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0) 60%);
+    z-index: -1;
+}
 
 .dash-card-header {
     display: flex;
@@ -191,199 +306,219 @@ body,
     margin-bottom: 16px;
 }
 
-.dash-card-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--navy);
-}
-.dash-card-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
+.dash-card-title { font-size: 14px; font-weight: 700; color: var(--primary-dark); }
+.dash-card-sub   { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
 .btn-link {
-    font-size: 12px;
-    color: var(--tosca);
-    font-weight: 600;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 6px;
-    transition: background 0.15s;
+    font-size: 12px; color: var(--primary-dark);
+    font-weight: 600; background: none; border: none;
+    cursor: pointer; padding: 4px 10px;
+    border-radius: 6px; transition: background 0.15s;
 }
-.btn-link:hover { background: var(--tosca-soft); }
+.btn-link:hover { background: var(--primary-soft); }
+
+/* ═══════════════════════════════
+   AKSES CEPAT — preview cards
+═══════════════════════════════ */
+.shortcut-links { display: grid; gap: 14px; }
+
+/* Setiap shortcut = preview card bergaya stok / transaksi */
+.shortcut-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.shortcut-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #F97316;
+}
+
+/* Ikon bulat */
+.shortcut-dot {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 17px; flex-shrink: 0;
+}
+
+.shortcut-info { flex: 1; min-width: 0; }
+
+.shortcut-name {
+    font-size: 13px; font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+}
+
+/* Preview rows di dalam shortcut (mirip stok-item / tabel mini) */
+.shortcut-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.preview-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--text-mid);
+    font-weight: 500;
+}
+
+.preview-row i {
+    width: 14px;
+    text-align: center;
+    color: var(--primary-dark);
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.preview-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.preview-val {
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-left: auto;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.preview-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 99px;
+    flex-shrink: 0;
+}
+
+.badge-ok      { background: #DCFCE7; color: #15803D; }
+.badge-warning { background: #FEF9C3; color: #A16207; }
+.badge-danger  { background: #FEE2E2; color: #DC2626; }
+
+.shortcut-arrow {
+    color: var(--primary-dark);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
 
 /* ═══════════════════════════════
    CHART
 ═══════════════════════════════ */
-.chart-area {
-    position: relative;
-    height: 180px;
-}
-.chart-svg { width: 100%; height: 100%; }
+.chart-area { position: relative; height: 180px; }
+.chart-svg  { width: 100%; height: 100%; }
 
 .chart-labels {
     display: flex;
     justify-content: space-between;
     padding: 6px 4px 0;
 }
-.chart-labels span {
-    font-size: 10.5px;
-    color: var(--text-muted);
-}
+.chart-labels span { font-size: 10.5px; color: var(--text-muted); }
 
 /* ═══════════════════════════════
    STOK LIST
 ═══════════════════════════════ */
-.stok-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+.stok-list { display: flex; flex-direction: column; gap: 12px; }
 
-.stok-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+.stok-item { display: flex; align-items: center; gap: 12px; }
 
-.stok-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
+.stok-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
 .stok-info  { flex: 1; min-width: 0; }
-.stok-name  {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-dark);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.stok-detail {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
+.stok-name  { font-size: 12.5px; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stok-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-.stok-bar-wrap {
-    flex: 1.2;
-    height: 6px;
-    background: var(--white-ish);
-    border-radius: 99px;
-    overflow: hidden;
-}
-.stok-bar {
-    height: 100%;
-    border-radius: 99px;
-}
+.stok-bar-wrap { flex: 1.2; height: 6px; background: var(--white-ish); border-radius: 99px; overflow: hidden; }
+.stok-bar      { height: 100%; border-radius: 99px; }
 
-.stok-badge {
-    font-size: 10.5px;
-    padding: 3px 8px;
-    border-radius: 99px;
-    font-weight: 600;
-    flex-shrink: 0;
-}
-.badge-warning { background: #fff3e0; color: #e65100; }
-.badge-danger  { background: #fce4ec; color: #c2185b; }
-.badge-ok      { background: var(--tosca-soft); color: var(--tosca-dark); }
+.stok-badge { font-size: 10.5px; padding: 3px 8px; border-radius: 99px; font-weight: 600; flex-shrink: 0; }
 
 /* ═══════════════════════════════
    TABLE
 ═══════════════════════════════ */
 .table-wrap { overflow-x: auto; }
 
-.dash-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
+.dash-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
 .dash-table thead th {
     text-align: left;
     padding: 8px 12px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 11px; font-weight: 600;
     color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: uppercase; letter-spacing: 0.5px;
     border-bottom: 1px solid var(--border);
     background: var(--white-ish);
 }
 
-.dash-table tbody tr {
-    border-bottom: 1px solid rgba(0,67,105,0.06);
-    transition: background 0.12s;
-}
+.dash-table tbody tr { border-bottom: 1px solid rgba(0,67,105,0.06); transition: background 0.12s; }
 .dash-table tbody tr:last-child { border-bottom: none; }
-.dash-table tbody tr:hover      { background: var(--white-ish); }
+.dash-table tbody tr:hover { background: var(--white-ish); }
 
-.dash-table tbody td {
-    padding: 11px 12px;
-    color: var(--text-dark);
-    vertical-align: middle;
-}
+.dash-table tbody td { padding: 11px 12px; color: var(--text-dark); vertical-align: middle; }
 
-.trx-id     { font-weight: 600; color: var(--navy); font-size: 12px; font-family: monospace; }
+.trx-id     { font-weight: 600; color: var(--primary-dark); font-size: 12px; font-family: monospace; }
 .trx-name   { font-weight: 500; }
-.trx-amount { font-weight: 700; color: var(--navy); }
-.trx-date   { color: var(--text-muted); font-size: 12px; }
+.trx-amount { font-weight: 700; color: var(--primary-dark); }
+
+/* ── Tanggal tabel — lebih terlihat ── */
+.trx-date {
+    color: #C2410C !important;
+    font-size: 12px;
+    font-weight: 600;
+}
 
 .trx-type {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 99px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 11px; font-weight: 600;
 }
-.type-bpjs    { background: var(--blue-soft);  color: var(--navy); }
-.type-mandiri { background: var(--tosca-soft); color: var(--tosca-dark); }
+.type-bpjs    { background: var(--primary-soft);  color: var(--primary-dark); }
+.type-mandiri { background: var(--primary-pale);  color: var(--primary-dark); }
 
 .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 99px;
+    font-size: 11px; font-weight: 600;
 }
-.status-selesai { background: var(--tosca-soft); color: var(--tosca-dark); }
-.status-pending { background: #fff3e0;           color: #e65100; }
+.status-selesai { background: var(--primary-soft); color: var(--primary-dark); }
+.status-pending { background: #FEF9C3; color: #A16207; }
 
 /* ═══════════════════════════════
    TOMBOL
 ═══════════════════════════════ */
 .btn-all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 18px;
     border-radius: var(--radius-sm);
-    background: var(--navy);
+    background: linear-gradient(135deg, #F97316, #EA580C);
     color: var(--white);
-    font-size: 12.5px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    margin-top: 14px;
-    transition: background 0.15s;
+    font-size: 12.5px; font-weight: 600;
+    border: none; cursor: pointer; margin-top: 14px;
+    transition: all 0.2s;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(249,115,22,0.25);
 }
-.btn-all:hover    { background: var(--navy-light); }
+.btn-all:hover    { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(249,115,22,0.35); }
 .btn-all.full     { width: 100%; justify-content: center; }
 
-.btn-all-wrap {
-    display: flex;
-    justify-content: center;
-    margin-top: 6px;
-}
+.btn-all-wrap { display: flex; justify-content: center; margin-top: 6px; }
 
 /* ═══════════════════════════════
    RESPONSIVE
