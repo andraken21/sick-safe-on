@@ -74,16 +74,12 @@
                     <option value="Laki-laki"  {{ request('jenis_kelamin') == 'Laki-laki'  ? 'selected' : '' }}>Laki-laki</option>
                     <option value="Perempuan"  {{ request('jenis_kelamin') == 'Perempuan'  ? 'selected' : '' }}>Perempuan</option>
                 </select>
-                <select name="status" class="filter-select">
-                    <option value="">Semua Status</option>
-                    <option value="aktif"    {{ request('status') == 'aktif'    ? 'selected' : '' }}>Aktif</option>
-                    <option value="nonaktif" {{ request('status') == 'nonaktif' ? 'selected' : '' }}>Non-aktif</option>
-                </select>
+              
             </div>
             <button type="submit" class="btn-filter">
                 <i class="bi bi-funnel-fill"></i> Filter
             </button>
-            @if(request()->hasAny(['search','jenis_kelamin','status']))
+            @if(request()->hasAny(['search','jenis_kelamin']))
                 <a href="{{ route('dokter.pilih-pasien') }}" class="btn-reset">
                     <i class="bi bi-x-circle"></i> Reset
                 </a>
@@ -111,7 +107,6 @@
                         <th>Jenis Kelamin</th>
                         <th>Tanggal Lahir</th>
                         <th>Riwayat Penyakit</th>
-                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -143,13 +138,6 @@
                             <td>{{ \Carbon\Carbon::parse($pasien->Tanggal_Lahir)->format('d M Y') }}</td>
                             <td>{{ $pasien->Riwayat_Penyakit ?? '-' }}</td>
                             <td>
-                                @if(($pasien->user?->status ?? '') == 'aktif')
-                                    <span class="badge badge-aktif"><i class="bi bi-circle-fill"></i> Aktif</span>
-                                @else
-                                    <span class="badge badge-nonaktif"><i class="bi bi-circle"></i> Non-aktif</span>
-                                @endif
-                            </td>
-                            <td>
                                 <a href="#" class="btn-detail">
                                     <i class="bi bi-eye"></i> Detail
                                 </a>
@@ -160,7 +148,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7">
+                            <td colspan="6">
                                 <div class="empty-state">
                                     <div class="empty-icon"><i class="bi bi-people"></i></div>
                                     <h4>Tidak Ada Pasien Ditemukan</h4>

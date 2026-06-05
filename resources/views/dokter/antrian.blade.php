@@ -14,7 +14,7 @@
 
     {{-- PAGE HEADER --}}
     <div class="page-header">
-        <h1>Selamat datang, Dr. {{ Auth::user()->nama }} 👋</h1>
+    <h1>Selamat datang, {{ Auth::user()->nama }} 👋</h1>
         <p>Dashboard Dokter &mdash; {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}</p>
     </div>
 

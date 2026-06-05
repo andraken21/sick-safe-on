@@ -76,13 +76,7 @@
         <div class="search-wrap">
             <i class="bi bi-search"></i>
             <input type="text" id="searchInput" placeholder="Cari nama pasien atau ID resep...">
-        </div>
-        <select class="filter-select" id="filterBulan">
-            <option>Semua Bulan</option>
-            <option>Mei 2024</option>
-            <option>April 2024</option>
-            <option>Maret 2024</option>
-        </select>
+        </div>    
     </div>
 
     {{-- TABLE --}}
@@ -109,8 +103,6 @@
                         <td><span class="resep-id">RSP-2024-0053</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-1">RH</div>
-                                <div>
                                     <div class="pat-name">Rudi Hartono</div>
                                     <div class="pat-id">#PAT-0003</div>
                                 </div>
@@ -129,8 +121,6 @@
                         <td><span class="resep-id">RSP-2024-0052</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-2">DP</div>
-                                <div>
                                     <div class="pat-name">Dinda Permata</div>
                                     <div class="pat-id">#PAT-0002</div>
                                 </div>
@@ -141,16 +131,16 @@
                         <td class="tgl">20 Mei 2024</td>
                         <td><span class="status-badge s-validasi">Menunggu Validasi</span></td>
                         <td>
+                          <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
                             <button class="btn-aksi-edit">Edit</button>
+                          </div>
                         </td>
                     </tr>
                     <tr data-status="pembayaran">
                         <td><span class="resep-id">RSP-2024-0050</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-3">RW</div>
-                                <div>
                                     <div class="pat-name">Rini Wulandari</div>
                                     <div class="pat-id">#PAT-0005</div>
                                 </div>
@@ -161,15 +151,15 @@
                         <td class="tgl">19 Mei 2024</td>
                         <td><span class="status-badge s-pembayaran">Menunggu Pembayaran</span></td>
                         <td>
+                            <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
+                            </div>
                         </td>
                     </tr>
                     <tr data-status="diproses">
                         <td><span class="resep-id">RSP-2024-0049</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-1">BH</div>
-                                <div>
                                     <div class="pat-name">Budi Hartono</div>
                                     <div class="pat-id">#PAT-0006</div>
                                 </div>
@@ -180,15 +170,15 @@
                         <td class="tgl">18 Mei 2024</td>
                         <td><span class="status-badge s-diproses">Diproses</span></td>
                         <td>
+                            <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
+                            </div>
                         </td>
                     </tr>
                     <tr data-status="selesai">
                         <td><span class="resep-id">RSP-2024-0051</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-2">AS</div>
-                                <div>
                                     <div class="pat-name">Andi Setiawan</div>
                                     <div class="pat-id">#PAT-0001</div>
                                 </div>
@@ -199,16 +189,15 @@
                         <td class="tgl">17 Mei 2024</td>
                         <td><span class="status-badge s-selesai">Selesai</span></td>
                         <td>
+                             <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
-                            <button class="btn-aksi-cetak"><i class="bi bi-printer"></i></button>
+                             </div>
                         </td>
                     </tr>
                     <tr data-status="selesai">
                         <td><span class="resep-id">RSP-2024-0048</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-3">MS</div>
-                                <div>
                                     <div class="pat-name">Maya Sari</div>
                                     <div class="pat-id">#PAT-0007</div>
                                 </div>
@@ -219,16 +208,15 @@
                         <td class="tgl">16 Mei 2024</td>
                         <td><span class="status-badge s-selesai">Selesai</span></td>
                         <td>
+                            <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
-                            <button class="btn-aksi-cetak"><i class="bi bi-printer"></i></button>
+                            </div>
                         </td>
                     </tr>
                     <tr data-status="draft">
                         <td><span class="resep-id">RSP-2024-0047</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-1">LP</div>
-                                <div>
                                     <div class="pat-name">Lina Permata</div>
                                     <div class="pat-id">#PAT-0008</div>
                                 </div>
@@ -239,16 +227,16 @@
                         <td class="tgl">15 Mei 2024</td>
                         <td><span class="status-badge s-draft">Draft</span></td>
                         <td>
+                            <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
                             <button class="btn-aksi-edit">Lanjutkan</button>
+                            </div>
                         </td>
                     </tr>
                     <tr data-status="diproses">
                         <td><span class="resep-id">RSP-2024-0046</span></td>
                         <td>
                             <div class="patient-cell">
-                                <div class="av av-2">AG</div>
-                                <div>
                                     <div class="pat-name">Agus Salim</div>
                                     <div class="pat-id">#PAT-0009</div>
                                 </div>
@@ -259,7 +247,9 @@
                         <td class="tgl">14 Mei 2024</td>
                         <td><span class="status-badge s-diproses">Diproses</span></td>
                         <td>
+                            <div class="aksi-wrap">
                             <button class="btn-aksi-detail">Detail</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

@@ -77,19 +77,12 @@
                             <label>Keluhan Utama <span class="req">*</span></label>
                             <textarea name="keluhan" placeholder="Tuliskan keluhan yang disampaikan pasien..." required>{{ old('keluhan') }}</textarea>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Kode Diagnosa (ICD-10)</label>
-                                <input type="text" name="kode_diagnosa" placeholder="Cth: J00, A09" value="{{ old('kode_diagnosa') }}">
-                                <span class="field-hint">Opsional</span>
-                            </div>
-                            <div class="form-group">
-                                <label>Nama Diagnosa <span class="req">*</span></label>
-                                <input type="text" name="nama_diagnosa" id="inputDiagnosa"
-                                       placeholder="Cth: Infeksi Saluran Napas"
-                                       value="{{ old('nama_diagnosa') }}" required>
-                            </div>
-                        </div>
+                        <div class="form-group">
+                              <label> Diagnosa <span class="req">*</span></label>
+                              <input type="text" name="nama_diagnosa" id="inputDiagnosa"
+                                    placeholder="Cth: Infeksi Saluran Napas"
+                                   value="{{ old('nama_diagnosa') }}" required>
+                                </div>
                         <div class="form-group">
                             <label>Catatan Tambahan</label>
                             <textarea name="catatan" placeholder="Catatan untuk apoteker atau pasien..." style="min-height:64px">{{ old('catatan') }}</textarea>
