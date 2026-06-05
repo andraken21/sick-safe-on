@@ -67,13 +67,13 @@ body,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: green !important;
+    background: #d19885 !important;
 }
 
 /* buat ubah sidebar  */
 .sidebar {
     width: 220px;
-    background: red !important;
+    background: #d19885 !important;
     border-right: 1px solid var(--border);
     padding: 24px 20px;
     display: flex;
@@ -88,7 +88,7 @@ body,
     text-align: center;
     font-size: 11px;
     color: var(--text-muted);
-    background: blue !important;
+    background: #d19885 !important;
 }
 
 .dash-main {
