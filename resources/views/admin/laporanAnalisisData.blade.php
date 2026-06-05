@@ -2,9 +2,15 @@
 
 @section('title', 'Laporan Analisis Data - Sick Safe ON')
 
+@push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/LaporanAnalisisData.css') }}">
+@endpush
+
+
 @section('content')
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/laporanAnalisisData.css') }}">
 
     <div class="dash-main">
         <div class="dash-content">
@@ -184,8 +190,11 @@
     {{-- TOAST --}}
     <div class="toast-container" id="toast-container"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="{{ asset('js/laporanAnalisisData.js') }}"></script>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="{{ asset('js/laporanAnalisisData.js') }}"></script>
+@endpush
