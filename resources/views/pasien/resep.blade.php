@@ -28,7 +28,7 @@
                 <i class="fas fa-file-medical"></i>
             </div>
             <div class="stat-text">
-                <div class="num">12</div>
+                <div class="num">{{ $totalResep }}</div>
                 <div class="lbl">Total Resep</div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <i class="fas fa-spinner"></i>
             </div>
             <div class="stat-text">
-                <div class="num" style="color: var(--ss-info);">2</div>
+                <div class="num" style="color: var(--ss-info);">{{ $totalResepDiproses }}</div>
                 <div class="lbl">Sedang Diproses</div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <i class="fas fa-clock"></i>
             </div>
             <div class="stat-text">
-                <div class="num" style="color: var(--ss-warning);">1</div>
+                <div class="num" style="color: var(--ss-warning);">{{ $totalResepMenungguDibayar }}</div>
                 <div class="lbl">Menunggu Bayar</div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 <i class="fas fa-check-circle"></i>
             </div>
             <div class="stat-text">
-                <div class="num" style="color: var(--ss-success);">9</div>
+                <div class="num" style="color: var(--ss-success);">{{ $totalResepSelesai }}</div>
                 <div class="lbl">Selesai</div>
             </div>
         </div>

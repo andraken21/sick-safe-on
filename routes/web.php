@@ -88,30 +88,19 @@ Route::middleware(['auth', 'role:Dokter'])->group(function () {
 
 // PASIEN
 Route::middleware(['auth', 'role:Pasien'])->group(function () {
-
-    // Dashboard
     Route::get('/pasien/dashboard', [PasienController::class, 'dashboard'])->name('pasien.dashboard');
-
-    // Resep
     Route::get('/pasien/resep',      [PasienController::class, 'resep'])->name('pasien.resep');
     Route::get('/pasien/resep/{id}', [PasienController::class, 'detailResep'])->name('pasien.resep.detail');
-
-    // Pembayaran
-    Route::get('/pasien/pembayaran',              [PasienController::class, 'pembayaran'])->name('pasien.pembayaran');
-    Route::get('/pasien/pembayaran/riwayat',      [PasienController::class, 'riwayatPembayaran'])->name('pasien.pembayaran.riwayat');
-    Route::get('/pasien/pembayaran/bayar/{id}',   [PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
-    Route::post('/pasien/pembayaran/proses',      [PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
-
-    // Rating
+    Route::get('/pasien/pembayaran',            [PasienController::class, 'pembayaran'])->name('pasien.pembayaran');
+    Route::get('/pasien/pembayaran/riwayat',    [PasienController::class, 'riwayatPembayaran'])->name('pasien.pembayaran.riwayat');
+    Route::get('/pasien/pembayaran/bayar/{id}', [PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
+    Route::post('/pasien/pembayaran/proses',    [PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
     Route::get('/pasien/rating',  [PasienController::class, 'rating'])->name('pasien.rating');
     Route::post('/pasien/rating', [PasienController::class, 'simpanRating'])->name('pasien.rating.simpan');
-
-    // Profil
-    Route::get('/pasien/profil',             [PasienController::class, 'profil'])->name('pasien.profil');
-    Route::post('/pasien/profil',            [PasienController::class, 'updateProfil'])->name('pasien.profil.update');
-    Route::post('/pasien/profil/password',   [PasienController::class, 'updatePassword'])->name('pasien.profil.password');
+    Route::get('/pasien/profil',           [PasienController::class, 'profil'])->name('pasien.profil');
+    Route::post('/pasien/profil',          [PasienController::class, 'updateProfil'])->name('pasien.profil.update');
+    Route::post('/pasien/profil/password', [PasienController::class, 'updatePassword'])->name('pasien.profil.password');
 });
-
 
 
 // APOTEKER

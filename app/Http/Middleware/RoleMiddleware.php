@@ -9,14 +9,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        // Cek apakah user sudah login dan rolenya sesuai dengan yang diizinkan
-        if (Auth::check() && Auth::user()->role == $role) {
+        // Belum login → ke halaman login
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $userRole = Auth::user()->role;
+
+        // Role cocok → lanjutkan request
+        if ($userRole === $role) {
             return $next($request);
         }
 
-        // Jika tidak sesuai, tendang balik ke halaman login
-        return redirect('/login');
+        // Sudah login tapi role beda → arahkan ke dashboard yang sesuai
+        // Ini mencegah redirect loop
+        return match($userRole) {
+            'Admin'    => redirect('/admin/dashboard'),
+            'Dokter'   => redirect('/dokter/dashboard'),
+            'Pasien'   => redirect('/pasien/dashboard'),
+            'Apoteker' => redirect('/apoteker/dashboard'),
+            default    => redirect('/login'),
+        };
     }
 }

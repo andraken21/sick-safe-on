@@ -33,7 +33,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'password' => Hash::make($request->password),
-            'role' => 'pasien', // FIX: lowercase
+            'role' => 'Pasien', // FIX: lowercase
         ]);
 
         return redirect('/login')->with('success', 'Akun berhasil dibuat!');
@@ -44,30 +44,25 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+        public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email'    => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            $role = Auth::user()->role;
-
-            // FIX: semua role lowercase
-            if ($role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
-            } elseif ($role === 'dokter') {
-                return redirect()->intended('/dokter/dashboard');
-            } elseif ($role === 'pasien') {
-                return redirect()->intended('/pasien/dashboard');
-            } elseif ($role === 'apoteker') {
-                return redirect()->intended('/apoteker/dashboard');
-            }
-
-            return redirect('/');
+            // Gunakan redirect eksplisit, BUKAN intended()
+            // intended() bisa mengarah ke URL lama yang salah
+            return match(Auth::user()->role) {
+                'Admin'    => redirect('/admin/dashboard'),
+                'Dokter'   => redirect('/dokter/dashboard'),
+                'Pasien'   => redirect('/pasien/dashboard'),
+                'Apoteker' => redirect('/apoteker/dashboard'),
+                default    => redirect('/'),
+            };
         }
 
         return back()->withErrors([

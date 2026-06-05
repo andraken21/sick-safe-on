@@ -13,6 +13,7 @@ use App\Models\DetailTransaksi;
 use App\Models\Antrian;
 use App\Models\Rating;
 use App\Models\Dokter;
+use App\Models\Resep;
 
 class PasienController extends Controller
 {
@@ -68,12 +69,28 @@ class PasienController extends Controller
     {
         $pasien = $this->getPasien();
 
+        $totalResep = Resep::whereHas('detailResep', function ($query) use ($pasien) {
+            $query->where('id_pasien', $pasien->id_pasien);
+        })->count();
+
+        $totalResepDiproses = DetailResep::where('id_pasien', $pasien->id_pasien)
+            ->whereIn('status', ['menunggu', 'diproses'])
+            ->count();
+
+        $totalResepMenungguDibayar = DetailResep::where('id_pasien', $pasien->id_pasien)
+            ->where('status', 'menunggu_bayar')
+            ->count();
+        
+        $totalResepSelesai = DetailResep::where('id_pasien', $pasien->id_pasien)
+            ->where('status', 'selesai')
+            ->count();
+
         $resepList = DetailResep::with(['dokter.user', 'resep.resepObat.obat'])
             ->where('id_pasien', $pasien->id_pasien)
             ->latest('tanggal')
             ->paginate(10);
 
-        return view('pasien.resep', compact('resepList'));
+        return view('pasien.resep', compact('resepList', 'totalResep', 'totalResepDiproses', 'totalResepMenungguDibayar', 'totalResepSelesai'));
     }
 
     public function detailResep($id_detail_resep)
