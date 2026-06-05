@@ -49,6 +49,17 @@
                         <div class="summary-sub" id="sub-pending">Rp 0</div>
                     </div>
                 </div>
+
+                <div class="summary-card filter-card" data-filter-status="batal" title="Tampilkan transaksi batal">
+                    <div class="summary-icon icon-cancel">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="summary-info">
+                        <div class="summary-label">Transaksi Batal</div>
+                        <div class="summary-value" id="count-batal">0</div>
+                        <div class="summary-sub" id="sub-batal">Rp 0</div>
+                    </div>
+                </div>
             </div>
 
             {{-- FILTERS & SEARCH --}}
@@ -68,11 +79,6 @@
                         <option value="bpjs">BPJS</option>
                         <option value="mandiri">Mandiri</option>
                     </select>
-                    <select class="filter-select" id="filter-status">
-                        <option value="">Semua Status</option>
-                        <option value="selesai">Selesai</option>
-                        <option value="pending">Pending</option>
-                    </select>
                 </div>
             </div>
 
@@ -82,10 +88,8 @@
                     <table class="dash-table transactions-table">
                         <thead>
                             <tr>
-                                <th width="4%"><input type="checkbox" id="check-all"></th>
                                 <th>No. Transaksi</th>
                                 <th>Nama Pasien</th>
-                                <th>No. RM</th>
                                 <th>Tipe</th>
                                 <th>Total</th>
                                 <th>Waktu</th>

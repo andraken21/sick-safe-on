@@ -98,32 +98,47 @@
             </div>
         </div>
 
-        {{-- Panel Barcode Mandiri --}}
-        <div class="panel-mandiri" id="panelMandiri" style="{{ $detail['metode'] === 'Mandiri' ? '' : 'display:none;' }}">
+
+         {{-- Panel Transfer --}}
+        <div class="panel-transfer" id="panelTransfer" style="{{ $detail['metode'] === 'Transfer' ? '' : 'display:none;' }}">
             <div class="barcode-box">
-                <div class="lbl">Barcode Pembayaran Mandiri</div>
-                <div class="barcode-img-wrap">
-                    <img id="barcodeImg" src="{{ asset('image/barcode.png') }}" alt="Barcode Mandiri"
-                         style="width:100%; height:100%; object-fit:contain;">
-                </div>
-                <div class="barcode-ref" id="barcodeRef">MDR-{{ time() }}</div>
-                <div class="barcode-hint">Scan barcode ini</div>
-            </div>
+            <div class="lbl">Transfer ke Rekening</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:16px;margin-top:10px;font-size:.85rem;">
+            <div style="margin-bottom:8px;color:#7a8499;">Bank Mandiri</div>
+            <div style="font-size:1.2rem;font-weight:800;letter-spacing:.1em;">1234-5678-9012</div>
+            <div style="color:#7a8499;margin-top:4px;">a.n. Sick Safe ON</div>
         </div>
+    </div>
+</div>
+
+        {{-- Panel QR --}}
+        <div class="panel-qr" id="panelQr" style="{{ $detail['metode'] === 'QR' ? '' : 'display:none;' }}">
+            <div class="qr-box">
+            <div class="lbl">Scan QR untuk Membayar</div>
+            <div class="qr-img-wrap">
+            <img src="{{ asset('image/qr.png') }}" alt="QR Code" id="qrImg"
+                 onerror="this.style.display='none';document.getElementById('qrPlaceholder').style.display='flex'">
+            <div id="qrPlaceholder" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#ccc;font-size:.8rem;">QR belum tersedia</div>
+        </div>
+        <div class="qr-ref">{{ $detail['nomor_invoice'] }}</div>
+        <div class="qr-hint">Scan menggunakan aplikasi pembayaran</div>
+    </div>
+</div>
 
         {{-- Pilih metode --}}
         <div class="metode-selector" id="metodeSelector">
             <div class="ttl">Pilih Metode Pembayaran</div>
-            <div class="metode-grid">
-                <button class="metode-btn {{ $detail['metode'] === 'BPJS' ? 'active' : '' }}" data-metode="BPJS">
-                    <div class="icon">🏥</div>
-                    <div class="name">BPJS Kesehatan</div>
-                </button>
-                <button class="metode-btn {{ $detail['metode'] === 'Mandiri' ? 'active' : '' }}" data-metode="Mandiri">
-                    <div class="icon">🏦</div>
-                    <div class="name">Mandiri</div>
-                </button>
-            </div>
+        <div class="metode-grid">
+           <button class="metode-btn {{ $detail['metode'] === 'BPJS' ? 'active' : '' }}" data-metode="BPJS">
+           <div class="name">BPJS Kesehatan</div>
+        </button>
+           <button class="metode-btn {{ $detail['metode'] === 'Transfer' ? 'active' : '' }}" data-metode="Transfer">
+           <div class="name">Transfer Bank</div>
+        </button>
+           <button class="metode-btn {{ $detail['metode'] === 'QR' ? 'active' : '' }}" data-metode="QR">
+           <div class="name">Scan QR</div>
+    </button>
+</div>
         </div>
 
         {{-- Processing state --}}
@@ -159,6 +174,38 @@
 
 {{-- CSRF untuk AJAX --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
+{{-- Modal Ulasan --}}
+<div class="modal-ulasan" id="modalUlasan" style="display:none;">
+    <div class="modal-ulasan-box">
+        <div class="modal-ulasan-top">
+            <div style="font-size:2rem;">⭐</div>
+            <h2>Bagaimana pelayanannya?</h2>
+            <p>Berikan ulasan untuk dokter Anda</p>
+        </div>
+
+        <form action="{{ route('pasien.ulasan.simpan') }}" method="POST" id="formUlasan">
+            @csrf
+            <input type="hidden" name="nomor_resep" value="{{ $detail['resep_id'] }}">
+            <input type="hidden" name="nama_dokter" value="{{ $detail['dokter'] }}">
+
+            <div class="star-group" id="starGroup">
+                <input type="radio" name="bintang" id="s5" value="5"><label for="s5">★</label>
+                <input type="radio" name="bintang" id="s4" value="4"><label for="s4">★</label>
+                <input type="radio" name="bintang" id="s3" value="3"><label for="s3">★</label>
+                <input type="radio" name="bintang" id="s2" value="2"><label for="s2">★</label>
+                <input type="radio" name="bintang" id="s1" value="1"><label for="s1">★</label>
+            </div>
+
+            <textarea name="komentar" placeholder="Ceritakan pengalaman Anda... (opsional)"
+                      rows="3" id="ulasanKomentar"></textarea>
+
+            <div style="display:flex;gap:10px;margin-top:16px;">
+                <button type="button" id="btnSkipUlasan" class="btn-skip-ulasan">Lewati</button>
+                <button type="submit" class="btn-kirim-ulasan">Kirim Ulasan</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 @endsection
 

@@ -44,7 +44,12 @@ function fmtDate(iso) {
     return `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-function statusLabel(s) { return s === 'selesai' ? 'Selesai' : 'Pending'; }
+function statusLabel(s) {
+    if (s === 'selesai') return 'Selesai';
+    if (s === 'pending') return 'Pending';
+    if (s === 'batal')   return 'Batal';
+    return s;
+}
 function typeLabel(t)   { return t === 'bpjs' ? 'BPJS' : 'Mandiri'; }
 
 /* ============================
@@ -55,8 +60,7 @@ function getFiltered() {
     return trxData.filter(t => {
         const matchSearch = !q ||
             t.trxId.toLowerCase().includes(q) ||
-            t.patientName.toLowerCase().includes(q) ||
-            t.rm.toLowerCase().includes(q);
+            t.patientName.toLowerCase().includes(q);
         const matchCard   = state.cardFilter === 'all' || t.status === state.cardFilter;
         const matchType   = !state.type   || t.type   === state.type;
         const matchStatus = !state.status || t.status === state.status;
@@ -87,7 +91,6 @@ function renderTable() {
         emptyState.style.display = 'none';
         tbody.innerHTML = pageData.map(t => `
             <tr data-id="${t.id}" class="trx-row">
-                <td><input type="checkbox" class="check-row"></td>
                 <td><span class="trx-id">${t.trxId}</span></td>
                 <td>
                     <div class="patient-info">
@@ -95,7 +98,6 @@ function renderTable() {
                         <div class="patient-sub">${t.patientType}</div>
                     </div>
                 </td>
-                <td><span class="rm-number">${t.rm}</span></td>
                 <td><span class="type-badge type-${t.type}">${typeLabel(t.type)}</span></td>
                 <td class="amount-cell">${fmtPriceFull(t.total)}</td>
                 <td class="time-cell">
@@ -105,7 +107,9 @@ function renderTable() {
                 <td><span class="status-badge status-${t.status}">
                     ${t.status === 'selesai'
                         ? '<i class="fa-solid fa-circle-check" style="font-size:9px"></i>'
-                        : '<i class="fa-solid fa-hourglass-half" style="font-size:9px"></i>'}
+                        : (t.status === 'pending'
+                            ? '<i class="fa-solid fa-hourglass-half" style="font-size:9px"></i>'
+                            : '<i class="fa-solid fa-circle-xmark" style="font-size:9px"></i>')}
                     ${statusLabel(t.status)}
                 </span></td>
                 <td>
@@ -127,7 +131,6 @@ function renderTable() {
 
     renderPagination(totalPages);
     updateSummaryCards();
-    bindCheckAll();
 }
 
 /* ============================
@@ -172,17 +175,26 @@ function renderPagination(totalPages) {
 }
 
 /* ============================
-   SUMMARY CARDS
+    SUMMARY CARDS
 ============================ */
+
 function updateSummaryCards() {
     const all      = trxData;
     const selesai  = all.filter(t => t.status === 'selesai');
     const pending  = all.filter(t => t.status === 'pending');
+    const batal    = all.filter(t => t.status === 'batal');
     document.getElementById('count-total').textContent   = all.length;
     document.getElementById('count-selesai').textContent = selesai.length;
     document.getElementById('count-pending').textContent = pending.length;
-    document.getElementById('sub-selesai').textContent   = fmtPrice(selesai.reduce((s,t) => s+t.total, 0));
-    document.getElementById('sub-pending').textContent   = fmtPrice(pending.reduce((s,t) => s+t.total, 0));
+    // batal may not always exist in DOM for older pages — guard
+    const elBatal = document.getElementById('count-batal');
+    if (elBatal) elBatal.textContent = batal.length;
+    const subS = document.getElementById('sub-selesai');
+    const subP = document.getElementById('sub-pending');
+    const subB = document.getElementById('sub-batal');
+    if (subS) subS.textContent = fmtPrice(selesai.reduce((s,t) => s+t.total, 0));
+    if (subP) subP.textContent = fmtPrice(pending.reduce((s,t) => s+t.total, 0));
+    if (subB) subB.textContent = fmtPrice(batal.reduce((s,t) => s+t.total, 0));
 }
 
 /* ============================
@@ -286,10 +298,6 @@ function openDetail(id) {
                 <label>No. Transaksi</label>
                 <span style="font-family:monospace">${t.trxId}</span>
             </div>
-            <div class="detail-item">
-                <label>No. Rekam Medis</label>
-                <span style="font-family:monospace">${t.rm}</span>
-            </div>
             <div class="detail-item full">
                 <label>Nama Pasien</label>
                 <span>${t.patientName} <span style="font-size:12px;font-weight:500;color:var(--text-muted)">(${t.patientType})</span></span>
@@ -303,7 +311,9 @@ function openDetail(id) {
                 <span><span class="status-badge status-${t.status}">
                     ${t.status === 'selesai'
                         ? '<i class="fa-solid fa-circle-check" style="font-size:9px"></i>'
-                        : '<i class="fa-solid fa-hourglass-half" style="font-size:9px"></i>'}
+                        : (t.status === 'pending'
+                            ? '<i class="fa-solid fa-hourglass-half" style="font-size:9px"></i>'
+                            : '<i class="fa-solid fa-circle-xmark" style="font-size:9px"></i>')}
                     ${statusLabel(t.status)}
                 </span></span>
             </div>
@@ -350,16 +360,7 @@ function showToast(msg, type = 'info') {
     }, 3000);
 }
 
-/* ============================
-   CHECK-ALL
-============================ */
-function bindCheckAll() {
-    const ca = document.getElementById('check-all');
-    if (!ca) return;
-    ca.onchange = function () {
-        document.querySelectorAll('.check-row').forEach(cb => cb.checked = this.checked);
-    };
-}
+// selection checkboxes removed
 
 /* ============================
    INIT

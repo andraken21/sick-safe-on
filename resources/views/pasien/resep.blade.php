@@ -100,6 +100,7 @@
                     <th>Obat</th>
                     <th>Total</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody id="resep-tbody">

@@ -14,18 +14,18 @@
    DATA DUMMY
 ============================ */
 let medicineData = [
-    { id: 1,  code: 'PAR-001', name: 'Paracetamol 500mg',    category: 'analgesik',   stock: 45,  min: 100, price: 2500,  supplier: 'PT Dexa Medica',  exp: '2026-12-15', status: 'rendah'  },
-    { id: 2,  code: 'AMX-001', name: 'Amoxicillin 500mg',    category: 'antibiotik',  stock: 32,  min: 100, price: 8500,  supplier: 'PT Kimia Farma',  exp: '2026-11-22', status: 'menipis' },
-    { id: 3,  code: 'CTM-001', name: 'CTM 4mg',              category: 'antihistamin',stock: 20,  min: 50,  price: 1200,  supplier: 'PT Fahrenheit',   exp: '2026-10-10', status: 'menipis' },
-    { id: 4,  code: 'VIT-001', name: 'Vitamin C 500mg',      category: 'vitamin',     stock: 250, min: 100, price: 3500,  supplier: 'PT Bayer',        exp: '2027-01-05', status: 'aman'    },
-    { id: 5,  code: 'IBU-001', name: 'Ibuprofen 200mg',      category: 'analgesik',   stock: 0,   min: 75,  price: 4500,  supplier: 'PT Mepro',        exp: '2026-09-20', status: 'habis'   },
-    { id: 6,  code: 'KLR-001', name: 'Kalium Klorida 250mg', category: 'vitamin',     stock: 120, min: 100, price: 5000,  supplier: 'PT Sanbe Farma',  exp: '2026-08-08', status: 'aman'    },
-    { id: 7,  code: 'DXM-001', name: 'Dexamethasone 0.5mg',  category: 'analgesik',   stock: 0,   min: 50,  price: 3200,  supplier: 'PT Dexa Medica',  exp: '2026-07-30', status: 'habis'   },
-    { id: 8,  code: 'ANT-001', name: 'Antasida DOEN',        category: 'antihistamin',stock: 180, min: 80,  price: 1800,  supplier: 'PT Kimia Farma',  exp: '2027-03-15', status: 'aman'    },
-    { id: 9,  code: 'CIP-001', name: 'Ciprofloxacin 500mg',  category: 'antibiotik',  stock: 15,  min: 60,  price: 12000, supplier: 'PT Sanbe Farma',  exp: '2026-12-01', status: 'menipis' },
-    { id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',    category: 'vitamin',     stock: 300, min: 100, price: 6000,  supplier: 'PT Bayer',        exp: '2027-06-20', status: 'aman'    },
-    { id: 11, code: 'MET-001', name: 'Metformin 500mg',      category: 'analgesik',   stock: 55,  min: 80,  price: 4000,  supplier: 'PT Mepro',        exp: '2026-11-10', status: 'rendah'  },
-    { id: 12, code: 'LOR-001', name: 'Loratadine 10mg',      category: 'antihistamin',stock: 0,   min: 60,  price: 5500,  supplier: 'PT Fahrenheit',   exp: '2027-02-28', status: 'habis'   },
+    { id: 1,  code: 'PAR-001', name: 'Paracetamol 500mg',    category: 'analgesik',   stock: 45,  min: 100, price: 2500,  exp: '2026-12-15', status: 'menipis'  },
+    { id: 2,  code: 'AMX-001', name: 'Amoxicillin 500mg',    category: 'antibiotik',  stock: 32,  min: 100, price: 8500,  exp: '2026-11-22', status: 'menipis' },
+    { id: 3,  code: 'CTM-001', name: 'CTM 4mg',              category: 'antihistamin',stock: 20,  min: 50,  price: 1200,  exp: '2026-10-10', status: 'menipis' },
+    { id: 4,  code: 'VIT-001', name: 'Vitamin C 500mg',      category: 'vitamin',     stock: 250, min: 100, price: 3500,  exp: '2027-01-05', status: 'aman'    },
+    { id: 5,  code: 'IBU-001', name: 'Ibuprofen 200mg',      category: 'analgesik',   stock: 0,   min: 75,  price: 4500,  exp: '2026-09-20', status: 'habis'   },
+    { id: 6,  code: 'KLR-001', name: 'Kalium Klorida 250mg', category: 'vitamin',     stock: 120, min: 100, price: 5000,  exp: '2026-08-08', status: 'aman'    },
+    { id: 7,  code: 'DXM-001', name: 'Dexamethasone 0.5mg',  category: 'analgesik',   stock: 0,   min: 50,  price: 3200,  exp: '2026-07-30', status: 'habis'   },
+    { id: 8,  code: 'ANT-001', name: 'Antasida DOEN',        category: 'antihistamin',stock: 180, min: 80,  price: 1800,  exp: '2027-03-15', status: 'aman'    },
+    { id: 9,  code: 'CIP-001', name: 'Ciprofloxacin 500mg',  category: 'antibiotik',  stock: 15,  min: 60,  price: 12000, exp: '2026-12-01', status: 'menipis' },
+    { id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',    category: 'vitamin',     stock: 300, min: 100, price: 6000,  exp: '2027-06-20', status: 'aman'    },
+    { id: 11, code: 'MET-001', name: 'Metformin 500mg',      category: 'analgesik',   stock: 55,  min: 80,  price: 4000,  exp: '2026-11-10', status: 'menipis'  },
+    { id: 12, code: 'LOR-001', name: 'Loratadine 10mg',      category: 'antihistamin',stock: 0,   min: 60,  price: 5500,  exp: '2027-02-28', status: 'habis'   },
 ];
 
 /* ============================
@@ -53,7 +53,7 @@ function isNearExpiry(iso) {
 function isExpired(iso) { return new Date(iso) < new Date(); }
 
 function statusLabel(s) {
-    return { aman: '✓ Aman', rendah: '⚠ Rendah', menipis: '⚠ Menipis', habis: '✗ Habis' }[s] || s;
+    return { aman: '✓ Aman', menipis: '⚠ Menipis', habis: '✗ Habis' }[s] || s;
 }
 
 function categoryLabel(c) {
@@ -64,7 +64,7 @@ function computeStatus(m) {
     if (m.stock === 0) return 'habis';
     const ratio = m.stock / m.min;
     if (ratio < 0.3) return 'menipis';
-    if (ratio < 0.7) return 'rendah';
+    if (ratio < 0.7) return 'menipis';
     return 'aman';
 }
 
@@ -74,9 +74,10 @@ function computeStatus(m) {
 function getFiltered() {
     const q = state.search.toLowerCase();
     return medicineData.filter(m => {
-        const matchSearch = !q || m.name.toLowerCase().includes(q) || m.code.toLowerCase().includes(q) || m.supplier.toLowerCase().includes(q);
+        const matchSearch = !q || m.name.toLowerCase().includes(q) || m.code.toLowerCase().includes(q);
         let matchCard = true;
-        if (state.cardFilter === 'rendah')  matchCard = m.status === 'rendah' || m.status === 'menipis';
+        if (state.cardFilter === 'menipis')  matchCard = m.status === 'menipis';
+        if (state.cardFilter === 'aman')   matchCard = m.status === 'aman';
         if (state.cardFilter === 'habis')   matchCard = m.status === 'habis';
         if (state.cardFilter === 'expired') matchCard = isNearExpiry(m.exp) || isExpired(m.exp);
         const matchCat    = !state.category || m.category === state.category;
@@ -115,7 +116,6 @@ function renderTable() {
 
             return `
             <tr data-id="${m.id}">
-                <td style="text-align:center;"><input type="checkbox" class="check-row"></td>
                 <td>
                     <div class="med-cell">
                         <div class="med-code">${m.code}</div>
@@ -128,7 +128,6 @@ function renderTable() {
                 <td class="stock-cell ${m.stock === 0 ? 'stock-zero' : ''}">${m.stock}</td>
                 <td class="min-cell">${m.min}</td>
                 <td class="price-cell">${fmtPrice(m.price)}</td>
-                <td style="font-size:13px;">${m.supplier}</td>
                 <td style="font-size:13px; text-align:center;">${expLabel}</td>
                 <td style="text-align:center;">
                     <span class="status-badge status-${m.status}">${statusLabel(m.status)}</span>
@@ -195,9 +194,11 @@ function renderPagination(totalPages) {
 ============================ */
 function updateSummaryCards() {
     document.getElementById('count-total').textContent   = medicineData.length;
-    document.getElementById('count-rendah').textContent  = medicineData.filter(m => m.status === 'rendah' || m.status === 'menipis').length;
+    document.getElementById('count-menipis').textContent  = medicineData.filter(m => m.status === 'menipis').length;
     document.getElementById('count-habis').textContent   = medicineData.filter(m => m.status === 'habis').length;
     document.getElementById('count-expired').textContent = medicineData.filter(m => isNearExpiry(m.exp) || isExpired(m.exp)).length;
+    const safeEl = document.getElementById('count-aman');
+    if (safeEl) safeEl.textContent = medicineData.filter(m => m.status === 'aman').length;
 }
 
 /* ============================
@@ -236,10 +237,6 @@ function openDetail(id) {
             <div class="detail-item">
                 <label>Status</label>
                 <span><span class="status-badge status-${m.status}">${statusLabel(m.status)}</span></span>
-            </div>
-            <div class="detail-item full">
-                <label>Supplier</label>
-                <span>${m.supplier}</span>
             </div>
             <div class="detail-item">
                 <label>Tanggal Kadaluarsa</label>
@@ -298,10 +295,6 @@ function openEdit(id) {
                 <label>Tanggal Kadaluarsa <span class="req">*</span></label>
                 <input class="form-control" id="edit-exp" type="date" value="${m.exp}">
             </div>
-        </div>
-        <div class="form-group">
-            <label>Supplier <span class="req">*</span></label>
-            <input class="form-control" id="edit-supplier" value="${m.supplier}">
         </div>`;
 
     document.getElementById('modal-edit-cancel').onclick = () => closeModal('modal-edit');
@@ -314,15 +307,14 @@ function openEdit(id) {
         const min      = parseInt(document.getElementById('edit-min').value);
         const price    = parseInt(document.getElementById('edit-price').value);
         const exp      = document.getElementById('edit-exp').value;
-        const supplier = document.getElementById('edit-supplier').value.trim();
 
-        if (!name || !supplier || isNaN(stock) || isNaN(min) || isNaN(price) || !exp) {
+        if (!name || isNaN(stock) || isNaN(min) || isNaN(price) || !exp) {
             showToast('Semua field wajib diisi!', 'error');
             return;
         }
 
         const idx = medicineData.findIndex(x => x.id === id);
-        medicineData[idx] = { ...medicineData[idx], name, category, stock, min, price, exp, supplier };
+        medicineData[idx] = { ...medicineData[idx], name, category, stock, min, price, exp };
         medicineData[idx].status = computeStatus(medicineData[idx]);
 
         closeModal('modal-edit');
@@ -418,16 +410,7 @@ function showToast(msg, type = 'info') {
     }, 3000);
 }
 
-/* ============================
-   CHECK-ALL
-============================ */
-function bindCheckAll() {
-    const ca = document.getElementById('check-all');
-    if (!ca) return;
-    ca.addEventListener('change', function () {
-        document.querySelectorAll('.check-row').forEach(cb => cb.checked = this.checked);
-    });
-}
+// checkboxes removed — selection feature disabled
 
 /* ============================
    INIT
@@ -512,7 +495,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Check-all
-    bindCheckAll();
-    new MutationObserver(bindCheckAll).observe(document.getElementById('medicine-tbody'), { childList: true });
+    // Selection checkboxes removed (no-op)
 });

@@ -70,7 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td><span class="dokter-text">${resep.dokter}</span></td>
                 <td><span class="obat-text">${resep.obat} Obat</span></td>
                 <td><span class="total-text">Rp ${resep.total.toLocaleString('id-ID')}</span></td>
-                <td><span class="badge badge--${resep.status}">${getStatusLabel(resep.status)}</span></td>
+                <td>${getStatusLabel(resep.status)}</td>
+                <td>
+                <button class="btn-detail-resep" onclick="showDetail('${resep.nomor}')">
+                Detail
+                </button>
+</td>
             </tr>
             `;
         }).join('');
@@ -144,16 +149,16 @@ document.addEventListener('DOMContentLoaded', function() {
             badge.textContent = `${filteredResep.length} Resep`;
         }
     }
-
-    function getStatusLabel(status) {
-        const labels = {
-            'proses': 'Sedang Diproses',
-            'tunggu': 'Menunggu Pembayaran',
-            'selesai': 'Selesai',
-            'batal': 'Dibatalkan'
-        };
-        return labels[status] || status;
-    }
+function getStatusLabel(status) {
+   const map = {
+    'proses':  { label: 'Sedang Diproses',    cls: 'status-sedang-diproses' },
+    'tunggu':  { label: 'Menunggu Pembayaran', cls: 'status-menunggu-pembayaran' },
+    'selesai': { label: 'Selesai',             cls: 'status-selesai' },
+    'batal':   { label: 'Dibatalkan',          cls: 'status-dibatalkan' },
+};
+    const s = map[status] || { label: status, cls: 's-draft' };
+    return `<span class="status-badge ${s.cls}">${s.label}</span>`;
+}
 
     const statusSelect = document.querySelector('.filter-status');
     const bulanSelect = document.querySelector('.filter-bulan');

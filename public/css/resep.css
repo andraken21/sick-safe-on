@@ -32,6 +32,10 @@
     to   { opacity: 1; transform: none; }
 }
 
+.s-diproses   { background: #FFF0F3; color: #7B2D8B; }
+.s-pembayaran { background: #FFF0F3; color: #a16207; }
+.s-selesai    { background: #FFF0F3; color: #15803d; }
+.s-draft      { background: #FFF0F3; color: #b91c1c; }
 /* ── PAGE HEADER ── */
 .page-header {
     display: flex;
@@ -74,6 +78,21 @@
 .btn-primary:hover {
     background: var(--ss-primary-dark);
     transform: translateY(-1px);
+}
+.btn-detail-resep {
+    background: transparent;
+    color: rgb(243, 170, 206);
+    border: 1.5px solid rgb(243, 170, 206);
+    border-radius: var(--radius-sm);
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+}
+.btn-detail-resep:hover {
+    background: rgb(243, 170, 206);
+    color: #fff;
 }
 
 /* ── STAT CARDS ── */

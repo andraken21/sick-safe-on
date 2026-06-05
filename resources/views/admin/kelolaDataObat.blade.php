@@ -25,6 +25,16 @@
                     </div>
                 </div>
 
+                <div class="summary-card filter-card" data-filter-status="aman" title="Tampilkan stok aman">
+                    <div class="summary-icon icon-safe">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <div class="summary-info">
+                        <div class="summary-label">Stok Aman</div>
+                        <div class="summary-value" id="count-aman">0</div>
+                    </div>
+                </div>
+
                 <div class="summary-card filter-card" data-filter-status="rendah" title="Tampilkan stok menipis">
                     <div class="summary-icon icon-low">
                         <i class="fa-solid fa-triangle-exclamation"></i>
@@ -60,7 +70,7 @@
             <div class="filter-section">
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="search-input" placeholder="Cari nama obat, kode, atau supplier..." class="search-input">
+                    <input type="text" id="search-input" placeholder="Cari nama obat, atau kode ..." class="search-input">
                     <button class="search-clear" id="search-clear" style="display:none;" title="Hapus pencarian">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -74,14 +84,6 @@
                         <option value="antihistamin">Antihistamin</option>
                         <option value="vitamin">Vitamin</option>
                     </select>
-
-                    <select class="filter-select" id="filter-status">
-                        <option value="">Semua Status</option>
-                        <option value="aman">Aman</option>
-                        <option value="rendah">Rendah</option>
-                        <option value="menipis">Menipis</option>
-                        <option value="habis">Habis</option>
-                    </select>
                 </div>
             </div>
 
@@ -91,13 +93,12 @@
                     <table class="dash-table medicines-table">
                         <thead>
                             <tr>
-                                <th width="5%" style="text-align:center;"><input type="checkbox" id="check-all"></th>
+                        
                                 <th style="text-align:center;">Nama Obat</th>
                                 <th style="text-align:center;">Kategori</th>
                                 <th style="text-align:center;">Stok</th>
                                 <th style="text-align:center;">Minimum</th>
                                 <th style="text-align:center;">Harga</th>
-                                <th style="text-align:center;">Supplier</th>
                                 <th style="text-align:center;">Tgl Exp</th>
                                 <th style="text-align:center;">Status</th>
                                 <th style="text-align:center;">Aksi</th>

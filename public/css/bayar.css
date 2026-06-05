@@ -4,11 +4,14 @@
 .bayar-wrap {
     font-family: 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    background: linear-gradient(135deg, #f0f9ff 0%, #FFB3CD 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 32px 16px 48px;
+}
+.bayar-table tbody tr:hover {
+    background: #FFB3CD;
 }
 
 /* ── HEADER ── */
@@ -60,6 +63,10 @@
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 12px; font-size: .8rem; margin-bottom: 10px;
 }
+.inv-icon--done {
+    background: #fff0f5;
+    color: #c9184a;
+}
 .inv-grid-item .lbl { font-size: .7rem; color: #64748b; margin-bottom: 3px; }
 .inv-grid-item .val { font-weight: 700; color: #1e293b; }
 .inv-dokter .lbl { font-size: .7rem; color: #64748b; margin-bottom: 3px; }
@@ -90,7 +97,7 @@
 .bpjs-box .lbl {
     font-size: .7rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: .8px;
-    color: #065f46; margin-bottom: 10px;
+    color: #FFB3CD; margin-bottom: 10px;
 }
 .bpjs-number {
     font-family: 'Courier New', monospace;
@@ -140,6 +147,40 @@
 }
 .barcode-hint { font-size: .72rem; color: #64748b; }
 
+
+.panel-qr { margin: 16px 0; }
+.qr-box {
+    border: 2px dashed #FFB3CD;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background: #fff8fb;
+}
+.qr-box .lbl {
+    font-size: .75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--ss-muted); margin-bottom: 14px;
+}
+.qr-img-wrap {
+    width: 180px; height: 180px;
+    margin: 0 auto 12px;
+    border: 2px solid #FFB3CD;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+}
+.qr-img-wrap img {
+    width: 100%; height: 100%; object-fit: contain;
+}
+.qr-ref {
+    font-family: 'Courier New', monospace;
+    font-size: .82rem; font-weight: 700;
+    letter-spacing: .1em; color: var(--ss-text);
+    margin-bottom: 4px;
+}
+.qr-hint { font-size: .72rem; color: var(--ss-muted); }
+
 /* ── METODE SELECTOR ── */
 .metode-selector { margin-bottom: 22px; }
 .metode-selector .ttl { font-size: .82rem; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
@@ -155,6 +196,55 @@
 .metode-btn.active { border-color: #14b8a6; background: #f0fdfa; }
 .metode-btn .icon  { font-size: 1.4rem; margin-bottom: 4px; }
 .metode-btn .name  { font-size: .75rem; font-weight: 700; color: #1e293b; }
+ 
+
+/* ── Ulasan ── */
+
+.modal-ulasan {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+}
+.modal-ulasan-box {
+    background: #fff; border-radius: 18px;
+    padding: 28px 24px; width: 100%; max-width: 400px;
+    margin: 16px; text-align: center;
+    animation: slideUp .25s ease;
+}
+.modal-ulasan-top h2 { font-size: 1.1rem; font-weight: 800; margin: 8px 0 4px; }
+.modal-ulasan-top p  { font-size: .83rem; color: #7a8499; margin-bottom: 18px; }
+
+.star-group { display: flex; gap: 4px; flex-direction: row-reverse; justify-content: center; margin-bottom: 16px; }
+.star-group input { display: none; }
+.star-group label {
+    font-size: 2.4rem; color: #e4e9f0; cursor: pointer;
+    transition: color .15s;
+}
+.star-group input:checked ~ label,
+.star-group label:hover,
+.star-group label:hover ~ label { color: #FFB3CD; }
+
+.modal-ulasan-box textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid #e4e9f0; border-radius: 8px;
+    font-family: inherit; font-size: .83rem;
+    outline: none; resize: none; box-sizing: border-box;
+}
+.modal-ulasan-box textarea:focus { border-color: #FFB3CD; }
+
+.btn-kirim-ulasan {
+    flex: 1; padding: 12px;
+    background: #ed2f72; color: #fff; border: none;
+    border-radius: 8px; font-size: .88rem; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+}
+.btn-skip-ulasan {
+    flex: 1; padding: 12px;
+    background: #f1f5f9; color: #7a8499; border: none;
+    border-radius: 8px; font-size: .88rem; font-weight: 600;
+    font-family: inherit; cursor: pointer;
+}
 
 /* ── PROCESSING / SUCCESS STATE ── */
 .state-processing, .state-success {

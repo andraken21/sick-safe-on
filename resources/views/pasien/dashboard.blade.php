@@ -210,10 +210,7 @@
         </div>
         {{-- /.grid-col kanan --}}
 
-    </div>
-    {{-- /.main-grid --}}
-pasien-dashboard
-</div>
+    
 {{-- /.pasien-dashboard --}}
 
 @endsection
