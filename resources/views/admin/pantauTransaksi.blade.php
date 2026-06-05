@@ -2,75 +2,51 @@
 
 @section('title', 'Pantau Transaksi - Sick Safe ON')
 
+@push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/pantauTransaksi.css') }}">
+@endpush
+
 @section('content')
 <div class="dashboard-wrap">
 <link rel="stylesheet" href="{{ asset('css/pantauTransaksi.css') }}">
 
-    {{-- MAIN AREA --}}
     <div class="dash-main">
-
-        <!-- {{-- TOPBAR --}}
-        <div class="dash-topbar">
-            <div>
-                <div class="topbar-title">Pantau Transaksi</div>
-                <div class="topbar-sub">Pantau semua transaksi BPJS dan pembayaran mandiri</div>
-            </div>
-            <div class="topbar-right">
-                <button class="topbar-btn" title="Refresh">
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
-                </button>
-                <button class="topbar-btn" title="Export">
-                    <i class="fa-solid fa-download"></i>
-                </button>
-            </div>
-        </div> -->
-
-        {{-- CONTENT --}}
         <div class="dash-content">
 
             {{-- SUMMARY CARDS --}}
             <div class="trx-summary">
-                <div class="summary-card">
+                <div class="summary-card filter-card active" data-filter-status="all" title="Tampilkan semua transaksi">
                     <div class="summary-icon icon-total">
                         <i class="fa-solid fa-receipt"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Transaksi</div>
-                        <div class="summary-value">847</div>
+                        <div class="summary-value" id="count-total">0</div>
                         <div class="summary-sub">Bulan ini</div>
                     </div>
                 </div>
 
-                <div class="summary-card">
+                <div class="summary-card filter-card" data-filter-status="selesai" title="Tampilkan transaksi selesai">
                     <div class="summary-icon icon-success">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Selesai</div>
-                        <div class="summary-value">823</div>
-                        <div class="summary-sub">Rp 245.5 Juta</div>
+                        <div class="summary-value" id="count-selesai">0</div>
+                        <div class="summary-sub" id="sub-selesai">Rp 0</div>
                     </div>
                 </div>
 
-                <div class="summary-card">
+                <div class="summary-card filter-card" data-filter-status="pending" title="Tampilkan transaksi pending">
                     <div class="summary-icon icon-pending">
-                        <i class="fa-solid fa-hourglass-end"></i>
+                        <i class="fa-solid fa-hourglass-half"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Pending</div>
-                        <div class="summary-value">18</div>
-                        <div class="summary-sub">Rp 12.3 Juta</div>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon icon-failed">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </div>
-                    <div class="summary-info">
-                        <div class="summary-label">Transaksi Gagal</div>
-                        <div class="summary-value">6</div>
-                        <div class="summary-sub">Rp 850.000</div>
+                        <div class="summary-value" id="count-pending">0</div>
+                        <div class="summary-sub" id="sub-pending">Rp 0</div>
                     </div>
                 </div>
             </div>
@@ -79,28 +55,24 @@
             <div class="filter-section">
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Cari No. Transaksi atau nama pasien..." class="search-input">
+                    <input type="text" id="search-input"
+                           placeholder="Cari No. Transaksi atau nama pasien..."
+                           class="search-input">
+                    <button class="search-clear" id="search-clear" style="display:none;" title="Hapus pencarian">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
-
                 <div class="filter-group">
-                    <select class="filter-select">
+                    <select class="filter-select" id="filter-type">
                         <option value="">Semua Tipe</option>
                         <option value="bpjs">BPJS</option>
                         <option value="mandiri">Mandiri</option>
                     </select>
-
-                    <select class="filter-select">
+                    <select class="filter-select" id="filter-status">
                         <option value="">Semua Status</option>
                         <option value="selesai">Selesai</option>
                         <option value="pending">Pending</option>
-                        <option value="gagal">Gagal</option>
                     </select>
-
-                    <input type="date" class="filter-date">
-
-                    <button class="btn-filter">
-                        <i class="fa-solid fa-filter"></i> Filter
-                    </button>
                 </div>
             </div>
 
@@ -110,261 +82,66 @@
                     <table class="dash-table transactions-table">
                         <thead>
                             <tr>
-                                <th width="5%"><input type="checkbox" class="check-all"></th>
+                                <th width="4%"><input type="checkbox" id="check-all"></th>
                                 <th>No. Transaksi</th>
                                 <th>Nama Pasien</th>
                                 <th>No. RM</th>
                                 <th>Tipe</th>
                                 <th>Total</th>
                                 <th>Waktu</th>
-                                <th>Kasir</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {{-- Transaction 1 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0847</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Andi Setiawan</div>
-                                        <div class="patient-sub">Pasien Umum</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-02456</span></td>
-                                <td><span class="type-badge type-bpjs">BPJS</span></td>
-                                <td class="amount-cell">Rp 125.000</td>
-                                <td class="time-cell">
-                                    <div>16 Mei 2026</div>
-                                    <div class="time-sub">14:32 WIB</div>
-                                </td>
-                                <td>Siti Indriyani</td>
-                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {{-- Transaction 2 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0846</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Dewi Kusuma</div>
-                                        <div class="patient-sub">Pasien BPJS</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-01298</span></td>
-                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
-                                <td class="amount-cell">Rp 85.000</td>
-                                <td class="time-cell">
-                                    <div>16 Mei 2026</div>
-                                    <div class="time-sub">13:15 WIB</div>
-                                </td>
-                                <td>Reza Pratama</td>
-                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {{-- Transaction 3 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0845</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Bambang Sutrisno</div>
-                                        <div class="patient-sub">Pasien Umum</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-03121</span></td>
-                                <td><span class="type-badge type-bpjs">BPJS</span></td>
-                                <td class="amount-cell">Rp 210.000</td>
-                                <td class="time-cell">
-                                    <div>16 Mei 2026</div>
-                                    <div class="time-sub">12:45 WIB</div>
-                                </td>
-                                <td>Aprina Santoso</td>
-                                <td><span class="status-badge status-pending">⏳ Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {{-- Transaction 4 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0844</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Lina Maulida</div>
-                                        <div class="patient-sub">Pasien BPJS</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-02897</span></td>
-                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
-                                <td class="amount-cell">Rp 55.000</td>
-                                <td class="time-cell">
-                                    <div>16 Mei 2026</div>
-                                    <div class="time-sub">11:20 WIB</div>
-                                </td>
-                                <td>Siti Indriyani</td>
-                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {{-- Transaction 5 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0843</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Hendra Gunawan</div>
-                                        <div class="patient-sub">Pasien Umum</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-01567</span></td>
-                                <td><span class="type-badge type-bpjs">BPJS</span></td>
-                                <td class="amount-cell">Rp 320.000</td>
-                                <td class="time-cell">
-                                    <div>15 Mei 2026</div>
-                                    <div class="time-sub">16:05 WIB</div>
-                                </td>
-                                <td>Nurul Putri</td>
-                                <td><span class="status-badge status-gagal">✗ Gagal</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {{-- Transaction 6 --}}
-                            <tr>
-                                <td><input type="checkbox" class="check-row"></td>
-                                <td>
-                                    <span class="trx-id">TRX-2026-0842</span>
-                                </td>
-                                <td>
-                                    <div class="patient-info">
-                                        <div class="patient-name">Maya Safitri</div>
-                                        <div class="patient-sub">Pasien BPJS</div>
-                                    </div>
-                                </td>
-                                <td><span class="rm-number">RM-02345</span></td>
-                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
-                                <td class="amount-cell">Rp 175.000</td>
-                                <td class="time-cell">
-                                    <div>15 Mei 2026</div>
-                                    <div class="time-sub">15:30 WIB</div>
-                                </td>
-                                <td>Reza Pratama</td>
-                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-action btn-view" title="Lihat Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="btn-action btn-print" title="Cetak">
-                                            <i class="fa-solid fa-print"></i>
-                                        </button>
-                                        <button class="btn-action btn-more" title="Lebih Lanjut">
-                                            <i class="fa-solid fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="trx-tbody"></tbody>
                     </table>
+                    <div id="empty-state" style="display:none;" class="empty-state">
+                        <i class="fa-solid fa-receipt"></i>
+                        <p>Tidak ada transaksi yang ditemukan.</p>
+                    </div>
                 </div>
             </div>
 
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
-                    Menampilkan <strong>1-6</strong> dari <strong>847</strong> transaksi
+                    Menampilkan <strong id="pag-from">0</strong>–<strong id="pag-to">0</strong>
+                    dari <strong id="pag-total">0</strong> transaksi
                 </div>
-                <div class="pagination">
-                    <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">4</button>
-                    <button class="page-btn">5</button>
-                    <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
+                <div class="pagination" id="pagination-controls"></div>
             </div>
 
         </div>
-        {{-- /CONTENT --}}
-
     </div>
-    {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/monitorTransaction.js') }}"></script>
+    {{-- MODAL DETAIL --}}
+    <div class="modal-overlay" id="modal-detail" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">Detail Transaksi</h3>
+                <button class="modal-close" id="modal-detail-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-detail-body"></div>
+            <div class="modal-footer">
+                <button class="btn-modal-secondary" id="modal-detail-print">
+                    <i class="fa-solid fa-print"></i> Cetak
+                </button>
+                <button class="btn-modal-primary" id="modal-detail-close-btn">
+                    <i class="fa-solid fa-xmark"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{-- TOAST --}}
+    <div class="toast-container" id="toast-container"></div>
+
 </div>
+
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/pantauTransaksi.js') }}"></script>
+@endpush

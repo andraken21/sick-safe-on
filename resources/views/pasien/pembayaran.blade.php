@@ -2,6 +2,7 @@
 
 @section('title', 'Pembayaran — Sick Safe ON')
 
+<<<<<<< HEAD
 @section('content')
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -500,6 +501,16 @@
 }
 </style>
 
+=======
+@push('styles')
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/pembayaran.css') }}">
+<link rel="stylesheet" href="{{ asset('css/dashboardPasien.css') }}">
+@endpush
+
+@section('content')
+>>>>>>> main
 <div class="bayar-page">
 
     {{-- PAGE HEADER --}}
@@ -557,7 +568,11 @@
         <div class="table-card">
             <div class="card-head">
                 <h2>Riwayat Pembayaran</h2>
+<<<<<<< HEAD
                 <span class="badge-count">9 Transaksi</span>
+=======
+                <span class="badge-count">{{ count($pembayaranList) }} Transaksi</span>
+>>>>>>> main
             </div>
 
             <div class="filter-bar">
@@ -569,16 +584,26 @@
                     <input type="text" placeholder="Cari invoice...">
                 </div>
                 <select class="filter-select">
+<<<<<<< HEAD
                     <option>Semua Status</option>
+=======
+                    <option value="Semua Status">Semua Status</option>
+>>>>>>> main
                     <option value="lunas">Lunas</option>
                     <option value="menunggu">Menunggu</option>
                     <option value="proses">Diproses</option>
                     <option value="gagal">Gagal</option>
                 </select>
                 <select class="filter-select">
+<<<<<<< HEAD
                     <option>Semua Metode</option>
                     <option>BPJS</option>
                     <option>Mandiri</option>
+=======
+                    <option value="Semua Metode">Semua Metode</option>
+                    <option value="BPJS">BPJS</option>
+                    <option value="Mandiri">Mandiri</option>
+>>>>>>> main
                 </select>
             </div>
 
@@ -592,7 +617,11 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     <!-- Diisi oleh JavaScript -->
+=======
+                    {{-- Baris awal diisi oleh pembayaran.js (renderTable()) --}}
+>>>>>>> main
                 </tbody>
             </table>
 
@@ -611,6 +640,7 @@
                     <h3>Tagihan Aktif</h3>
                 </div>
                 <div class="side-card-body">
+<<<<<<< HEAD
                     {{-- Data tagihan aktif disimpan sebagai data attributes --}}
                     <div class="tagihan-list"
                          id="tagihanData"
@@ -630,10 +660,39 @@
                         <div class="tagihan-row">
                             <span class="lbl">Dokter &amp; Obat</span>
                             <span class="val">Dr. Budi Santoso • 3 Obat</span>
+=======
+                    @if($detailPembayaran)
+                    {{--
+                        Semua nilai PHP disimpan di data-* agar JS bisa
+                        membacanya tanpa Blade syntax di dalam file .js
+                    --}}
+                    <div class="tagihan-list"
+                         id="tagihanData"
+                         data-subtotal="{{ $detailPembayaran['subtotal_obat'] }}"
+                         data-layanan="{{ $detailPembayaran['biaya_layanan'] }}"
+                         data-total-normal="{{ $detailPembayaran['total'] }}"
+                         data-invoice="{{ $detailPembayaran['nomor_invoice'] }}"
+                         data-status="{{ strtolower($detailPembayaran['status']) }}"
+                         data-bayar-url="{{ route('pasien.pembayaran.bayar', $detailPembayaran['nomor_invoice']) }}"
+                         data-proses-url="{{ route('pasien.pembayaran.proses') }}">
+
+                        <div class="tagihan-row">
+                            <span class="lbl">NO. INVOICE</span>
+                            <span class="val" style="color:var(--ss-primary);">{{ $detailPembayaran['nomor_invoice'] }}</span>
+                        </div>
+                        <div class="tagihan-row">
+                            <span class="lbl">Resep</span>
+                            <span class="val">{{ $detailPembayaran['resep_id'] }}</span>
+                        </div>
+                        <div class="tagihan-row">
+                            <span class="lbl">Dokter &amp; Obat</span>
+                            <span class="val">{{ $detailPembayaran['dokter'] }}</span>
+>>>>>>> main
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-row">
                             <span class="lbl">Subtotal obat</span>
+<<<<<<< HEAD
                             <span class="val" id="tagihanSubtotal">Rp 75.000</span>
                         </div>
                         <div class="tagihan-row">
@@ -643,16 +702,45 @@
                         <div class="tagihan-row" id="tagihanDiskonRow">
                             <span class="lbl">Diskon BPJS</span>
                             <span class="val" id="tagihanDiskon">– Rp 0</span>
+=======
+                            <span class="val" id="tagihanSubtotal">Rp {{ number_format($detailPembayaran['subtotal_obat'], 0, ',', '.') }}</span>
+                        </div>
+                        <div class="tagihan-row">
+                            <span class="lbl">Biaya layanan</span>
+                            <span class="val" id="tagihanLayanan">Rp {{ number_format($detailPembayaran['biaya_layanan'], 0, ',', '.') }}</span>
+                        </div>
+                        <div class="tagihan-row" id="tagihanDiskonRow">
+                            <span class="lbl" id="tagihanDiskonLbl">Diskon {{ $detailPembayaran['metode'] }}</span>
+                            <span class="val" id="tagihanDiskon">- Rp {{ number_format($detailPembayaran['diskon'], 0, ',', '.') }}</span>
+>>>>>>> main
                         </div>
                         <div class="tagihan-divider"></div>
                         <div class="tagihan-total">
                             <span class="lbl">Total Bayar</span>
+<<<<<<< HEAD
                             <span class="val" id="tagihanTotal">Rp 87.500</span>
                         </div>
                     </div>
                     {{-- Tombol Bayar Sekarang: hanya aktif kalau status = menunggu --}}
                     <a href="#" id="btnBayarSekarang" class="btn-bayar" style="margin-top:12px;">Bayar Sekarang</a>
                     <p id="btnBayarInfo" style="display:none; text-align:center; font-size:.78rem; color:var(--ss-muted); margin-top:8px;"></p>
+=======
+                            <span class="val" id="tagihanTotal">Rp {{ number_format($detailPembayaran['total_bayar'], 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    @if(strtolower($detailPembayaran['status']) === 'menunggu')
+                    {{-- href diisi oleh JS berdasarkan metode terpilih --}}
+                    <a href="#" id="btnBayarSekarang" class="btn-bayar" style="margin-top:12px;">
+                        Bayar Sekarang
+                    </a>
+                    @endif
+
+                    <p id="btnBayarInfo" style="display:none; text-align:center; font-size:.78rem; color:var(--ss-muted); margin-top:8px;"></p>
+                    @else
+                    <p style="text-align: center; color: var(--ss-muted);">Tidak ada tagihan aktif.</p>
+                    @endif
+>>>>>>> main
                 </div>
             </div>
 
@@ -678,18 +766,27 @@
                                 <div class="metode-badge metode-badge--mandiri">🏦</div>
                                 <div>
                                     <div class="metode-name">Mandiri</div>
+<<<<<<< HEAD
                                    
+=======
+>>>>>>> main
                                 </div>
                             </div>
                             <div class="metode-check"></div>
                         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
                     </div>
                 </div>
             </div>
 
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     </div>
 
     {{-- MODAL PEMBAYARAN --}}
@@ -703,8 +800,11 @@
                 <button class="modal-close" id="modalCloseBtn">✕</button>
             </div>
             <div class="modal-body">
+<<<<<<< HEAD
 
                 {{-- Ringkasan invoice --}}
+=======
+>>>>>>> main
                 <div class="modal-invoice" id="modalInvoice">
                     <div class="modal-invoice-row">
                         <span>Resep</span><span>RSP-2026-0051</span>
@@ -724,7 +824,10 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- Panel BPJS --}}
+=======
+>>>>>>> main
                 <div class="panel-bpjs" id="panelBpjs">
                     <div class="bpjs-number-wrap">
                         <div class="bpjs-label">📋 Nomor BPJS Kesehatan</div>
@@ -737,12 +840,18 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- Panel Mandiri Barcode --}}
+=======
+>>>>>>> main
                 <div class="panel-mandiri" id="panelMandiri">
                     <div class="barcode-dashed">
                         <div class="barcode-lbl">Barcode Pembayaran Mandiri</div>
                         <div class="barcode-img-wrap">
+<<<<<<< HEAD
                             {{-- Ganti src dengan path gambar barcode kamu --}}
+=======
+>>>>>>> main
                             <img id="barcodeImg" src="" alt="Barcode" style="display:none;">
                             <div class="barcode-placeholder" id="barcodePlaceholder">
                                 🖼️<br>Tambahkan gambar barcode<br>di sini
@@ -753,14 +862,20 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- Processing state --}}
+=======
+>>>>>>> main
                 <div class="modal-processing" id="modalProcessing">
                     <div class="modal-spinner"></div>
                     <div style="font-weight:700;margin-bottom:4px;">Memproses Pembayaran…</div>
                     <div style="font-size:.8rem;color:var(--ss-muted);">Mohon tunggu sebentar</div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- Success state --}}
+=======
+>>>>>>> main
                 <div class="modal-success" id="modalSuccess">
                     <div class="icon">✅</div>
                     <div class="title">Pembayaran Dikonfirmasi!</div>
@@ -768,15 +883,20 @@
                     <div style="font-size:1.2rem;font-weight:800;color:var(--ss-primary);margin-top:12px;">Rp 87.500</div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- Tombol konfirmasi --}}
                 <button class="btn-konfirmasi" id="btnKonfirmasi">Konfirmasi Bayar</button>
 
+=======
+                <button class="btn-konfirmasi" id="btnKonfirmasi">Konfirmasi Bayar</button>
+>>>>>>> main
             </div>
         </div>
     </div>
 
 </div>
 
+<<<<<<< HEAD
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // ===== DATA TRANSAKSI =====
@@ -1136,3 +1256,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 @endsection
+=======
+{{-- CSRF untuk AJAX --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+@endsection
+
+@push('scripts')
+<script src="{{ asset('js/pembayaran.js') }}"></script>
+@endpush
+>>>>>>> main

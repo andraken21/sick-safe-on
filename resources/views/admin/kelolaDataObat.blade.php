@@ -2,14 +2,15 @@
 
 @section('title', 'Kelola Data Obat - Sick Safe ON')
 
+@push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">
+@endpush
+
 @section('content')
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/kelolaDataObat.css') }}">
-
-    {{-- MAIN AREA --}}
     <div class="dash-main">
-
-        {{-- CONTENT --}}
         <div class="dash-content">
 
             {{-- SUMMARY CARDS --}}
@@ -20,7 +21,7 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Obat</div>
-                        <div class="summary-value" id="count-total">156</div>
+                        <div class="summary-value" id="count-total">0</div>
                     </div>
                 </div>
 
@@ -30,7 +31,7 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Stok Menipis</div>
-                        <div class="summary-value" id="count-rendah">8</div>
+                        <div class="summary-value" id="count-rendah">0</div>
                     </div>
                 </div>
 
@@ -40,7 +41,7 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Stok Habis</div>
-                        <div class="summary-value" id="count-habis">3</div>
+                        <div class="summary-value" id="count-habis">0</div>
                     </div>
                 </div>
 
@@ -50,7 +51,7 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Akan Kadaluarsa</div>
-                        <div class="summary-value" id="count-expired">5</div>
+                        <div class="summary-value" id="count-expired">0</div>
                     </div>
                 </div>
             </div>
@@ -90,7 +91,7 @@
                     <table class="dash-table medicines-table">
                         <thead>
                             <tr>
-                                <th width="5%" style="text-align:center;"><input type="checkbox" class="check-all" id="check-all"></th>
+                                <th width="5%" style="text-align:center;"><input type="checkbox" id="check-all"></th>
                                 <th style="text-align:center;">Nama Obat</th>
                                 <th style="text-align:center;">Kategori</th>
                                 <th style="text-align:center;">Stok</th>
@@ -102,9 +103,7 @@
                                 <th style="text-align:center;">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="medicine-tbody">
-                            {{-- Rows injected by JS --}}
-                        </tbody>
+                        <tbody id="medicine-tbody"></tbody>
                     </table>
                     <div id="empty-state" style="display:none;" class="empty-state">
                         <i class="fa-solid fa-box-open"></i>
@@ -115,19 +114,15 @@
 
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
-                <div class="pagination-info" id="pagination-info">
-                    Menampilkan <strong id="pag-from">1</strong>-<strong id="pag-to">6</strong> dari <strong id="pag-total">156</strong> obat
+                <div class="pagination-info">
+                    Menampilkan <strong id="pag-from">0</strong>-<strong id="pag-to">0</strong>
+                    dari <strong id="pag-total">0</strong> obat
                 </div>
-                <div class="pagination" id="pagination-controls">
-                    {{-- Injected by JS --}}
-                </div>
+                <div class="pagination" id="pagination-controls"></div>
             </div>
 
         </div>
-        {{-- /CONTENT --}}
-
     </div>
-    {{-- /MAIN AREA --}}
 
     {{-- MODAL DETAIL --}}
     <div class="modal-overlay" id="modal-detail" style="display:none;">
@@ -136,13 +131,8 @@
                 <h3 class="modal-title">Detail Obat</h3>
                 <button class="modal-close" id="modal-detail-close"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="modal-body" id="modal-detail-body">
-                {{-- Injected by JS --}}
-            </div>
+            <div class="modal-body" id="modal-detail-body"></div>
             <div class="modal-footer">
-                <button class="btn-modal-secondary" id="modal-detail-edit-btn">
-                    <i class="fa-solid fa-pen"></i> Edit Obat
-                </button>
                 <button class="btn-modal-primary" id="modal-detail-close-btn">Tutup</button>
             </div>
         </div>
@@ -155,9 +145,7 @@
                 <h3 class="modal-title">Edit Obat</h3>
                 <button class="modal-close" id="modal-edit-close"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="modal-body" id="modal-edit-body">
-                {{-- Injected by JS --}}
-            </div>
+            <div class="modal-body" id="modal-edit-body"></div>
             <div class="modal-footer">
                 <button class="btn-modal-secondary" id="modal-edit-cancel">Batal</button>
                 <button class="btn-modal-primary" id="modal-edit-save">
@@ -167,15 +155,19 @@
         </div>
     </div>
 
-    {{-- MODAL MORE (dropdown actions) --}}
+    {{-- CONTEXT MENU — posisi fixed, tidak ikut scroll --}}
     <div class="context-menu" id="context-menu" style="display:none;">
+        <button class="ctx-item ctx-edit"    id="ctx-edit"><i class="fa-solid fa-pen"></i> Edit Obat</button>
         <button class="ctx-item ctx-restock" id="ctx-restock"><i class="fa-solid fa-boxes-stacking"></i> Restock</button>
-        <button class="ctx-item ctx-delete" id="ctx-delete"><i class="fa-solid fa-trash"></i> Hapus Obat</button>
+        <button class="ctx-item ctx-delete"  id="ctx-delete"><i class="fa-solid fa-trash"></i> Hapus Obat</button>
     </div>
 
     {{-- TOAST --}}
     <div class="toast-container" id="toast-container"></div>
 
-<script src="{{ asset('js/kelolaDataObat.js') }}"></script>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/kelolaDataObat.js') }}"></script>
+@endpush
