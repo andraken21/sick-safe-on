@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --ss-primary:       #2bbf8e;
-    --ss-primary-light: #e6f9f4;
-    --ss-primary-mid:   #d0f5ea;
-    --ss-primary-dark:  #1a9e74;
+    --ss-primary:       #FFB3CD;
+    --ss-primary-light: #FFB3CD;
+    --ss-primary-mid:   #FFB3CD;
+    --ss-primary-dark:  #FFB3CD;
     --ss-warning:       #e05e2e;
     --ss-info:          #1d6fd8;
     --ss-success:       #1fa85c;
@@ -74,9 +74,9 @@
     flex-shrink: 0; font-size: 1.1rem;
 }
 .stat-icon--teal    { background: var(--ss-primary-light); color: var(--ss-primary); }
-.stat-icon--warning { background: #fff4ee; color: var(--ss-warning); }
+.stat-icon--warning { background: #FFF0F3; color: #7B2D8B; }
 .stat-icon--info    { background: #dbeafe; color: var(--ss-info); }
-.stat-icon--success { background: #dcfce7; color: var(--ss-success); }
+.stat-icon--success { background: #FFF0F3; color: #5E2D34;  }
 
 .stat-text .num { font-size: 1.4rem; font-weight: 800; line-height: 1; }
 .stat-text .lbl { font-size: .75rem; color: var(--ss-muted); font-weight: 500; margin-top: 3px; }
@@ -210,16 +210,17 @@
     padding: 4px 11px; border-radius: 999px;
     font-size: .72rem; font-weight: 600; white-space: nowrap;
 }
-.badge--lunas  { background: #dcfce7; color: #15803d; }
-.badge--tunggu { background: #fef9c3; color: #a16207; }
-.badge--gagal  { background: #fee2e2; color: #b91c1c; }
-.badge--proses { background: #dbeafe; color: #1d4ed8; }
-.badge--menunggu { background: #fef9c3; color: #a16207; }
-
+.badge--lunas    { background: #FFF0F3; color: #5E2D34; }
+.badge--tunggu   { background: #FFF0F3; color: #15803d; }
+.badge--gagal    { background: #FFF0F3; color: #b91c1c; }
+.badge--proses   { background: #FFF0F3; color: #7B2D8B; }
+.badge--menunggu { background: #FFF0F3; color: #a16207; }
 /* Pagination */
 .pagination-wrap {
     display: flex; align-items: center;
     justify-content: space-between;
+    background: #fff0f5;
+    border-color: rgb(243, 170, 206);
     padding: 14px 20px;
     border-top: 1px solid var(--ss-border);
     flex-wrap: wrap; gap: 10px;
@@ -238,8 +239,8 @@
     transition: all .2s; color: var(--ss-text);
 }
 .pg-btn:hover, .pg-btn.active {
-    background: var(--ss-primary);
-    border-color: var(--ss-primary);
+    background: #FFB3CD;
+    border-color: #FFB3CD;
     color: #fff;
 }
 .pg-btn:disabled {
@@ -280,8 +281,8 @@
     transition: all .2s;
 }
 .metode-item:hover, .metode-item.active {
-    border-color: var(--ss-primary);
-    background: var(--ss-primary-light);
+    background: #fff0f5;
+    border-color: rgb(243, 170, 206);
 }
 
 .metode-item-left { display: flex; align-items: center; gap: 10px; }
@@ -354,7 +355,8 @@
     text-decoration: none;
     transition: background .2s, transform .15s;
 }
-.btn-bayar:hover { background: var(--ss-primary-dark); transform: translateY(-1px); }
+.btn-bayar:hover {     background: #fff0f5;
+    border-color: rgb(243, 170, 206); transform: translateY(-1px); }
 
 /* ── MODAL PAYMENT ── */
 .modal-overlay {
@@ -394,7 +396,9 @@
     font-size: 1rem; display: flex; align-items: center; justify-content: center;
     transition: background .2s;
 }
-.modal-close:hover { background: rgba(255,255,255,.35); }
+.modal-close:hover { background:  #fff0f5;
+    border-color: rgb(243, 170, 206); 
+}
 .modal-body { padding: 20px 24px; }
 .modal-invoice {
     background: #f8fafc; border-radius: 10px;
@@ -421,6 +425,7 @@
 }
 .bpjs-label {
     font-size: .72rem; font-weight: 700;
+     color: rgb(243, 170, 206);
     text-transform: uppercase; letter-spacing: .8px;
     color: var(--ss-primary-dark); margin-bottom: 8px;
 }
@@ -485,7 +490,8 @@
     font-family: var(--ss-font); cursor: pointer; margin-top: 4px;
     transition: background .2s, transform .15s;
 }
-.btn-konfirmasi:hover { background: var(--ss-primary-dark); transform: translateY(-1px); }
+.btn-konfirmasi:hover {     background: #fff0f5;
+    border-color: rgb(243, 170, 206); transform: translateY(-1px); }
 
 /* Responsive */
 @media (max-width: 1000px) {

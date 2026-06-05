@@ -15,7 +15,7 @@
 
 <div class="register-card">
    
-    {{-- Panel Kiri --}}
+    {{-- Panel Kiri --}}    
     <div class="left-panel">
         <div class="left-panel-icon">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none"

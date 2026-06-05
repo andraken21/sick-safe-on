@@ -149,11 +149,77 @@ class PasienController extends Controller
 
         return view('pasien.pembayaran', compact('pasien', 'pembayaranList', 'detailPembayaran'));
     }
+    public function simpanUlasan(Request $request)
+{
+    $request->validate([
+        'nama_dokter'  => 'required|string',
+        'nomor_resep'  => 'required|string',
+        'bintang'      => 'nullable|integer|min:1|max:5',
+        'komentar'     => 'nullable|string|max:500',
+    ]);
 
-    /**
-     * Halaman pembayaran penuh.
-     * GET /pasien/pembayaran/bayar/{invoice}?metode=BPJS
-     */
+    $pasien = \DB::table('pasien')->where('ID_User', Auth::id())->first();
+
+    \DB::table('ulasan')->insert([
+        'ID_Pasien'   => $pasien->ID_Pasien,
+        'nama_dokter' => $request->nama_dokter,
+        'nomor_resep' => $request->nomor_resep,
+        'bintang'     => $request->bintang ?? 5,
+        'komentar'    => $request->komentar,
+        'created_at'  => now(),
+        'updated_at'  => now(),
+    ]);
+
+    return redirect()->route('pasien.pembayaran')->with('success', 'Ulasan berhasil dikirim!');
+}
+    public function profil()
+{
+    $user = Auth::user();
+    $noBpjs = \DB::table('pasien')->where('ID_User', $user->id)->value('No_BPJS');
+    return view('pasien.profil', compact('user', 'noBpjs'));
+}
+
+public function updateProfil(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'nama'          => 'required|string|max:255',
+        'email'         => 'required|email|unique:users,email,' . $user->id,
+        'no_telp'       => 'nullable|string|max:15',
+        'alamat'        => 'nullable|string',
+        'no_bpjs'       => 'nullable|string|max:13',
+        'password'      => 'nullable|min:8|confirmed',
+    ]);
+
+    \DB::table('users')->where('id', $user->id)->update([
+        'nama'    => $request->nama,
+        'email'   => $request->email,
+        'no_telp' => $request->no_telp,
+        'alamat'  => $request->alamat,
+        'password'=> $request->password ? \Hash::make($request->password) : $user->password,
+        'updated_at' => now(),
+    ]);
+
+    \DB::table('pasien')->updateOrInsert(
+        ['ID_User' => $user->id],
+        ['No_BPJS' => $request->no_bpjs, 'updated_at' => now()]
+    );
+
+    return back()->with('success', 'Profil berhasil diperbarui!');
+}
+
+public function deleteProfil(Request $request)
+{
+    $user = Auth::user();
+    Auth::logout();
+    \DB::table('pasien')->where('ID_User', $user->id)->delete();
+    \DB::table('users')->where('id', $user->id)->delete();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/login')->with('success', 'Akun berhasil dihapus.');
+}
+
     public function halamanBayar(Request $request, string $invoice)
     {
         $pasien = Auth::user();
@@ -186,10 +252,6 @@ class PasienController extends Controller
         return view('pasien.bayar', compact('pasien', 'detail'));
     }
 
-    /**
-     * Proses pembayaran via AJAX POST.
-     * POST /pasien/pembayaran/proses
-     */
     public function prosesBayar(Request $request)
     {
         // TODO: Simpan ke database, update status invoice, kirim notifikasi apoteker, dll.
@@ -200,4 +262,5 @@ class PasienController extends Controller
             'waktu'    => now()->format('d M Y, H:i'),
         ]);
     }
+    
 }

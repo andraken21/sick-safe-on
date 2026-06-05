@@ -252,10 +252,7 @@
                         <div class="bpjs-name" id="bpjsName">Nama Peserta Aktif</div>
                         <div class="bpjs-status">✅ Peserta Aktif</div>
                     </div>
-                    <div class="bpjs-info">
-                        ℹ️ Tunjukkan nomor BPJS ini kepada petugas apotek. Biaya ditanggung sesuai ketentuan BPJS Kesehatan.
-                    </div>
-                </div>
+    
 
                 <div class="panel-mandiri" id="panelMandiri">
                     <div class="barcode-dashed">

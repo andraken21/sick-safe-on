@@ -53,6 +53,11 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
         Route::get('/pasien/pembayaran', [App\Http\Controllers\PasienController::class, 'pembayaran'])->name('pasien.pembayaran');
         Route::get('/pasien/pembayaran/bayar/{invoice}', [App\Http\Controllers\PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
         Route::post('/pasien/pembayaran/proses', [App\Http\Controllers\PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
+        Route::get('/pasien/ulasan', [App\Http\Controllers\PasienController::class, 'ulasan'])->name('pasien.ulasan');
+        Route::post('/pasien/ulasan/simpan', [App\Http\Controllers\PasienController::class, 'simpanUlasan'])->name('pasien.ulasan.simpan');
+        Route::get('/pasien/profil', [App\Http\Controllers\PasienController::class, 'profil'])->name('pasien.profil');
+        Route::put('/pasien/profil/update', [App\Http\Controllers\PasienController::class, 'updateProfil'])->name('pasien.profil.update');
+        Route::delete('/pasien/profil/delete', [App\Http\Controllers\PasienController::class, 'deleteProfil'])->name('pasien.profil.delete');
 });
 
 // APOTEKER

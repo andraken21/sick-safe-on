@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+.profil-page { max-width: 680px; margin: 0 auto; padding: 8px 0 40px; }
+.profil-page h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+.profil-page .sub { font-size: .85rem; color: #7a8499; margin-bottom: 24px; }
+
+.profil-avatar-wrap {
+    display: flex; align-items: center; gap: 18px;
+    background: #fff; border: 1px solid #e4e9f0;
+    border-radius: 14px; padding: 22px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.profil-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #FFB3CD; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 800; flex-shrink: 0;
+}
+.profil-avatar-info p { font-size: 1rem; font-weight: 700; margin: 0 0 4px; }
+.profil-avatar-info span { font-size: .78rem; color: #7a8499; }
+
+.profil-card {
+    background: #fff; border: 1px solid #e4e9f0;
+    border-radius: 14px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    margin-bottom: 16px;
+}
+.profil-card h2 { font-size: .95rem; font-weight: 700; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #e4e9f0; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label { font-size: .8rem; font-weight: 600; color: #4a5568; }
+.form-group input, .form-group textarea {
+    padding: 10px 14px;
+    border: 1.5px solid #e4e9f0; border-radius: 8px;
+    font-family: inherit; font-size: .85rem; outline: none;
+    transition: border-color .2s; background: #fff;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: #FFB3CD; }
+.form-group input[readonly] { background: #f8fafc; color: #7a8499; cursor: not-allowed; }
+
+.bpjs-input-wrap { position: relative; }
+.bpjs-input-wrap input { padding-left: 38px; }
+.bpjs-input-wrap .bpjs-icon {
+    position: absolute; left: 12px; top: 50%;
+    transform: translateY(-50%); font-size: 14px; color: #FFB3CD;
+}
+
+.btn-row { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+.btn-save {
+    padding: 11px 28px; background: #FFB3CD; color: #fff;
+    border: none; border-radius: 8px; font-size: .88rem;
+    font-weight: 700; font-family: inherit; cursor: pointer;
+    transition: opacity .2s;
+}
+.btn-save:hover { opacity: .85; }
+
+.danger-zone {
+    background: #fff; border: 1.5px solid #fee2e2;
+    border-radius: 14px; padding: 20px 24px;
+}
+.danger-zone h2 { font-size: .95rem; font-weight: 700; color: #b91c1c; margin-bottom: 6px; }
+.danger-zone p  { font-size: .82rem; color: #7a8499; margin-bottom: 14px; }
+.btn-delete {
+    padding: 10px 22px; background: #fee2e2; color: #b91c1c;
+    border: 1.5px solid #fca5a5; border-radius: 8px;
+    font-size: .85rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: background .2s;
+}
+.btn-delete:hover { background: #fca5a5; }
+
+.alert-success {
+    background: #DCFCE7; color: #15803d; border-radius: 8px;
+    padding: 12px 16px; font-size: .85rem; font-weight: 600;
+    margin-bottom: 18px;
+}
+.alert-error {
+    background: #fee2e2; color: #b91c1c; border-radius: 8px;
+    padding: 12px 16px; font-size: .85rem; font-weight: 600;
+    margin-bottom: 18px;
+}
+
+/* Modal konfirmasi hapus */
+.modal-hapus {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 2000;
+    align-items: center; justify-content: center;
+}
+.modal-hapus.open { display: flex; }
+.modal-hapus-box {
+    background: #fff; border-radius: 16px;
+    padding: 28px 24px; max-width: 380px; width: 100%;
+    margin: 16px; text-align: center;
+}
+.modal-hapus-box .icon { font-size: 2.5rem; margin-bottom: 10px; }
+.modal-hapus-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+.modal-hapus-box p  { font-size: .83rem; color: #7a8499; margin-bottom: 20px; }
+.modal-hapus-btns { display: flex; gap: 10px; }
+.btn-batal-hapus {
+    flex: 1; padding: 11px; background: #f1f5f9; color: #7a8499;
+    border: none; border-radius: 8px; font-size: .88rem;
+    font-weight: 600; font-family: inherit; cursor: pointer;
+}
+.btn-konfirm-hapus {
+    flex: 1; padding: 11px; background: #b91c1c; color: #fff;
+    border: none; border-radius: 8px; font-size: .88rem;
+    font-weight: 700; font-family: inherit; cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+}

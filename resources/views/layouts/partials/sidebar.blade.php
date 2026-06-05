@@ -73,6 +73,7 @@
                 <i class="fas fa-credit-card"></i> Pembayaran
             </a>
 
+
         @elseif($role === 'Apoteker')
             <div class="nav-label">Menu Utama</div>
             <a href="{{ route('apoteker.dashboard') }}"
@@ -104,17 +105,27 @@
 
     </nav>
 
-    <div class="sidebar-user">
+   @if($role === 'Pasien')
+        <a href="{{ route('pasien.profil') }}" class="sidebar-user sidebar-user--link">
+        @else
+        <div class="sidebar-user">
+        @endif
         <div class="user-avatar">
-            {{ strtoupper(substr(Auth::user()->nama ?? 'U', 0, 2)) }}
+        {{ strtoupper(substr(Auth::user()->nama ?? 'U', 0, 2)) }}
         </div>
         <div class="user-info">
-            <p>{{ Auth::user()->nama ?? 'Pengguna' }}</p>
-            <span>{{ Auth::user()->role ?? '' }}</span>
+        <p>{{ Auth::user()->nama ?? 'Pengguna' }}</p>
+        <span>{{ Auth::user()->role ?? '' }}</span>
         </div>
-    </div>
-
-</aside>
+        @if($role === 'Pasien')
+        <i class="fas fa-chevron-right" style="color:#4a6a7a;font-size:11px;margin-left:auto;"></i>
+        @endif
+        @if($role === 'Pasien')
+        </a>
+        @else
+        </div>
+        @endif
+        </aside>
 
 <style>
     .sidebar {
@@ -133,6 +144,7 @@
         padding: 22px 18px 18px;
         border-bottom: 1px solid rgba(255,255,255,0.07);
     }
+    
 
 /* BENAR: Menghilangkan scrollbar di navigasi utama sidebar */
 .sidebar-nav::-webkit-scrollbar {
@@ -191,6 +203,14 @@
         padding: 14px 16px;
         border-top: 1px solid rgba(255,255,255,0.07);
         display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-user--link {
+    text-decoration: none;
+    transition: background .2s;
+    cursor: pointer;
+    }
+    .sidebar-user--link:hover {
+    background: rgba(255,255,255,0.05);
     }
     .user-avatar {
         width: 32px; height: 32px; border-radius: 50%;

@@ -58,8 +58,10 @@
         });
 
         // Panel instruksi
-        if (panelBpjs)    panelBpjs.style.display    = isBpjs  ? '' : 'none';
-        if (panelMandiri) panelMandiri.style.display = !isBpjs ? '' : 'none';
+         if (panelBpjs)    panelBpjs.style.display    = isBpjs  ? '' : 'none';
+         if (panelMandiri) panelMandiri.style.display = !isBpjs ? '' : 'none';
+         const panelQr = document.getElementById('panelQr');
+         if (panelQr)      panelQr.style.display      = !isBpjs ? '' : 'none';
 
         // Barcode Mandiri: generate ref baru tiap kali panel ditampilkan
         if (!isBpjs && barcodeRef) barcodeRef.textContent = genRef();
@@ -148,7 +150,18 @@
                             ? `Kode Ref: ${data.kode_ref} • ${data.waktu || ''}`
                             : '';
                     }
-                    if (stateSuccess) stateSuccess.style.display = '';
+                    if (stateSuccess) 
+                    setTimeout(() => {
+                    const modalUlasan = document.getElementById('modalUlasan');
+                    if (modalUlasan) modalUlasan.style.display = 'flex';}                    , 1500);stateSuccess.style.display = '';
+
+                    const btnSkipUlasan = document.getElementById('btnSkipUlasan');
+                    if (btnSkipUlasan) {
+                    btnSkipUlasan.addEventListener('click', () => {
+                    document.getElementById('modalUlasan').style.display = 'none';
+                     window.location.href = kembaliUrl;
+    });
+}
 
                     // Tampilkan tombol kembali setelah 1.5 detik
                     setTimeout(() => {
