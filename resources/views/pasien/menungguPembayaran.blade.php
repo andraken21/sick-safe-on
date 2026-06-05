@@ -31,11 +31,11 @@
 
             {{-- TABS --}}
             <div class="tabs">
-                <a href="{{ route('apoteker.menunggu-validasi') }}" class="tab">
+                <a href="{{ route('apoteker.validasi') }}" class="tab">
                     <span class="tab-label">Menunggu Validasi</span>
                     <span class="tab-badge badge-warning">3</span>
                 </a>
-                <a href="{{ route('apoteker.menunggu-pembayaran') }}" class="tab active">
+                <a href="{{ route('apoteker.pembayaran') }}" class="tab active">
                     <span class="tab-label">Menunggu Pembayaran</span>
                     <span class="tab-badge badge-info">2</span>
                 </a>
@@ -138,7 +138,7 @@
 
                 {{-- ACTIONS --}}
                 <div class="actions">
-                    <form method="POST" action="{{ route('apoteker.batalkan-pembayaran') }}" style="margin:0;">
+                    <form method="POST" action="#" style="margin:0;">
                         @csrf
                         <input type="hidden" name="resep_id" value="RSP-2024-0048">
                         <button type="submit" class="btn-custom btn-outline" onclick="return confirm('Batalkan pembayaran ini?')">
@@ -146,7 +146,7 @@
                             Batalkan
                         </button>
                     </form>
-                    <form method="POST" action="{{ route('apoteker.konfirmasi-pembayaran') }}" style="margin:0;">
+                    <form method="POST" action="#" style="margin:0;">
                         @csrf
                         <input type="hidden" name="resep_id" value="RSP-2024-0048">
                         <button type="submit" class="btn-custom btn-dark">

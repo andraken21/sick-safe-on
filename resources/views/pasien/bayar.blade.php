@@ -92,8 +92,8 @@
         <div class="panel-bpjs" id="panelBpjs" style="{{ $detail['metode'] === 'BPJS' ? '' : 'display:none;' }}">
             <div class="bpjs-box">
                 <div class="lbl">📋 Nomor BPJS Kesehatan</div>
-                <div class="bpjs-number">0001 2345 6789 01</div>
-                <div class="bpjs-name">{{ $pasien->name ?? 'Andra Kenzie' }}</div>
+                <div class="bpjs-number">{{ $pasien->no_bpjs ?? '0001 2345 6789 01' }}</div>
+                <div class="bpjs-name">{{ $pasien->user->nama ?? 'Nama Pasien' }}</div>
                 <div class="bpjs-badge">✅ Peserta Aktif</div>
             </div>
         </div>

@@ -6,7 +6,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // ── Data transaksi (statis, nanti bisa diganti fetch dari API) ───────────
-    const allTransactions = [
+    const tableDataEl = document.getElementById('pembayaranTableData');
+    const serverTransactions = tableDataEl
+        ? JSON.parse(atob(tableDataEl.dataset.transactions || 'W10='))
+        : [];
+
+    const staticTransactions = [
         { id: 'INV-2026-0077', date: '08 Des 2026', ref: 'RSP-0051', metode: 'BPJS',    total: 87500,  status: 'menunggu', icon: 'fa-clock',    iconClass: 'inv-icon--pend' },
         { id: 'INV-2026-0070', date: '20 Nov 2026', ref: 'RSP-0048', metode: 'BPJS',    total: 85000,  status: 'lunas',    icon: 'fa-check',    iconClass: 'inv-icon--done' },
         { id: 'INV-2026-0065', date: '10 Nov 2026', ref: 'RSP-0045', metode: 'Mandiri', total: 210000, status: 'lunas',    icon: 'fa-check',    iconClass: 'inv-icon--done' },
@@ -17,6 +22,33 @@ document.addEventListener('DOMContentLoaded', function () {
         { id: 'INV-2026-0035', date: '15 Sep 2026', ref: 'RSP-0028', metode: 'Mandiri', total: 156000, status: 'proses',   icon: 'fa-sync-alt', iconClass: 'inv-icon--proc' },
         { id: 'INV-2026-0030', date: '05 Sep 2026', ref: 'RSP-0025', metode: 'BPJS',    total: 94500,  status: 'lunas',    icon: 'fa-check',    iconClass: 'inv-icon--done' }
     ];
+
+    const allTransactions = serverTransactions.length
+        ? serverTransactions.map(t => {
+            const status = (t.status || '').toLowerCase();
+            const normalizedStatus = status === 'menunggu' ? 'menunggu'
+                : status === 'lunas' ? 'lunas'
+                : status === 'gagal' ? 'gagal'
+                : 'proses';
+
+            return {
+                id: t.nomor_invoice,
+                date: t.tanggal,
+                ref: t.resep_id,
+                metode: t.metode,
+                total: Number(t.total_bayar || 0),
+                status: normalizedStatus,
+                icon: normalizedStatus === 'lunas' ? 'fa-check'
+                    : normalizedStatus === 'gagal' ? 'fa-times'
+                    : normalizedStatus === 'proses' ? 'fa-sync-alt'
+                    : 'fa-clock',
+                iconClass: normalizedStatus === 'lunas' ? 'inv-icon--done'
+                    : normalizedStatus === 'gagal' ? 'inv-icon--fail'
+                    : normalizedStatus === 'proses' ? 'inv-icon--proc'
+                    : 'inv-icon--pend',
+            };
+        })
+        : staticTransactions;
 
     // ── Baca konfigurasi dari DOM (ditetapkan oleh Blade via data-*) ─────────
     const tagihanEl   = document.getElementById('tagihanData');

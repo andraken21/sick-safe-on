@@ -15,7 +15,7 @@
     {{-- ===== TOP BAR ===== --}}
     <div class="dash-topbar">
         <div class="dash-greeting">
-            <h1 class="greeting-title">Halo, {{ Auth::user()->name ?? 'Andra Kenzie' }} </h1>
+            <h1 class="greeting-title">Halo, {{ Auth::user()->nama ?? 'Pasien' }} </h1>
             <p class="greeting-sub">Berikut ringkasan akun Anda</p>
         </div>
         <div class="topbar-actions">
@@ -202,7 +202,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('pasien.pembayaran') ?? '#' }}" class="btn-outline-full" style="margin-top:12px;">
+                <a href="{{ route('pasien.pembayaran') }}" class="btn-outline-full" style="margin-top:12px;">
                     Kelola Pembayaran
                 </a>
             </div>
@@ -212,7 +212,6 @@
 
     </div>
     {{-- /.main-grid --}}
-pasien-dashboard
 </div>
 {{-- /.pasien-dashboard --}}
 

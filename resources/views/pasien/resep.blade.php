@@ -86,7 +86,9 @@
     </div>
 
     {{-- TABLE CARD --}}
-    <div class="table-card">
+    <div class="table-card"
+         id="resepData"
+         data-resep="{{ base64_encode(json_encode($resepData ?? [])) }}">
         <div class="table-head-row">
             <h2>Daftar Resep</h2>
             <span class="badge-count" id="resep-count">12 Resep</span>

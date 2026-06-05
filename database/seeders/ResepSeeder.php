@@ -154,8 +154,46 @@ class ResepSeeder extends Seeder
             'keluhan'     => 'Demam tinggi dan sakit kepala',
             'diagnosa'    => null,
             'keterangan'  => null,
-            'status'      => 'diproses',
+            'status'      => 'menunggu_pembayaran',
             'total_obat'  => 1,
+            'tanggal'     => now()->toDateString(),
+            'created_at'  => now(),
+            'updated_at'  => now(),
+        ]);
+
+        $resep5 = DB::table('resep')->insertGetId([
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('resep_obat')->insert([
+            [
+                'id_resep'   => $resep5,
+                'id_obat'    => $obats['Cetirizine 10mg']->id_obat,
+                'jumlah'     => 10,
+                'dosis'      => '3x1',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id_resep'   => $resep5,
+                'id_obat'    => $obats['Ciprofloxacin 500mg']->id_obat,
+                'jumlah'     => 7,
+                'dosis'      => '1x1',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        DB::table('detail_resep')->insert([
+            'id_pasien'   => $pasiens[1]->id_pasien,
+            'id_dokter'   => $dokters[1]->id_dokter,
+            'id_resep'    => $resep5,
+            'keluhan'     => 'Nyeri lambung dan sakit kepala sejak kemarin',
+            'diagnosa'    => 'Dispepsia dan nyeri kepala',
+            'keterangan'  => 'Obat diminum setelah makan',
+            'status'      => 'menunggu',
+            'total_obat'  => 2,
             'tanggal'     => now()->toDateString(),
             'created_at'  => now(),
             'updated_at'  => now(),

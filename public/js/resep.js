@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    const allResep = [
+    const resepDataEl = document.getElementById('resepData');
+    const serverResep = resepDataEl
+        ? JSON.parse(atob(resepDataEl.dataset.resep || 'W10='))
+        : [];
+
+    const staticResep = [
         { nomor: 'RSP-2026-0051', tanggal: '2026-05-08', dokter: 'Dr. Budi Santoso', obat: 3, total: 125000, status: 'proses', icon: 'fa-file-prescription', iconClass: 'resep-icon-sm resep-icon-sm--warn' },
         { nomor: 'RSP-2026-0050', tanggal: '2026-05-01', dokter: 'Dr. Sari Dewi', obat: 2, total: 87500, status: 'tunggu', icon: 'fa-file-prescription', iconClass: 'resep-icon-sm' },
         { nomor: 'RSP-2026-0048', tanggal: '2026-04-20', dokter: 'Dr. Budi Santoso', obat: 2, total: 85000, status: 'selesai', icon: 'fa-check', iconClass: 'resep-icon-sm resep-icon-sm--done' },
@@ -14,6 +19,19 @@ document.addEventListener('DOMContentLoaded', function() {
         { nomor: 'RSP-2026-0028', tanggal: '2026-03-05', dokter: 'Dr. Siti Nurhaliza', obat: 1, total: 38000, status: 'batal', icon: 'fa-times', iconClass: 'resep-icon-sm' },
         { nomor: 'RSP-2026-0025', tanggal: '2026-03-01', dokter: 'Dr. Sari Dewi', obat: 4, total: 198000, status: 'selesai', icon: 'fa-check', iconClass: 'resep-icon-sm resep-icon-sm--done' }
     ];
+
+    const allResep = serverResep.length
+        ? serverResep.map(resep => ({
+            nomor: resep.nomor,
+            tanggal: resep.tanggal,
+            dokter: resep.dokter,
+            obat: Number(resep.obat || resep.jumlah_obat || 0),
+            total: Number(resep.total || 0),
+            status: resep.status_key || resep.status || 'proses',
+            icon: resep.icon || 'fa-file-prescription',
+            iconClass: resep.iconClass || 'resep-icon-sm',
+        }))
+        : staticResep;
 
     const itemsPerPage = 5;
     let currentPage = 1;

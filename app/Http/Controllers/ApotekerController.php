@@ -18,17 +18,7 @@ class ApotekerController extends Controller
 
     public function dashboard()
     {
-        $totalMenungguValidasi   = DetailResep::where('status', 'menunggu')->count();
-        $totalMenungguPembayaran = DetailResep::where('status', 'menunggu_pembayaran')->count();
-        $totalDiproses           = DetailResep::where('status', 'diproses')->count();
-        $totalSelesai            = DetailResep::where('status', 'selesai')->count();
-
-        return view('apoteker.dashboard', compact(
-            'totalMenungguValidasi',
-            'totalMenungguPembayaran',
-            'totalDiproses',
-            'totalSelesai'
-        ));
+        return redirect()->route('apoteker.validasi');
     }
 
     // ────────────────────────────────────────────────────
@@ -61,7 +51,7 @@ class ApotekerController extends Controller
             ->where('status', 'menunggu')
             ->findOrFail($id_detail_resep);
 
-        return view('apoteker.detailValidasi', compact('detail'));
+        return redirect()->route('apoteker.validasi');
     }
 
     public function validasi(Request $request, $id_detail_resep)

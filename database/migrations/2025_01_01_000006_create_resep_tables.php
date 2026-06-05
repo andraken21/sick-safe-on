@@ -30,7 +30,7 @@ return new class extends Migration
             $table->text('keluhan');
             $table->text('diagnosa')->nullable();
             $table->text('keterangan')->nullable();
-            $table->enum('status', ['menunggu', 'diproses', 'selesai'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'menunggu_pembayaran', 'diproses', 'selesai', 'ditolak'])->default('menunggu');
             $table->unsignedTinyInteger('total_obat')->default(0)->comment('Cache jumlah jenis obat dalam resep');
             $table->date('tanggal');
             $table->timestamps();

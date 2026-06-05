@@ -27,7 +27,7 @@
                 <i class="fas fa-receipt"></i>
             </div>
             <div class="stat-text">
-                <div class="num">Rp 507.500</div>
+                <div class="num">Rp {{ number_format($totalDibayar ?? 0, 0, ',', '.') }}</div>
                 <div class="lbl">Total Dibayar</div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <i class="fas fa-hourglass-half"></i>
             </div>
             <div class="stat-text">
-                <div class="num" style="color:var(--ss-warning);">1</div>
+                <div class="num" style="color:var(--ss-warning);">{{ $menungguBayar ?? 0 }}</div>
                 <div class="lbl">Menunggu Bayar</div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                 <i class="fas fa-check-double"></i>
             </div>
             <div class="stat-text">
-                <div class="num" style="color:var(--ss-success);">8</div>
+                <div class="num" style="color:var(--ss-success);">{{ $totalLunas ?? 0 }}</div>
                 <div class="lbl">Lunas</div>
             </div>
         </div>
@@ -64,10 +64,12 @@
     <div class="main-grid">
 
         {{-- TABEL RIWAYAT --}}
-        <div class="table-card">
+        <div class="table-card"
+             id="pembayaranTableData"
+             data-transactions="{{ base64_encode(json_encode($pembayaranList ?? [])) }}">
             <div class="card-head">
                 <h2>Riwayat Pembayaran</h2>
-                <span class="badge-count">{{ count($pembayaranList) }} Transaksi</span>
+                <span class="badge-count">{{ count($pembayaranList ?? []) }} Transaksi</span>
             </div>
 
             <div class="filter-bar">
@@ -133,7 +135,7 @@
                          data-total-normal="{{ $detailPembayaran['total'] }}"
                          data-invoice="{{ $detailPembayaran['nomor_invoice'] }}"
                          data-status="{{ strtolower($detailPembayaran['status']) }}"
-                         data-bayar-url="{{ route('pasien.pembayaran.bayar', $detailPembayaran['nomor_invoice']) }}"
+                         data-bayar-url="{{ route('pasien.pembayaran.bayar', $detailPembayaran['id_transaksi']) }}"
                          data-proses-url="{{ route('pasien.pembayaran.proses') }}">
 
                         <div class="tagihan-row">

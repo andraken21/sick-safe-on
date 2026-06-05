@@ -14,6 +14,7 @@ class Rating extends Model
 
     protected $fillable = [
         'id_dokter',
+        'id_pasien',
         'rating',
     ];
 
@@ -22,5 +23,10 @@ class Rating extends Model
     public function dokter()
     {
         return $this->belongsTo(Dokter::class, 'id_dokter', 'id_dokter');
+    }
+
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class, 'id_pasien', 'id_pasien');
     }
 }

@@ -21,11 +21,11 @@
 
             {{-- TABS --}}
             <div class="tabs">
-                <a href="{{ route('apoteker.menunggu-validasi') }}" class="tab active">
+                <a href="{{ route('apoteker.validasi') }}" class="tab active">
                     <span class="tab-label">Menunggu Validasi</span>
                     <span class="tab-badge badge-warning">3</span>
                 </a>
-                <a href="{{ route('apoteker.menunggu-pembayaran') }}" class="tab">
+                <a href="{{ route('apoteker.pembayaran') }}" class="tab">
                     <span class="tab-label">Menunggu Pembayaran</span>
                     <span class="tab-badge badge-info">2</span>
                 </a>
