@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Apoteker extends Model
+class Admin extends Model
 {
     use HasFactory;
 
-    protected $table      = 'apoteker';
-    protected $primaryKey = 'id_apoteker';
+    protected $table      = 'admin';
+    protected $primaryKey = 'id_admin';
 
     protected $fillable = [
         'id_user',

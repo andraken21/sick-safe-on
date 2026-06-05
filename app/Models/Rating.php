@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Apoteker extends Model
+class Rating extends Model
 {
     use HasFactory;
 
-    protected $table      = 'apoteker';
-    protected $primaryKey = 'id_apoteker';
+    protected $table      = 'rating';
+    protected $primaryKey = 'id_rating';
 
     protected $fillable = [
-        'id_user',
+        'id_dokter',
+        'rating',
     ];
 
     // ── Relasi ──────────────────────────────────────────
 
-    public function user()
+    public function dokter()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id_user');
+        return $this->belongsTo(Dokter::class, 'id_dokter', 'id_dokter');
     }
 }

@@ -33,7 +33,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'password' => Hash::make($request->password),
-            'role' => 'Pasien', // Tetap dikunci sebagai Pasien
+            'role' => 'pasien', // FIX: lowercase
         ]);
 
         return redirect('/login')->with('success', 'Akun berhasil dibuat!');
@@ -54,21 +54,19 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Ambil data role user yang sedang login
-            $role = Auth::user()->role; 
+            $role = Auth::user()->role;
 
-            // Arahkan ke dashboard masing-masing sesuai role
-            if ($role === 'Admin') {
+            // FIX: semua role lowercase
+            if ($role === 'admin') {
                 return redirect()->intended('/admin/dashboard');
-            } elseif ($role === 'Dokter') {
+            } elseif ($role === 'dokter') {
                 return redirect()->intended('/dokter/dashboard');
-            } elseif ($role === 'Pasien') {
+            } elseif ($role === 'pasien') {
                 return redirect()->intended('/pasien/dashboard');
-            } elseif ($role === 'Apoteker') {
+            } elseif ($role === 'apoteker') {
                 return redirect()->intended('/apoteker/dashboard');
             }
 
-            // Default jika role tidak dikenali
             return redirect('/');
         }
 
@@ -83,7 +81,6 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            // Jika email ada, pindah ke form Gambar 2 sambil membawa email-nya
             return redirect()->route('password.reset', ['email' => $request->email]);
         }
 
@@ -91,7 +88,7 @@ class LoginController extends Controller
     }
 
     public function showResetForm($email) {
-        return view('auth.forgot-reset', ['email' => $email]); // Gambar 2
+        return view('auth.forgot-reset', ['email' => $email]);
     }
 
     public function updatePassword(Request $request) {
@@ -115,11 +112,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
-
 }

@@ -17,6 +17,6 @@ class RoleMiddleware
         }
 
         // Jika tidak sesuai, tendang balik ke halaman login
-        return redirect('/login'); 
+        return redirect('/login');
     }
 }

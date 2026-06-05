@@ -10,22 +10,22 @@ class PrescriptionDetailSeeder extends Seeder
     public function run(): void
     {
         DB::table('prescription_details')->insert([
-            ['ID_Resep' => 1,  'ID_Obat' => 4,  'Jumlah' => 30, 'Dosis' => '1x1 pagi sesudah makan'],
-            ['ID_Resep' => 1,  'ID_Obat' => 9,  'Jumlah' => 10, 'Dosis' => '1x1'],
-            ['ID_Resep' => 2,  'ID_Obat' => 5,  'Jumlah' => 30, 'Dosis' => '1x1 malam'],
-            ['ID_Resep' => 2,  'ID_Obat' => 11, 'Jumlah' => 10, 'Dosis' => '1x1'],
-            ['ID_Resep' => 3,  'ID_Obat' => 7,  'Jumlah' => 30, 'Dosis' => '1x1 malam'],
-            ['ID_Resep' => 4,  'ID_Obat' => 3,  'Jumlah' => 20, 'Dosis' => '3x1 sebelum makan'],
-            ['ID_Resep' => 5,  'ID_Obat' => 1,  'Jumlah' => 15, 'Dosis' => '3x1'],
-            ['ID_Resep' => 6,  'ID_Obat' => 6,  'Jumlah' => 1,  'Dosis' => 'Jika sesak nafas'],
-            ['ID_Resep' => 7,  'ID_Obat' => 4,  'Jumlah' => 30, 'Dosis' => '1x1 pagi'],
-            ['ID_Resep' => 7,  'ID_Obat' => 9,  'Jumlah' => 10, 'Dosis' => '1x1'],
-            ['ID_Resep' => 8,  'ID_Obat' => 2,  'Jumlah' => 15, 'Dosis' => '3x1 sesudah makan'],
-            ['ID_Resep' => 8,  'ID_Obat' => 10, 'Jumlah' => 10, 'Dosis' => '2x1'],
-            ['ID_Resep' => 9,  'ID_Obat' => 12, 'Jumlah' => 30, 'Dosis' => '1x1 pagi'],
-            ['ID_Resep' => 9,  'ID_Obat' => 8,  'Jumlah' => 10, 'Dosis' => '1x1 malam'],
-            ['ID_Resep' => 10, 'ID_Obat' => 1,  'Jumlah' => 10, 'Dosis' => '3x1'],
-            ['ID_Resep' => 10, 'ID_Obat' => 3,  'Jumlah' => 15, 'Dosis' => '3x1 sebelum makan'],
+            ['id_resep' => 1,  'id_obat' => 4,  'jumlah' => 30, 'dosis' => '1x1 pagi sesudah makan'],
+            ['id_resep' => 1,  'id_obat' => 9,  'jumlah' => 10, 'dosis' => '1x1'],
+            ['id_resep' => 2,  'id_obat' => 5,  'jumlah' => 30, 'dosis' => '1x1 malam'],
+            ['id_resep' => 2,  'id_obat' => 11, 'jumlah' => 10, 'dosis' => '1x1'],
+            ['id_resep' => 3,  'id_obat' => 7,  'jumlah' => 30, 'dosis' => '1x1 malam'],
+            ['id_resep' => 4,  'id_obat' => 3,  'jumlah' => 20, 'dosis' => '3x1 sebelum makan'],
+            ['id_resep' => 5,  'id_obat' => 1,  'jumlah' => 15, 'dosis' => '3x1'],
+            ['id_resep' => 6,  'id_obat' => 6,  'jumlah' => 1,  'dosis' => 'Jika sesak nafas'],
+            ['id_resep' => 7,  'id_obat' => 4,  'jumlah' => 30, 'dosis' => '1x1 pagi'],
+            ['id_resep' => 7,  'id_obat' => 9,  'jumlah' => 10, 'dosis' => '1x1'],
+            ['id_resep' => 8,  'id_obat' => 2,  'jumlah' => 15, 'dosis' => '3x1 sesudah makan'],
+            ['id_resep' => 8,  'id_obat' => 10, 'jumlah' => 10, 'dosis' => '2x1'],
+            ['id_resep' => 9,  'id_obat' => 12, 'jumlah' => 30, 'dosis' => '1x1 pagi'],
+            ['id_resep' => 9,  'id_obat' => 8,  'jumlah' => 10, 'dosis' => '1x1 malam'],
+            ['id_resep' => 10, 'id_obat' => 1,  'jumlah' => 10, 'dosis' => '3x1'],
+            ['id_resep' => 10, 'id_obat' => 3,  'jumlah' => 15, 'dosis' => '3x1 sebelum makan'],
         ]);
     }
 }
