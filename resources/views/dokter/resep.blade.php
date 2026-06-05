@@ -19,34 +19,40 @@
                 <h2>Buat Resep</h2>
                 <p>Isi formulir resep untuk pasien yang dipilih</p>
             </div>
-            <a href="{{ route('dokter.pilih-pasien') }}" class="btn-back">
+            <a href="{{ route('dokter.pilih.pasien') }}" class="btn-back">
                 <i class="bi bi-arrow-left"></i> Ganti Pasien
             </a>
         </div>
     </div>
 
-    {{-- PATIENT INFO BANNER (data dummy) --}}
+    @php
+        $namaPasien = $pasien->user->nama ?? 'Pasien';
+        $inisialPasien = strtoupper(substr($namaPasien, 0, 2));
+        $tanggalLahir = $pasien->user?->tanggal_lahir;
+        $umur = $tanggalLahir ? $tanggalLahir->age . ' thn' : '-';
+    @endphp
+
     <div class="patient-info-card">
-        <div class="patient-big-avatar">AS</div>
+        <div class="patient-big-avatar">{{ $inisialPasien }}</div>
         <div class="patient-info-text">
-            <div class="pat-name">Andi Setiawan</div>
+            <div class="pat-name">{{ $namaPasien }}</div>
             <div class="pat-meta">
                 <div class="pat-meta-item">
-                    <i class="bi bi-credit-card-2-front"></i> BPJS: 0001234567890
+                    <i class="bi bi-credit-card-2-front"></i> BPJS: {{ $pasien->no_bpjs ?? '-' }}
                 </div>
                 <div class="pat-meta-item">
-                    <i class="bi bi-gender-male"></i> Laki-laki
+                    <i class="bi bi-gender-male"></i> {{ $pasien->user->jenis_kelamin ?? '-' }}
                 </div>
                 <div class="pat-meta-item">
-                    <i class="bi bi-calendar3"></i> 15 Mar 1990 (35 thn)
+                    <i class="bi bi-calendar3"></i> {{ optional($tanggalLahir)->format('d M Y') ?? '-' }} ({{ $umur }})
                 </div>
                 <div class="pat-meta-item">
-                    <i class="bi bi-telephone"></i> 0812-3456-7890
+                    <i class="bi bi-telephone"></i> {{ $pasien->user->no_telp ?? '-' }}
                 </div>
             </div>
         </div>
         <div class="patient-info-right">
-            <span class="info-badge">#PAT-0001</span>
+            <span class="info-badge">#PAT-{{ str_pad($pasien->id_pasien, 4, '0', STR_PAD_LEFT) }}</span>
             <div class="kode-resep-badge">
                 <div class="label">Kode Resep</div>
                 <div class="kode">RSP-{{ date('Y') }}-{{ str_pad(rand(1,9999), 4, '0', STR_PAD_LEFT) }}</div>
@@ -57,7 +63,7 @@
     {{-- FORM --}}
     <form id="formResep" method="POST" action="{{ route('dokter.resep.store') }}">
         @csrf
-        <input type="hidden" name="id_pasien"  value="1">
+        <input type="hidden" name="id_pasien"  value="{{ $pasien->id_pasien }}">
         <input type="hidden" name="kode_resep" value="RSP-{{ date('Y') }}-0001">
         <input type="hidden" name="status"     value="terkirim" id="inputStatus">
 
@@ -85,14 +91,14 @@
                             </div>
                             <div class="form-group">
                                 <label>Nama Diagnosa <span class="req">*</span></label>
-                                <input type="text" name="nama_diagnosa" id="inputDiagnosa"
+                                <input type="text" name="diagnosa" id="inputDiagnosa"
                                        placeholder="Cth: Infeksi Saluran Napas"
-                                       value="{{ old('nama_diagnosa') }}" required>
+                                       value="{{ old('diagnosa') }}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Catatan Tambahan</label>
-                            <textarea name="catatan" placeholder="Catatan untuk apoteker atau pasien..." style="min-height:64px">{{ old('catatan') }}</textarea>
+                            <textarea name="keterangan" placeholder="Catatan untuk apoteker atau pasien..." style="min-height:64px">{{ old('keterangan') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -143,7 +149,7 @@
                     <div class="ringkasan-body">
                         <div class="ringkasan-row">
                             <span class="rk-label">Pasien</span>
-                            <span class="rk-value">Andi Setiawan</span>
+                            <span class="rk-value">{{ $namaPasien }}</span>
                         </div>
                         <div class="ringkasan-row">
                             <span class="rk-label">Dokter</span>
@@ -174,7 +180,7 @@
                     <div class="section-card-body" style="padding:14px;">
                         <div class="riwayat-box">
                             <div class="rw-title"><i class="bi bi-exclamation-triangle-fill"></i> Perhatian</div>
-                            <div class="rw-text">Hipertensi sejak 2018, Diabetes Mellitus Tipe 2</div>
+                            <div class="rw-text">{{ $pasien->riwayat_penyakit ?? 'Tidak ada riwayat penyakit tercatat.' }}</div>
                         </div>
                     </div>
                 </div>
@@ -203,7 +209,7 @@
                     <button type="button" class="btn-draft" id="btnDraft">
                         <i class="bi bi-floppy-fill"></i> Simpan sebagai Draft
                     </button>
-                    <a href="{{ route('dokter.pilih-pasien') }}" class="btn-batal">
+                    <a href="{{ route('dokter.pilih.pasien') }}" class="btn-batal">
                         <i class="bi bi-x-circle"></i> Batalkan
                     </a>
                 </div>
@@ -221,5 +227,13 @@
 @endsection
 
 @push('scripts')
+<script>
+window.obatOptions = @json($obatList->map(fn ($obat) => [
+    'id' => $obat->id_obat,
+    'nama' => $obat->nama_obat,
+    'stok' => $obat->stok,
+    'harga' => (int) $obat->harga,
+])->values());
+</script>
 <script src="{{ asset('js/resepDokter.js') }}"></script>
 @endpush

@@ -35,16 +35,16 @@
                 <i class="fas fa-th-large"></i> Dashboard
             </a>
             <div class="nav-label">Pasien &amp; Resep</div>
-            <a href="{{ route('dokter.pilih-pasien') }}"
+            <a href="{{ route('dokter.pilih.pasien') }}"
                class="nav-item {{ request()->is('dokter/pilih-pasien') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Pilih Pasien
             </a>
-            <a href="{{ route('dokter.resep') }}"
-               class="nav-item {{ request()->is('dokter/resep') ? 'active' : '' }}">
+            <a href="{{ route('dokter.pilih.pasien') }}"
+               class="nav-item {{ request()->is('dokter/resep/create') ? 'active' : '' }}">
                 <i class="fas fa-file-prescription"></i> Buat Resep
             </a>
-            <a href="{{ route('dokter.daftar-resep') }}"
-               class="nav-item {{ request()->is('dokter/daftar-resep') ? 'active' : '' }}">
+            <a href="{{ route('dokter.resep') }}"
+               class="nav-item {{ request()->is('dokter/resep') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-list"></i> Daftar Resep
             </a>
             <a href="{{ route('dokter.antrian') }}"
@@ -75,16 +75,16 @@
                 <i class="fas fa-th-large"></i> Dashboard
             </a>
             <div class="nav-label">Resep</div>
-            <a href="{{ route('apoteker.dashboard', 'validasi') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/validasi') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.validasi') }}"
+               class="nav-item {{ request()->is('apoteker/validasi*') ? 'active' : '' }}">
                 <i class="fas fa-hourglass-half"></i> Menunggu Validasi
             </a>
-            <a href="{{ route('apoteker.dashboard', 'pembayaran') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/pembayaran') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.pembayaran') }}"
+               class="nav-item {{ request()->is('apoteker/pembayaran*') ? 'active' : '' }}">
                 <i class="fas fa-money-bill-wave"></i> Menunggu Pembayaran
             </a>
-            <a href="{{ route('apoteker.dashboard', 'diproses') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/diproses') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.diproses') }}"
+               class="nav-item {{ request()->is('apoteker/diproses*') ? 'active' : '' }}">
                 <i class="fas fa-cogs"></i> Diproses
             </a>
         @endif

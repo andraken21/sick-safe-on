@@ -49,6 +49,20 @@ class DokterController extends Controller
         $antrianHariIni = Antrian::where('id_dokter', $dokter->id_dokter)
                             ->where('tanggal', today())
                             ->count();
+        $resepHariIni = DetailResep::where('id_dokter', $dokter->id_dokter)
+                            ->whereDate('tanggal', today())
+                            ->count();
+        $pasienDilayaniBulanIni = DetailResep::where('id_dokter', $dokter->id_dokter)
+                            ->whereMonth('tanggal', today()->month)
+                            ->whereYear('tanggal', today()->year)
+                            ->distinct('id_pasien')
+                            ->count('id_pasien');
+        $antrianTerbaru = Antrian::with('pasien.user')
+                            ->where('id_dokter', $dokter->id_dokter)
+                            ->whereDate('tanggal', today())
+                            ->orderBy('nomor_antrian')
+                            ->limit(5)
+                            ->get();
 
         // 5 resep terbaru
         $resepTerbaru = DetailResep::with(['pasien.user', 'resep'])
@@ -64,6 +78,9 @@ class DokterController extends Controller
             'totalDiproses',
             'totalSelesai',
             'antrianHariIni',
+            'resepHariIni',
+            'pasienDilayaniBulanIni',
+            'antrianTerbaru',
             'resepTerbaru'
         ));
     }
@@ -77,18 +94,26 @@ class DokterController extends Controller
     public function pilihPasien(Request $request)
     {
         $search = $request->input('search');
+        $jenisKelamin = $request->input('jenis_kelamin');
 
-        $pasienList = Pasien::with('user')
+        $pasiens = Pasien::with('user')
             ->when($search, function ($query, $search) {
                 $query->whereHas('user', function ($q) use ($search) {
                     $q->where('nama', 'like', "%{$search}%")
                       ->orWhere('nik', 'like', "%{$search}%");
                 })->orWhere('no_bpjs', 'like', "%{$search}%");
             })
+            ->when($jenisKelamin, function ($query, $jenisKelamin) {
+                $query->whereHas('user', fn ($q) => $q->where('jenis_kelamin', $jenisKelamin));
+            })
             ->paginate(10)
             ->withQueryString();
+        $totalPasien = Pasien::count();
+        $totalAktif = $totalPasien;
+        $totalLakiLaki = Pasien::whereHas('user', fn ($q) => $q->where('jenis_kelamin', 'Laki-laki'))->count();
+        $totalPerempuan = Pasien::whereHas('user', fn ($q) => $q->where('jenis_kelamin', 'Perempuan'))->count();
 
-        return view('dokter.pilihPasien', compact('pasienList', 'search'));
+        return view('dokter.pilihPasien', compact('pasiens', 'search', 'totalPasien', 'totalAktif', 'totalLakiLaki', 'totalPerempuan'));
     }
 
     // ────────────────────────────────────────────────────
@@ -114,7 +139,7 @@ class DokterController extends Controller
             ->orderBy('nama_obat')
             ->get();
 
-        return view('dokter.daftarResep', compact('pasien', 'dokter', 'obatList'));
+        return view('dokter.resep', compact('pasien', 'dokter', 'obatList'));
     }
 
     // ────────────────────────────────────────────────────
@@ -228,7 +253,12 @@ class DokterController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('dokter.resep', compact('resepList', 'status', 'tanggal'));
+        $totalResep = DetailResep::where('id_dokter', $dokter->id_dokter)->count();
+        $totalMenunggu = DetailResep::where('id_dokter', $dokter->id_dokter)->where('status', 'menunggu')->count();
+        $totalDiproses = DetailResep::where('id_dokter', $dokter->id_dokter)->where('status', 'diproses')->count();
+        $totalSelesai = DetailResep::where('id_dokter', $dokter->id_dokter)->where('status', 'selesai')->count();
+
+        return view('dokter.daftarResep', compact('resepList', 'status', 'tanggal', 'totalResep', 'totalMenunggu', 'totalDiproses', 'totalSelesai'));
     }
 
     // ────────────────────────────────────────────────────

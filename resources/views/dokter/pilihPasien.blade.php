@@ -60,7 +60,7 @@
     </div>
 
     {{-- TOOLBAR: SEARCH & FILTER --}}
-    <form method="GET" action="{{ route('dokter.pilih-pasien') }}">
+    <form method="GET" action="{{ route('dokter.pilih.pasien') }}">
         <div class="toolbar">
             <div class="search-wrap">
                 <i class="bi bi-search"></i>
@@ -84,7 +84,7 @@
                 <i class="bi bi-funnel-fill"></i> Filter
             </button>
             @if(request()->hasAny(['search','jenis_kelamin','status']))
-                <a href="{{ route('dokter.pilih-pasien') }}" class="btn-reset">
+                <a href="{{ route('dokter.pilih.pasien') }}" class="btn-reset">
                     <i class="bi bi-x-circle"></i> Reset
                 </a>
             @endif
@@ -128,32 +128,28 @@
                                     <div class="patient-avatar {{ $avClass }}">{{ $inisial }}</div>
                                     <div>
                                         <div class="patient-fullname">{{ $pasien->user?->nama ?? '-' }}</div>
-                                        <div class="patient-id">#PAT-{{ str_pad($pasien->ID_Pasien, 4, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="patient-id">#PAT-{{ str_pad($pasien->id_pasien, 4, '0', STR_PAD_LEFT) }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $pasien->No_BPJS ?? '-' }}</td>
+                            <td>{{ $pasien->no_bpjs ?? '-' }}</td>
                             <td>
-                                @if($pasien->Jenis_kelamin == 'Laki-laki')
+                                @if($pasien->user?->jenis_kelamin == 'Laki-laki')
                                     <span class="badge badge-laki"><i class="bi bi-gender-male"></i> Laki-laki</span>
                                 @else
                                     <span class="badge badge-perempuan"><i class="bi bi-gender-female"></i> Perempuan</span>
                                 @endif
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($pasien->Tanggal_Lahir)->format('d M Y') }}</td>
-                            <td>{{ $pasien->Riwayat_Penyakit ?? '-' }}</td>
+                            <td>{{ optional($pasien->user?->tanggal_lahir)->format('d M Y') ?? '-' }}</td>
+                            <td>{{ $pasien->riwayat_penyakit ?? '-' }}</td>
                             <td>
-                                @if(($pasien->user?->status ?? '') == 'aktif')
-                                    <span class="badge badge-aktif"><i class="bi bi-circle-fill"></i> Aktif</span>
-                                @else
-                                    <span class="badge badge-nonaktif"><i class="bi bi-circle"></i> Non-aktif</span>
-                                @endif
+                                <span class="badge badge-aktif"><i class="bi bi-circle-fill"></i> Aktif</span>
                             </td>
                             <td>
                                 <a href="#" class="btn-detail">
                                     <i class="bi bi-eye"></i> Detail
                                 </a>
-                                <a href="{{ route('dokter.resep.create', $pasien->ID_Pasien) }}" class="btn-pilih">
+                                <a href="{{ route('dokter.resep.create', ['id_pasien' => $pasien->id_pasien]) }}" class="btn-pilih">
                                     <i class="bi bi-cursor-fill"></i> Pilih
                                 </a>
                             </td>
