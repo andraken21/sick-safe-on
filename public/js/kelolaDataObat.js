@@ -76,7 +76,7 @@ function getFiltered() {
     return medicineData.filter(m => {
         const matchSearch = !q || m.name.toLowerCase().includes(q) || m.code.toLowerCase().includes(q);
         let matchCard = true;
-        if (state.cardFilter === 'menipis')  matchCard = m.status === 'menipis';
+        if (state.cardFilter === 'menipis' || state.cardFilter === 'rendah') matchCard = m.status === 'menipis';
         if (state.cardFilter === 'aman')   matchCard = m.status === 'aman';
         if (state.cardFilter === 'habis')   matchCard = m.status === 'habis';
         if (state.cardFilter === 'expired') matchCard = isNearExpiry(m.exp) || isExpired(m.exp);
@@ -194,7 +194,8 @@ function renderPagination(totalPages) {
 ============================ */
 function updateSummaryCards() {
     document.getElementById('count-total').textContent   = medicineData.length;
-    document.getElementById('count-menipis').textContent  = medicineData.filter(m => m.status === 'menipis').length;
+    const lowEl = document.getElementById('count-menipis') || document.getElementById('count-rendah');
+    if (lowEl) lowEl.textContent = medicineData.filter(m => m.status === 'menipis').length;
     document.getElementById('count-habis').textContent   = medicineData.filter(m => m.status === 'habis').length;
     document.getElementById('count-expired').textContent = medicineData.filter(m => isNearExpiry(m.exp) || isExpired(m.exp)).length;
     const safeEl = document.getElementById('count-aman');
@@ -232,7 +233,7 @@ function openDetail(id) {
             </div>
             <div class="detail-item">
                 <label>Harga Satuan</label>
-                <span style="color:var(--or-dark);">${fmtPrice(m.price)}</span>
+                <span style="color:var(--primary-dark);">${fmtPrice(m.price)}</span>
             </div>
             <div class="detail-item">
                 <label>Status</label>
@@ -330,8 +331,15 @@ function openEdit(id) {
    Isi: Edit, Restock, Hapus
 ============================ */
 function openContextMenu(id, btn) {
-    state.contextTargetId = id;
     const menu = document.getElementById('context-menu');
+    if (state.contextTargetId === id && menu.style.display === 'block') {
+        closeContextMenu();
+        return;
+    }
+
+    document.querySelectorAll('.btn-more.open').forEach(b => b.classList.remove('open'));
+    state.contextTargetId = id;
+    btn.classList.add('open');
 
     // Tampilkan dulu agar bisa ukur dimensinya
     menu.style.display = 'block';
@@ -358,6 +366,7 @@ function openContextMenu(id, btn) {
 
 function closeContextMenu() {
     document.getElementById('context-menu').style.display = 'none';
+    document.querySelectorAll('.btn-more.open').forEach(b => b.classList.remove('open'));
     state.contextTargetId = null;
 }
 
@@ -453,17 +462,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('filter-category').addEventListener('change', function () {
         state.category = this.value; state.page = 1; renderTable();
     });
-    document.getElementById('filter-status').addEventListener('change', function () {
-        state.status = this.value; state.page = 1; renderTable();
-    });
+    const filterStatus = document.getElementById('filter-status');
+    if (filterStatus) {
+        filterStatus.addEventListener('change', function () {
+            state.status = this.value; state.page = 1; renderTable();
+        });
+    }
 
     // Table delegation — hanya btn-view dan btn-more
     document.getElementById('medicine-tbody').addEventListener('click', e => {
         const btnView = e.target.closest('.btn-view');
         const btnMore = e.target.closest('.btn-more');
 
-        if (btnView) openDetail(parseInt(btnView.dataset.id));
-        if (btnMore) { e.stopPropagation(); openContextMenu(parseInt(btnMore.dataset.id), btnMore); }
+        if (btnView) {
+            openDetail(parseInt(btnView.dataset.id));
+            return;
+        }
+
+        if (btnMore) {
+            e.stopPropagation();
+            openContextMenu(parseInt(btnMore.dataset.id), btnMore);
+        }
     });
 
     // Context menu: Edit, Restock, Hapus
@@ -487,6 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tutup context menu saat klik di luar
     document.addEventListener('click', () => closeContextMenu());
+    window.addEventListener('scroll', () => closeContextMenu(), true);
 
     // Tutup modals saat klik overlay
     ['modal-detail', 'modal-edit'].forEach(id => {

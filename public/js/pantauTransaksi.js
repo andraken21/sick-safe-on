@@ -226,6 +226,8 @@ function openDropdown(btn, id) {
     // Tampilkan "Konfirmasi Selesai" hanya untuk pending
     dropdown.querySelector('[data-dd="approve"]').style.display =
         t && t.status === 'pending' ? 'flex' : 'none';
+    dropdown.querySelector('[data-dd="cancel"]').style.display =
+        t && t.status !== 'batal' ? 'flex' : 'none';
 
     const rect  = btn.getBoundingClientRect();
     const menuW = 200;
@@ -271,16 +273,54 @@ function doApprove(id) {
 
 function doPrint(id) {
     const t = trxData.find(x => x.id === id);
-    if (t) showToast('Mencetak ' + t.trxId + '...', 'info');
+    if (!t) return;
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        showToast('Popup cetak diblokir browser.', 'error');
+        return;
+    }
+
+    printWindow.document.write(`
+        <!doctype html>
+        <html>
+        <head>
+            <title>Cetak ${t.trxId}</title>
+            <style>
+                body { font-family: Arial, sans-serif; color: #111827; padding: 32px; }
+                h1 { font-size: 22px; margin: 0 0 6px; }
+                .sub { color: #6b7280; margin-bottom: 24px; }
+                table { width: 100%; border-collapse: collapse; }
+                td { padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
+                td:first-child { color: #6b7280; width: 190px; }
+                .amount { font-size: 20px; font-weight: 700; }
+            </style>
+        </head>
+        <body>
+            <h1>Detail Transaksi</h1>
+            <div class="sub">Sick Safe ON</div>
+            <table>
+                <tr><td>No. Transaksi</td><td>${t.trxId}</td></tr>
+                <tr><td>Nama Pasien</td><td>${t.patientName} (${t.patientType})</td></tr>
+                <tr><td>No. RM</td><td>${t.rm}</td></tr>
+                <tr><td>Tipe Pembayaran</td><td>${typeLabel(t.type)}</td></tr>
+                <tr><td>Status</td><td>${statusLabel(t.status)}</td></tr>
+                <tr><td>Tanggal & Waktu</td><td>${fmtDate(t.date)} - ${t.time} WIB</td></tr>
+                <tr><td>Total Pembayaran</td><td class="amount">${fmtPriceFull(t.total)}</td></tr>
+            </table>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    showToast('Mencetak ' + t.trxId + '...', 'info');
 }
 
 function doCancel(id) {
     const t = trxData.find(x => x.id === id);
     if (!t) return;
     if (!confirm('Yakin ingin membatalkan transaksi ' + t.trxId + '?')) return;
-    trxData = trxData.filter(x => x.id !== id);
-    if (state.page > Math.ceil(trxData.length / ROWS_PER_PAGE))
-        state.page = Math.max(1, Math.ceil(trxData.length / ROWS_PER_PAGE));
+    t.status = 'batal';
     renderTable();
     showToast('Transaksi ' + t.trxId + ' dibatalkan.', 'error');
 }
@@ -327,7 +367,7 @@ function openDetail(id) {
             </div>
         </div>`;
 
-    document.getElementById('modal-detail-print').onclick     = () => { showToast('Mencetak ' + t.trxId + '...', 'info'); };
+    document.getElementById('modal-detail-print').onclick     = () => doPrint(t.id);
     document.getElementById('modal-detail-close').onclick     = () => closeModal();
     document.getElementById('modal-detail-close-btn').onclick = () => closeModal();
     showModal();
@@ -403,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('filter-type').addEventListener('change', function () {
         state.type = this.value; state.page = 1; renderTable();
     });
-    document.getElementById('filter-status').addEventListener('change', function () {
+    document.getElementById('filter-status')?.addEventListener('change', function () {
         state.status = this.value; state.page = 1; renderTable();
     });
 

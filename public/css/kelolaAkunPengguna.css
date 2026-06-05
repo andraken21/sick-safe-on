@@ -382,7 +382,6 @@
 
 .dropdown-item:hover { background: var(--primary-pale); }
 
-.dropdown-item.item-toggle:hover { color: #D97706; }
 .dropdown-item.item-edit:hover   { color: var(--primary-dark); }
 
 .dropdown-item.item-delete {

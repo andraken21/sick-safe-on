@@ -1,7 +1,7 @@
 /**
  * manageUsers.js
- * Fitur: Search live, Filter Role & Status, Pagination, View Detail,
- *        Edit, Tambah, Toggle Status, Hapus — dropdown "Lebih Lanjut" fixed position
+ * Fitur: Search live, Filter Role, Pagination, View Detail,
+ *        Edit, Tambah, Hapus - dropdown "Lebih Lanjut" fixed position
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -87,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
     dropdown.className = 'dropdown-menu';
     dropdown.id = 'sharedDropdown';
     dropdown.innerHTML = `
-        <button class="dropdown-item item-toggle" data-dd="toggle">
-            <i class="fa-solid fa-power-off"></i> Toggle Status
-        </button>
         <button class="dropdown-item item-edit" data-dd="edit">
             <i class="fa-solid fa-pen"></i> Edit Pengguna
         </button>
@@ -145,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const user   = users.find(u => u.id === activeDropdownId);
         closeDropdown();
         if (!user) return;
-        if (action === 'toggle') confirmToggle(user);
         if (action === 'edit')   openEditModal(user);
         if (action === 'delete') confirmDelete(user);
     });
@@ -377,7 +373,8 @@ document.addEventListener('DOMContentLoaded', function () {
        MODAL: DETAIL
     ================================================ */
     function openDetailModal(user) {
-        document.getElementById('detailAvatarLg').textContent   = user.initials;
+        const detailAvatar = document.getElementById('detailAvatarLg');
+        if (detailAvatar) detailAvatar.textContent = user.initials;
         document.getElementById('detailMainName').textContent   = user.name;
         document.getElementById('detailMainId').textContent     = 'ID: ' + user.id;
         document.getElementById('detailEmail').textContent      = user.email;
@@ -385,21 +382,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detailRole').innerHTML         = roleBadge(user.role);
         document.getElementById('detailCreated').textContent    = user.created;
         openModal(modalDetail);
-    }
-
-    /* ================================================
-       TOGGLE STATUS
-    ================================================ */
-    function confirmToggle(user) {
-        const next = user.status === 'aktif' ? 'Non-Aktif' : 'Aktif';
-        confirmMsg.innerHTML = `Ubah status <strong>${user.name}</strong> menjadi <strong>${next}</strong>?`;
-        document.getElementById('confirmIcon').textContent = '⚡';
-        confirmAction = () => {
-            user.status = user.status === 'aktif' ? 'nonaktif' : 'aktif';
-            showToast(`Status "${user.name}" → ${next}.`, 'success');
-            renderTable();
-        };
-        openModal(modalConfirm);
     }
 
     /* ================================================
