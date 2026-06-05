@@ -32,6 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
             title: 'Tolak Resep', question: 'Tolak resep ini?', desc: 'Resep akan dikembalikan ke dokter.'
         }));
 
+    // Validasi & Proses
+    document.getElementById('btn-open-validasi-proses')
+        ?.addEventListener('click', () => openModal('validasi-proses', {
+        title: 'Validasi & Proses',
+        question: 'Validasi dan langsung proses resep ini?',
+        desc: 'Resep akan divalidasi dan masuk ke antrian proses.'
+    }));
+
     // Pembayaran
     document.getElementById('btn-open-bayar')
         ?.addEventListener('click', () => openModal('bayar', {
@@ -56,12 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Konfirmasi modal
     document.getElementById('modal-confirm')?.addEventListener('click', function () {
-        const messages = {
-            validasi: ['Resep berhasil divalidasi',        'success'],
-            tolak:    ['Resep berhasil ditolak',           'error'],
-            bayar:    ['Pembayaran berhasil dikonfirmasi', 'success'],
-            selesai:  ['Pesanan selesai diproses',         'success'],
-        };
+    const messages = {
+        validasi:         ['Resep berhasil divalidasi',        'success'],
+        tolak:            ['Resep berhasil ditolak',           'error'],
+        bayar:            ['Pembayaran berhasil dikonfirmasi', 'success'],
+        selesai:          ['Pesanan selesai diproses',         'success'],
+        'validasi-proses':['Resep divalidasi dan diproses',   'success'], // ← tambahkan ini
+    };
         const [msg, type] = messages[currentAction] ?? ['Tindakan berhasil', 'info'];
         showToast(msg, type);
         closeModal();

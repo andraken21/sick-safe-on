@@ -80,16 +80,16 @@
                 <i class="fas fa-th-large"></i> Dashboard
             </a>
             <div class="nav-label">Resep</div>
-            <a href="{{ route('apoteker.dashboard', 'validasi') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/validasi') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.validasi') }}"
+               class="nav-item {{ request()->is('apoteker/validasi') ? 'active' : '' }}">
                 <i class="fas fa-hourglass-half"></i> Menunggu Validasi
             </a>
-            <a href="{{ route('apoteker.dashboard', 'pembayaran') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/pembayaran') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.pembayaran') }}"
+               class="nav-item {{ request()->is('apoteker/pembayaran') ? 'active' : '' }}">
                 <i class="fas fa-money-bill-wave"></i> Menunggu Pembayaran
             </a>
-            <a href="{{ route('apoteker.dashboard', 'diproses') }}"
-               class="nav-item {{ request()->is('apoteker/dashboard/diproses') ? 'active' : '' }}">
+            <a href="{{ route('apoteker.diproses') }}"
+               class="nav-item {{ request()->is('apoteker/diproses') ? 'active' : '' }}">
                 <i class="fas fa-cogs"></i> Diproses
             </a>
         @endif

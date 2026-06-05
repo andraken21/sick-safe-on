@@ -57,12 +57,8 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
 
 // APOTEKER
 Route::middleware(['auth', 'role:Apoteker'])->group(function () {
-    Route::get('/apoteker/dashboard/{status?}', function ($status = 'validasi') {
-        $allowed = ['validasi', 'pembayaran', 'diproses'];
-        $status  = in_array($status, $allowed) ? $status : 'validasi';
-        return view('apoteker.dashboard', compact('status'));
-    })->name('apoteker.dashboard');
-
-    Route::get('/apoteker/melihatResep',  fn() => view('apoteker.melihatResep'))->name('apoteker.melihatResep');
-    Route::get('/apoteker/ValidasiResep', fn() => view('apoteker.ValidasiResep'))->name('validasiresep');
+    Route::get('/apoteker/dashboard', fn() => view('apoteker.dashboard'))->name('apoteker.dashboard');
+    Route::get('/apoteker/diproses',  fn() => view('apoteker.diproses'))->name('apoteker.diproses');
+    Route::get('/apoteker/validasi',  fn() => view('apoteker.menungguValidasi'))->name('apoteker.validasi');
+    Route::get('/apoteker/pembayaran', fn() => view('apoteker.menungguPembayaran'))->name('apoteker.pembayaran');
 });

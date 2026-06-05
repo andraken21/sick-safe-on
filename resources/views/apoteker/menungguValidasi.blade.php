@@ -15,24 +15,8 @@
         <main class="main-content">
 
             <div class="page-header">
-                <h2 class="section-title">Resep Masuk</h2>
-                <p class="section-subtitle">Kelola dan validasi resep yang masuk dari dokter</p>
-            </div>
-
-            {{-- TABS --}}
-            <div class="tabs">
-                <a href="{{ route('apoteker.menunggu-validasi') }}" class="tab active">
-                    <span class="tab-label">Menunggu Validasi</span>
-                    <span class="tab-badge badge-warning">3</span>
-                </a>
-                <a href="{{ route('apoteker.menunggu-pembayaran') }}" class="tab">
-                    <span class="tab-label">Menunggu Pembayaran</span>
-                    <span class="tab-badge badge-info">2</span>
-                </a>
-                <a href="{{ route('apoteker.diproses') }}" class="tab">
-                    <span class="tab-label">Diproses</span>
-                    <span class="tab-badge badge-success">4</span>
-                </a>
+                <h2 class="section-title">Menunggu Validasi</h2>
+                <p class="section-subtitle">Periksa dan validasi resep yang masuk dari dokter</p>
             </div>
 
             {{-- TABLE --}}
@@ -128,18 +112,24 @@
                     </div>
                 </div>
 
-                {{-- ACTIONS --}}
+                {{-- ACTIONS — 3 tombol, masing-masing punya id --}}
                 <div class="actions">
-                    <button class="btn-custom btn-outline">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    <button class="btn-custom btn-outline" id="btn-open-tolak">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
                         Tolak
                     </button>
-                    <button class="btn-custom btn-primary">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                    <button class="btn-custom btn-primary" id="btn-open-validasi">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
                         Validasi
                     </button>
-                    <button class="btn-custom btn-dark">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <button class="btn-custom btn-dark" id="btn-open-validasi-proses">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                         Validasi & Proses
                     </button>
                 </div>
@@ -148,6 +138,29 @@
         </main>
     </div>
 </div>
+
+{{-- MODAL KONFIRMASI --}}
+<div class="modal-overlay" id="modal-konfirmasi" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-header">
+            <span class="modal-title" id="modal-title"></span>
+            <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-content-center">
+                <h2 id="modal-question"></h2>
+                <p id="modal-desc"></p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal-secondary" id="modal-cancel">Batal</button>
+            <button class="btn-modal-primary"   id="modal-confirm">Ya, Konfirmasi</button>
+        </div>
+    </div>
+</div>
+
+{{-- TOAST CONTAINER --}}
+<div class="toast-container" id="toast-container"></div>
 
 @endsection
 
