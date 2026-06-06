@@ -890,15 +890,10 @@ DASHBOARD APOTEKER
 
 @media (max-width: 992px) {
 
-<<<<<<< HEAD
-.stats-container{
-    flex-wrap:wrap;
-}
-=======
+
     .stats-container {
         flex-wrap: wrap;
     }
->>>>>>> 10e8eca9bbfd8e9ed5765039eb97d2b5271ed007
 
     .stat-card {
         min-width: 220px;
@@ -908,11 +903,7 @@ DASHBOARD APOTEKER
         grid-template-columns: 1fr;
     }
 
-<<<<<<< HEAD
-.info-grid{
-    grid-template-columns:1fr 1fr;
-}
-=======
+
     .activity-table {
         grid-template-columns: 1fr;
     }
@@ -920,8 +911,6 @@ DASHBOARD APOTEKER
     .info-grid {
         grid-template-columns: 1fr 1fr;
     }
->>>>>>> 10e8eca9bbfd8e9ed5765039eb97d2b5271ed007
-
 }
 
 @media (max-width:768px) {
