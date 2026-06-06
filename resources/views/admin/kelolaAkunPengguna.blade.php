@@ -73,6 +73,38 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($users ?? [] as $user)
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">{{ strtoupper(substr($user->nama ?? 'U', 0, 2)) }}</div>
+                                        <div class="user-info">
+                                            <div class="user-name">{{ $user->nama }}</div>
+                                            <div class="user-id">ID: USR-{{ str_pad((string) $user->ID_User, 4, '0', STR_PAD_LEFT) }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:{{ $user->email }}" class="email-link">{{ $user->email }}</a></td>
+                                <td><span class="role-badge role-{{ strtolower($user->role) }}">{{ ucfirst($user->role) }}</span></td>
+                                <td>{{ $user->no_telp ?? '-' }}</td>
+                                <td>{{ optional($user->created_at)->format('d M Y') ?? '-' }}</td>
+                                <td><span class="status-badge status-{{ strtolower($user->status ?? 'aktif') }}">{{ ucfirst($user->status ?? 'aktif') }}</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
                             {{-- User 1 --}}
                             <tr>
                                 <td><input type="checkbox" class="check-row"></td>
@@ -232,6 +264,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -240,7 +273,7 @@
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
-                    Menampilkan <strong>1-5</strong> dari <strong>24</strong> pengguna
+                    Menampilkan <strong>{{ method_exists($users ?? null, 'firstItem') ? ($users->firstItem() ?? 0) : 0 }}-{{ method_exists($users ?? null, 'lastItem') ? ($users->lastItem() ?? 0) : 0 }}</strong> dari <strong>{{ method_exists($users ?? null, 'total') ? $users->total() : 0 }}</strong> pengguna
                 </div>
                 <div class="pagination">
                     <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
@@ -259,6 +292,5 @@
     </div>
     {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/manageUsers.js') }}"></script>
 </div>
 @endsection

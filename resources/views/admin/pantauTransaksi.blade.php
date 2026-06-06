@@ -36,7 +36,7 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Transaksi</div>
-                        <div class="summary-value">847</div>
+                        <div class="summary-value">{{ number_format($summary['total'] ?? 0, 0, ',', '.') }}</div>
                         <div class="summary-sub">Bulan ini</div>
                     </div>
                 </div>
@@ -47,8 +47,8 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Selesai</div>
-                        <div class="summary-value">823</div>
-                        <div class="summary-sub">Rp 245.5 Juta</div>
+                        <div class="summary-value">{{ number_format($summary['selesai'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['selesai_nominal'] ?? 0, 0, ',', '.') }}</div>
                     </div>
                 </div>
 
@@ -58,8 +58,8 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Pending</div>
-                        <div class="summary-value">18</div>
-                        <div class="summary-sub">Rp 12.3 Juta</div>
+                        <div class="summary-value">{{ number_format($summary['pending'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['pending_nominal'] ?? 0, 0, ',', '.') }}</div>
                     </div>
                 </div>
 
@@ -69,8 +69,8 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Gagal</div>
-                        <div class="summary-value">6</div>
-                        <div class="summary-sub">Rp 850.000</div>
+                        <div class="summary-value">{{ number_format($summary['gagal'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['gagal_nominal'] ?? 0, 0, ',', '.') }}</div>
                     </div>
                 </div>
             </div>
@@ -123,6 +123,49 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($transactions ?? [] as $transaction)
+                            @php
+                                $prescription = $transaction->prescription;
+                                $pasien = optional(optional($prescription)->pasien);
+                                $pasienUser = optional($pasien->user);
+                                $kasirUser = optional(optional(optional($prescription)->apoteker)->user);
+                                $statusClass = $transaction->Status === 'lunas' ? 'selesai' : $transaction->Status;
+                                $statusLabel = $transaction->Status === 'lunas' ? 'Selesai' : ucfirst($transaction->Status);
+                                $metode = $transaction->Metode ?: 'Mandiri';
+                            @endphp
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td><span class="trx-id">TRX-{{ now()->year }}-{{ str_pad((string) $transaction->ID_Pembayaran, 4, '0', STR_PAD_LEFT) }}</span></td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">{{ $pasienUser->nama ?? 'Pasien tidak ditemukan' }}</div>
+                                        <div class="patient-sub">{{ $pasien->No_BPJS ? 'Pasien BPJS' : 'Pasien Umum' }}</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-{{ str_pad((string) optional($prescription)->ID_Pasien, 5, '0', STR_PAD_LEFT) }}</span></td>
+                                <td><span class="type-badge type-{{ strtolower($metode) === 'bpjs' ? 'bpjs' : 'mandiri' }}">{{ $metode }}</span></td>
+                                <td class="amount-cell">Rp {{ number_format($transaction->Total_Bayar, 0, ',', '.') }}</td>
+                                <td class="time-cell">
+                                    <div>{{ optional($transaction->Tanggal_Bayar)->format('d M Y') ?? '-' }}</div>
+                                    <div class="time-sub">{{ optional($transaction->created_at)->format('H:i') ?? '--:--' }} WIB</div>
+                                </td>
+                                <td>{{ $kasirUser->nama ?? '-' }}</td>
+                                <td><span class="status-badge status-{{ $statusClass }}">{{ $statusLabel }}</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
                             {{-- Transaction 1 --}}
                             <tr>
                                 <td><input type="checkbox" class="check-row"></td>
@@ -338,6 +381,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -346,7 +390,7 @@
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
-                    Menampilkan <strong>1-6</strong> dari <strong>847</strong> transaksi
+                    Menampilkan <strong>{{ method_exists($transactions ?? null, 'firstItem') ? ($transactions->firstItem() ?? 0) : 0 }}-{{ method_exists($transactions ?? null, 'lastItem') ? ($transactions->lastItem() ?? 0) : 0 }}</strong> dari <strong>{{ method_exists($transactions ?? null, 'total') ? $transactions->total() : 0 }}</strong> transaksi
                 </div>
                 <div class="pagination">
                     <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
@@ -365,6 +409,6 @@
     </div>
     {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/monitorTransaction.js') }}"></script>
+<script src="{{ asset('js/pantauTransaksi.js') }}"></script>
 </div>
 @endsection

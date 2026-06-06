@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'ID_User';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,11 +24,12 @@ class User extends Authenticatable
         'nama',         
         'password',
         'tanggal_lahir',
-        'gender',
+        'jenis_kelamin',
         'no_telp',
         'role',
         'nik',
         'alamat',
+        'status',
     ];
 
     /**
@@ -50,5 +53,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function pasien()
+    {
+        return $this->hasOne(Pasien::class, 'ID_User', 'ID_User');
+    }
+
+    public function dokter()
+    {
+        return $this->hasOne(Dokter::class, 'ID_User', 'ID_User');
+    }
+
+    public function apoteker()
+    {
+        return $this->hasOne(Apoteker::class, 'ID_User', 'ID_User');
     }
 }

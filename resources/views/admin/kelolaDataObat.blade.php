@@ -68,6 +68,7 @@
                 <div class="filter-group">
                     <select class="filter-select" id="filter-category">
                         <option value="">Semua Kategori</option>
+                        <option value="umum">Umum</option>
                         <option value="analgesik">Analgesik</option>
                         <option value="antibiotik">Antibiotik</option>
                         <option value="antihistamin">Antihistamin</option>
@@ -176,6 +177,9 @@
     {{-- TOAST --}}
     <div class="toast-container" id="toast-container"></div>
 
+<script>
+    window.medicineData = @json($medicines ?? []);
+</script>
 <script src="{{ asset('js/kelolaDataObat.js') }}"></script>
 </div>
 @endsection

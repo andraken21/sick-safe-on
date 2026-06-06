@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApotekerController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasienDashboardController;
 
     // Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
     Route::get('/', function () {
@@ -23,14 +26,16 @@ use App\Http\Controllers\LoginController;
     Route::post('/login', [LoginController::class, 'login']);
 
     // Kalau Role Admin
-    Route::middleware(['auth','role:Admin'])->group(function () {
-     Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
+    Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/kelolaAkunPengguna', [AdminController::class, 'kelolaAkunPengguna'])->name('admin.kelola-akun-pengguna');
+        Route::get('/kelolaDataObat', [AdminController::class, 'kelolaDataObat'])->name('admin.kelola-data-obat');
+        Route::get('/laporanAnalisisData', [AdminController::class, 'laporanAnalisisData'])->name('admin.laporan-analisis-data');
+        Route::get('/pantauTransaksi', [AdminController::class, 'pantauTransaksi'])->name('admin.pantau-transaksi');
     });
 
     // Kalau Role Dokter
-    Route::middleware(['auth', 'role:Dokter'])->group(function () {
+    Route::middleware(['auth', 'role:dokter'])->group(function () {
         Route::get('/dokter/dashboard', function () {
             return view('dokter.dashboard');
         });
@@ -39,15 +44,15 @@ use App\Http\Controllers\LoginController;
     // Kalau Role Pasien
     Route::middleware(['auth'])->group(function () {
      Route::prefix('pasien')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
-        Route::get('/resep', [App\Http\Controllers\PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
-        Route::get('/pembayaran', [App\Http\Controllers\PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
+        Route::get('/dashboard', [PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
+        Route::get('/resep', [PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
+        Route::get('/pembayaran', [PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
     });
 });
  
 
     // Kalau Role Apoteker
-    Route::middleware(['auth', 'role:Apoteker'])->group (function () {
+    Route::middleware(['auth', 'role:apoteker'])->group (function () {
         Route::get('/apoteker/dashboard', function(){
         return view('apoteker.dashboard');
         });
@@ -89,20 +94,4 @@ use App\Http\Controllers\LoginController;
     // Agar saat menekan button app akan pergi ke web app
     Route::get('/app', function () {
         return view('layouts.app');
-    });
-
-    Route::get('/admin/kelolaAkunPengguna', function () {
-        return view('admin.kelolaAkunPengguna');
-    });
-
-    Route::get('/admin/kelolaDataObat', function () {
-        return view('admin.kelolaDataObat');
-    });
-    
-    Route::get('/admin/laporanAnalisisData', function () {
-        return view('admin.laporanAnalisisData');
-    });
-
-    Route::get('/admin/pantauTransaksi', function () {
-        return view('admin.pantauTransaksi');
     });

@@ -12,7 +12,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $role): Response
     {
         // Cek apakah user sudah login dan rolenya sesuai dengan yang diizinkan
-        if (Auth::check() && Auth::user()->role == $role) {
+        if (Auth::check() && strtolower(Auth::user()->role) === strtolower($role)) {
             return $next($request);
         }
 

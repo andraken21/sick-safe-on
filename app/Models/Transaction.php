@@ -16,6 +16,11 @@ class Transaction extends Model
         'Status', 'Tanggal_Bayar',
     ];
 
+    protected $casts = [
+        'Total_Bayar' => 'decimal:2',
+        'Tanggal_Bayar' => 'date',
+    ];
+
     public function prescription(): BelongsTo
     {
         return $this->belongsTo(Prescription::class, 'ID_Resep', 'ID_Resep');

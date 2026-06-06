@@ -8,7 +8,7 @@
 /* ============================
    DATA DUMMY
 ============================ */
-let medicineData = [
+let medicineData = window.medicineData || [
     {
         id: 1, code: 'PAR-001', name: 'Paracetamol 500mg',
         category: 'analgesik', stock: 45, min: 100,
@@ -131,6 +131,7 @@ function categoryLabel(c) {
         antibiotik: 'Antibiotik',
         antihistamin: 'Antihistamin',
         vitamin: 'Vitamin',
+        umum: 'Umum',
     };
     return map[c] || c;
 }

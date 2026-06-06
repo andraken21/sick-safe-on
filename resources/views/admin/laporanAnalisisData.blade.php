@@ -233,13 +233,13 @@
                 <div class="key-metrics">
                     <div class="metric-card">
                         <div class="metric-label">Pendapatan Bulan Ini</div>
-                        <div class="metric-value">Rp 245,5 Juta</div>
-                        <div class="metric-change up">↑ 18% dari bulan lalu</div>
+                        <div class="metric-value">Rp {{ number_format($monthlyRevenue ?? 0, 0, ',', '.') }}</div>
+                        <div class="metric-change up">Bulan ini</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Rata-rata Transaksi</div>
-                        <div class="metric-value">Rp 289.500</div>
-                        <div class="metric-change up">↑ 5% dari bulan lalu</div>
+                        <div class="metric-value">Rp {{ number_format($averageTransaction ?? 0, 0, ',', '.') }}</div>
+                        <div class="metric-change up">Dari transaksi lunas</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Dokter Paling Aktif</div>
@@ -310,6 +310,5 @@
     </div>
     {{-- /MAIN AREA --}}
 
-<script src="{{ asset('js/reportsAnalytics.js') }}"></script>
 </div>
 @endsection

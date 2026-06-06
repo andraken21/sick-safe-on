@@ -20,8 +20,8 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Pasien</div>
-                        <div class="stat-value">120</div>
-                        <div class="stat-sub">↑ 8 bulan ini</div>
+                        <div class="stat-value">{{ number_format($stats['pasien'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="stat-sub">Terdaftar di sistem</div>
                     </div>
                 </div>
 
@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Dokter</div>
-                        <div class="stat-value">25</div>
+                        <div class="stat-value">{{ number_format($stats['dokter'] ?? 0, 0, ',', '.') }}</div>
                         <div class="stat-sub">Aktif bertugas</div>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                     </div>
                     <div>
                         <div class="stat-label">Apoteker</div>
-                        <div class="stat-value">18</div>
-                        <div class="stat-sub">3 jadwal hari ini</div>
+                        <div class="stat-value">{{ number_format($stats['apoteker'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="stat-sub">Aktif di sistem</div>
                     </div>
                 </div>
 
@@ -53,8 +53,8 @@
                     </div>
                     <div>
                         <div class="stat-label">Resep Bulan Ini</div>
-                        <div class="stat-value">320</div>
-                        <div class="stat-sub">↑ 12% vs bulan lalu</div>
+                        <div class="stat-value">{{ number_format($stats['resep_bulan_ini'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="stat-sub">Bulan ini</div>
                     </div>
                 </div>
             </div>

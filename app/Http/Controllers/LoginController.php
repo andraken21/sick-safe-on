@@ -33,7 +33,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'password' => Hash::make($request->password),
-            'role' => 'Pasien', // Tetap dikunci sebagai Pasien
+            'role' => 'pasien', // Tetap dikunci sebagai pasien
         ]);
 
         return redirect('/login')->with('success', 'Akun berhasil dibuat!');
@@ -58,13 +58,13 @@ class LoginController extends Controller
             $role = Auth::user()->role; 
 
             // Arahkan ke dashboard masing-masing sesuai role
-            if ($role === 'Admin') {
+            if ($role === 'admin') {
                 return redirect()->intended('/admin/dashboard');
-            } elseif ($role === 'Dokter') {
+            } elseif ($role === 'dokter') {
                 return redirect()->intended('/dokter/dashboard');
-            } elseif ($role === 'Pasien') {
+            } elseif ($role === 'pasien') {
                 return redirect()->intended('/pasien/dashboard');
-            } elseif ($role === 'Apoteker') {
+            } elseif ($role === 'apoteker') {
                 return redirect()->intended('/apoteker/dashboard');
             }
 
