@@ -124,7 +124,22 @@ class DokterController extends Controller
 
     public function daftarResep(Request $request)
     {
-        // Validasi bahwa id_pasien dikirim
+        // Validasi bahwa id_pasien dikirim (dari tombol "Pilih" di pilihPasien)
+        $request->validate([
+            'id_pasien' => 'required|exists:pasien,id_pasien',
+        ]);
+
+        // Redirect ke route resep.create agar URL konsisten dan bookmark-able
+        return redirect()->route('dokter.resep.create', ['id_pasien' => $request->id_pasien]);
+    }
+
+    /**
+     * Form buat resep (GET).
+     * Dipanggil dari route('dokter.resep.create', ['id_pasien' => ...])
+     * atau langsung dari tombol "Pilih" di pilihPasien.blade.php.
+     */
+    public function createResep(Request $request)
+    {
         $request->validate([
             'id_pasien' => 'required|exists:pasien,id_pasien',
         ]);

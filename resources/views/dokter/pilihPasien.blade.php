@@ -146,7 +146,7 @@
                                 <span class="badge badge-aktif"><i class="bi bi-circle-fill"></i> Aktif</span>
                             </td>
                             <td>
-                                <a href="#" class="btn-detail">
+                                <a href="javascript:void(0)" class="btn-detail" title="Fitur detail belum tersedia">
                                     <i class="bi bi-eye"></i> Detail
                                 </a>
                                 <a href="{{ route('dokter.resep.create', ['id_pasien' => $pasien->id_pasien]) }}" class="btn-pilih">

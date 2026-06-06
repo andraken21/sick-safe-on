@@ -25,47 +25,56 @@
         </div>
     </div>
 
+    {{-- Flash error dari controller (misal stok kurang) --}}
+    @if(session('error'))
+    <div style="padding:12px 16px;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;color:#b91c1c;font-size:.85rem;font-weight:600;margin-bottom:16px;">
+        ❌ {{ session('error') }}
+    </div>
+    @endif
+    @if($errors->any())
+    <div style="padding:12px 16px;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;color:#b91c1c;font-size:.85rem;margin-bottom:16px;">
+        <strong>Kesalahan validasi:</strong>
+        <ul style="margin:4px 0 0 16px;">
+            @foreach($errors->all() as $e) <li>{{ $e }}</li> @endforeach
+        </ul>
+    </div>
+    @endif
+
     @php
-        $namaPasien = $pasien->user->nama ?? 'Pasien';
+        $namaPasien    = $pasien->user->nama ?? 'Pasien';
         $inisialPasien = strtoupper(substr($namaPasien, 0, 2));
-        $tanggalLahir = $pasien->user?->tanggal_lahir;
-        $umur = $tanggalLahir ? $tanggalLahir->age . ' thn' : '-';
+        $tanggalLahir  = $pasien->user?->tanggal_lahir;
+        $umur          = $tanggalLahir ? \Carbon\Carbon::parse($tanggalLahir)->age . ' thn' : '-';
     @endphp
 
+    {{-- KARTU INFO PASIEN --}}
     <div class="patient-info-card">
         <div class="patient-big-avatar">{{ $inisialPasien }}</div>
         <div class="patient-info-text">
             <div class="pat-name">{{ $namaPasien }}</div>
             <div class="pat-meta">
-                <div class="pat-meta-item">
-                    <i class="bi bi-credit-card-2-front"></i> BPJS: {{ $pasien->no_bpjs ?? '-' }}
-                </div>
-                <div class="pat-meta-item">
-                    <i class="bi bi-gender-male"></i> {{ $pasien->user->jenis_kelamin ?? '-' }}
-                </div>
-                <div class="pat-meta-item">
-                    <i class="bi bi-calendar3"></i> {{ optional($tanggalLahir)->format('d M Y') ?? '-' }} ({{ $umur }})
-                </div>
-                <div class="pat-meta-item">
-                    <i class="bi bi-telephone"></i> {{ $pasien->user->no_telp ?? '-' }}
-                </div>
+                <div class="pat-meta-item"><i class="bi bi-credit-card-2-front"></i> BPJS: {{ $pasien->no_bpjs ?? '-' }}</div>
+                <div class="pat-meta-item"><i class="bi bi-gender-male"></i> {{ $pasien->user->jenis_kelamin ?? '-' }}</div>
+                <div class="pat-meta-item"><i class="bi bi-calendar3"></i> {{ optional($tanggalLahir)->format('d M Y') ?? '-' }} ({{ $umur }})</div>
+                <div class="pat-meta-item"><i class="bi bi-telephone"></i> {{ $pasien->user->no_telp ?? '-' }}</div>
             </div>
         </div>
         <div class="patient-info-right">
             <span class="info-badge">#PAT-{{ str_pad($pasien->id_pasien, 4, '0', STR_PAD_LEFT) }}</span>
-            <div class="kode-resep-badge">
-                <div class="label">Kode Resep</div>
-                <div class="kode">RSP-{{ date('Y') }}-{{ str_pad(rand(1,9999), 4, '0', STR_PAD_LEFT) }}</div>
-            </div>
         </div>
     </div>
 
-    {{-- FORM --}}
+    {{--
+        FORM RESEP
+        POST → route('dokter.resep.store')
+        Controller: storeResep()
+        Field yang divalidasi:
+          id_pasien, keluhan, diagnosa, keterangan (optional)
+          obat[*][id_obat], obat[*][jumlah], obat[*][dosis]
+    --}}
     <form id="formResep" method="POST" action="{{ route('dokter.resep.store') }}">
         @csrf
-        <input type="hidden" name="id_pasien"  value="{{ $pasien->id_pasien }}">
-        <input type="hidden" name="kode_resep" value="RSP-{{ date('Y') }}-0001">
-        <input type="hidden" name="status"     value="terkirim" id="inputStatus">
+        <input type="hidden" name="id_pasien" value="{{ $pasien->id_pasien }}">
 
         <div class="form-grid">
 
@@ -85,11 +94,6 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Kode Diagnosa (ICD-10)</label>
-                                <input type="text" name="kode_diagnosa" placeholder="Cth: J00, A09" value="{{ old('kode_diagnosa') }}">
-                                <span class="field-hint">Opsional</span>
-                            </div>
-                            <div class="form-group">
                                 <label>Nama Diagnosa <span class="req">*</span></label>
                                 <input type="text" name="diagnosa" id="inputDiagnosa"
                                        placeholder="Cth: Infeksi Saluran Napas"
@@ -104,6 +108,12 @@
                 </div>
 
                 {{-- Daftar Obat --}}
+                {{--
+                    Setiap baris obat dikirim sebagai array:
+                      obat[0][id_obat], obat[0][jumlah], obat[0][dosis]
+                      obat[1][id_obat], obat[1][jumlah], obat[1][dosis]  dst.
+                    Sesuai validasi controller: 'obat.*.id_obat', 'obat.*.jumlah', 'obat.*.dosis'
+                --}}
                 <div class="section-card">
                     <div class="section-card-header">
                         <div class="icon icon-blue"><i class="bi bi-capsule-pill"></i></div>
@@ -115,15 +125,16 @@
                                 <tr>
                                     <th class="col-no">#</th>
                                     <th class="col-nama">Nama Obat</th>
-                                    <th class="col-dosis">Dosis</th>
+                                    <th class="col-dosis">Dosis / Aturan Pakai</th>
                                     <th class="col-jml">Jumlah</th>
-                                    <th class="col-sat">Satuan</th>
-                                    <th class="col-aturan">Aturan Pakai</th>
-                                    <th class="col-ket">Keterangan</th>
+                                    <th class="col-stok">Stok</th>
+                                    <th class="col-harga">Harga Sat.</th>
                                     <th class="col-del"></th>
                                 </tr>
                             </thead>
-                            <tbody id="obatTableBody"></tbody>
+                            <tbody id="obatTableBody">
+                                {{-- Diisi oleh resepDokter.js --}}
+                            </tbody>
                         </table>
                     </div>
                     <div class="obat-footer">
@@ -161,12 +172,15 @@
                         </div>
                         <div class="ringkasan-row">
                             <span class="rk-label">Diagnosa</span>
-                            <span class="rk-value" id="rkDiagnosa"
-                                  style="color:#6a8fa5;font-weight:400;font-style:italic">Belum diisi</span>
+                            <span class="rk-value" id="rkDiagnosa" style="color:#6a8fa5;font-style:italic">Belum diisi</span>
                         </div>
                         <div class="ringkasan-obat-count">
                             <span class="label"><i class="bi bi-capsule-pill"></i> Jenis Obat</span>
                             <span class="count" id="rkObatCount">0</span>
+                        </div>
+                        <div class="ringkasan-row" style="margin-top:8px;font-weight:700;">
+                            <span class="rk-label">Est. Total</span>
+                            <span class="rk-value" id="rkTotal" style="color:#0e7490;">Rp 0</span>
                         </div>
                     </div>
                 </div>
@@ -185,29 +199,10 @@
                     </div>
                 </div>
 
-                {{-- Alergi --}}
-                <div class="section-card">
-                    <div class="section-card-header">
-                        <div class="icon" style="background:#FFEBEA;color:#D93025">
-                            <i class="bi bi-shield-exclamation"></i>
-                        </div>
-                        <h3>Alergi Obat</h3>
-                    </div>
-                    <div class="section-card-body" style="padding:14px;">
-                        <div class="alergi-box">
-                            <div class="al-title"><i class="bi bi-exclamation-octagon-fill"></i> Perhatian</div>
-                            <div class="al-empty">Tidak ada riwayat alergi tercatat.</div>
-                        </div>
-                    </div>
-                </div>
-
                 {{-- Action Buttons --}}
                 <div class="action-card">
-                    <button type="submit" class="btn-submit">
+                    <button type="submit" class="btn-submit" id="btnSubmit">
                         <i class="bi bi-send-fill"></i> Kirim ke Apoteker
-                    </button>
-                    <button type="button" class="btn-draft" id="btnDraft">
-                        <i class="bi bi-floppy-fill"></i> Simpan sebagai Draft
                     </button>
                     <a href="{{ route('dokter.pilih.pasien') }}" class="btn-batal">
                         <i class="bi bi-x-circle"></i> Batalkan
@@ -220,20 +215,24 @@
         </div>
     </form>
 
+    <div id="toast"><i class="bi bi-check-circle-fill"></i> <span id="toastMsg"></span></div>
+
 </div>
-
-<div id="toast"><i class="bi bi-check-circle-fill"></i> <span id="toastMsg"></span></div>
-
 @endsection
 
 @push('scripts')
 <script>
-window.obatOptions = @json($obatList->map(fn ($obat) => [
-    'id' => $obat->id_obat,
-    'nama' => $obat->nama_obat,
-    'stok' => $obat->stok,
-    'harga' => (int) $obat->harga,
-])->values());
+@php
+    $obatJson = $obatList->map(function ($o) {
+        return [
+            'id'    => $o->id_obat,
+            'nama'  => $o->nama_obat,
+            'stok'  => $o->stok,
+            'harga' => (int) $o->harga,
+        ];
+    })->values();
+@endphp
+window.obatOptions = {!! json_encode($obatJson) !!};
 </script>
 <script src="{{ asset('js/resepDokter.js') }}"></script>
 @endpush

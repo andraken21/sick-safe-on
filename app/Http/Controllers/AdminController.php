@@ -15,7 +15,6 @@ use App\Models\Kategori;
 use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
 use App\Models\DetailResep;
-use App\Models\Antrian;
 
 class AdminController extends Controller
 {
@@ -41,8 +40,9 @@ class AdminController extends Controller
         $resepDiproses = DetailResep::where('status', 'diproses')->count();
         $resepSelesai  = DetailResep::where('status', 'selesai')->count();
 
-        // Obat hampir habis (stok < 10)
-        $obatHampirHabis = Obat::where('stok', '<', 10)
+        // Obat hampir habis (stok < 10, bukan kadaluarsa)
+        $obatHampirHabis = Obat::with('kategori')
+                            ->where('stok', '<', 10)
                             ->where('status', '!=', 'kadaluarsa')
                             ->orderBy('stok')
                             ->take(5)
@@ -55,8 +55,9 @@ class AdminController extends Controller
                             ->get();
 
         // Grafik pendapatan 7 hari terakhir
+        // subDays(6) agar rentang = hari ini + 6 hari ke belakang = 7 hari total
         $grafikPendapatan = Transaksi::where('status', 'lunas')
-            ->where('created_at', '>=', now()->subDays(7))
+            ->whereDate('created_at', '>=', now()->subDays(6)->toDateString())
             ->selectRaw('DATE(created_at) as tanggal, SUM(total_bayar) as total')
             ->groupBy('tanggal')
             ->orderBy('tanggal')
@@ -89,11 +90,17 @@ class AdminController extends Controller
             });
         }
 
-        $users = $query->latest()->paginate(15)->withQueryString();
+        // Eager load relasi role agar tidak N+1 di view
+        $users = $query->with(['pasien', 'dokter', 'apoteker', 'admin'])
+                       ->latest()
+                       ->paginate(15)
+                       ->withQueryString();
 
         return view('admin.kelolaAkunPengguna', compact('users'));
     }
 
+    // createAkun tidak dipakai oleh route — route POST /create langsung ke storeAkun
+    // Method ini bisa dihapus, tapi dibiarkan aman
     public function createAkun()
     {
         return view('admin.createAkun');
@@ -104,8 +111,7 @@ class AdminController extends Controller
         $request->validate([
             'nama'             => 'required|string|max:100',
             'email'            => 'required|email|unique:users,email',
-            'password'         => 'required|min:8',
-            // FIX #1: enum di DB adalah 'Pasien','Dokter','Apoteker','Admin' — huruf kapital
+            'password'         => 'required|min:8|confirmed',
             'role'             => 'required|in:Pasien,Dokter,Apoteker,Admin',
             'nik'              => 'nullable|string|size:16|unique:users,nik',
             'no_telp'          => 'nullable|string|max:15',
@@ -130,7 +136,6 @@ class AdminController extends Controller
                 'alamat'        => $request->alamat,
             ]);
 
-            // Buat record sesuai role
             match ($request->role) {
                 'Pasien'   => Pasien::create([
                                 'id_user'          => $user->id_user,
@@ -142,7 +147,7 @@ class AdminController extends Controller
                                 'spesialis' => $request->spesialis,
                               ]),
                 'Apoteker' => Apoteker::create(['id_user' => $user->id_user]),
-                'Admin'    => Admin::create(['id_user' => $user->id_user]),
+                'Admin'    => Admin::create(['id_user'    => $user->id_user]),
             };
         });
 
@@ -152,7 +157,9 @@ class AdminController extends Controller
 
     public function editAkun($id_user)
     {
-        $user = User::findOrFail($id_user);
+        // Method ini tidak dipakai — edit dilakukan via modal JS di kelolaAkunPengguna
+        // Dibiarkan sebagai fallback jika suatu saat dibutuhkan
+        $user = User::with(['pasien', 'dokter'])->findOrFail($id_user);
         return view('admin.editAkun', compact('user'));
     }
 
@@ -166,11 +173,10 @@ class AdminController extends Controller
             'nik'              => 'nullable|string|size:16|unique:users,nik,' . $id_user . ',id_user',
             'no_telp'          => 'nullable|string|max:15',
             'tanggal_lahir'    => 'nullable|date',
-            // FIX #1: konsisten dengan enum DB
             'jenis_kelamin'    => 'nullable|in:Laki-laki,Perempuan',
             'alamat'           => 'nullable|string',
             'spesialis'        => 'required_if:role,Dokter|nullable|string',
-            'no_bpjs'          => 'nullable|string|max:13',
+            'no_bpjs'          => 'nullable|string|max:13|unique:pasien,no_bpjs,' . optional($user->pasien)->id_pasien . ',id_pasien',
             'riwayat_penyakit' => 'nullable|string',
         ]);
 
@@ -185,12 +191,12 @@ class AdminController extends Controller
                 'alamat'        => $request->alamat,
             ]);
 
-            if ($user->role === 'Dokter') {
-                $user->dokter()->update(['spesialis' => $request->spesialis]);
+            if ($user->role === 'Dokter' && $user->dokter) {
+                $user->dokter->update(['spesialis' => $request->spesialis]);
             }
 
-            if ($user->role === 'Pasien') {
-                $user->pasien()->update([
+            if ($user->role === 'Pasien' && $user->pasien) {
+                $user->pasien->update([
                     'no_bpjs'          => $request->no_bpjs,
                     'riwayat_penyakit' => $request->riwayat_penyakit,
                 ]);
@@ -236,7 +242,7 @@ class AdminController extends Controller
         }
 
         $obatList = $query->latest()->paginate(15)->withQueryString();
-        $kategori = Kategori::all();
+        $kategori = Kategori::orderBy('kategori_obat')->get();
 
         return view('admin.kelolaDataObat', compact('obatList', 'kategori'));
     }
@@ -278,6 +284,11 @@ class AdminController extends Controller
             'nama_obat', 'id_kategori', 'stok',
             'harga', 'status', 'tanggal_kadaluarsa',
         ]));
+
+        // Sinkronisasi otomatis: stok 0 → status habis
+        if ((int) $request->stok === 0 && $request->status === 'tersedia') {
+            $obat->update(['status' => 'habis']);
+        }
 
         return redirect()->route('kelolaDataObat')
             ->with('success', 'Data obat berhasil diperbarui.');
@@ -350,7 +361,6 @@ class AdminController extends Controller
                 ->update(['status' => 'diproses']);
         });
 
-        // FIX #2: route name di web.php adalah 'pantauTransaksi', bukan 'admin.pantauTransaksi'
         return redirect()->route('pantauTransaksi')
             ->with('success', 'Pembayaran dikonfirmasi, resep diteruskan ke apoteker.');
     }
@@ -369,7 +379,9 @@ class AdminController extends Controller
             $idResepList = DetailTransaksi::where('id_transaksi', $transaksi->id_transaksi)
                             ->pluck('id_resep');
 
+            // Status resep dikembalikan ke menunggu_pembayaran agar pasien bisa bayar ulang
             DetailResep::whereIn('id_resep', $idResepList)
+                ->where('status', 'menunggu_pembayaran')
                 ->update([
                     'status'     => 'menunggu_pembayaran',
                     'keterangan' => $request->keterangan,
@@ -410,8 +422,10 @@ class AdminController extends Controller
         }
 
         $transaksiList = $query->latest()->paginate(15)->withQueryString();
-        $totalLunas    = Transaksi::where('status', 'lunas')->sum('total_bayar');
-        $totalPending  = Transaksi::where('status', 'pending')->count();
+
+        // Angka summary selalu dihitung dari SEMUA data (bukan hanya hasil filter)
+        $totalLunas   = Transaksi::where('status', 'lunas')->sum('total_bayar');
+        $totalPending = Transaksi::where('status', 'pending')->count();
 
         return view('admin.pantauTransaksi', compact(
             'transaksiList', 'totalLunas', 'totalPending'
@@ -424,9 +438,10 @@ class AdminController extends Controller
 
     public function laporan(Request $request)
     {
-        $bulan = $request->input('bulan', now()->month);
-        $tahun = $request->input('tahun', now()->year);
+        $bulan = (int) $request->input('bulan', now()->month);
+        $tahun = (int) $request->input('tahun', now()->year);
 
+        // Grafik pendapatan per bulan sepanjang tahun yang dipilih
         $pendapatanBulanan = Transaksi::where('status', 'lunas')
             ->whereYear('created_at', $tahun)
             ->selectRaw('MONTH(created_at) as bulan, SUM(total_bayar) as total, COUNT(*) as jumlah')
@@ -434,6 +449,7 @@ class AdminController extends Controller
             ->orderBy('bulan')
             ->get();
 
+        // Obat paling banyak diresepkan bulan ini (resep status selesai)
         $obatTerlaris = DB::table('resep_obat')
             ->join('obat', 'resep_obat.id_obat', '=', 'obat.id_obat')
             ->join('resep', 'resep_obat.id_resep', '=', 'resep.id_resep')
@@ -447,9 +463,11 @@ class AdminController extends Controller
             ->take(10)
             ->get();
 
+        // Dokter paling aktif bulan ini
         $dokterAktif = DetailResep::with('dokter.user')
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
+            ->whereNotNull('id_dokter')
             ->selectRaw('id_dokter, COUNT(*) as total_pasien')
             ->groupBy('id_dokter')
             ->orderByDesc('total_pasien')

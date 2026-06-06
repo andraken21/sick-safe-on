@@ -10,138 +10,262 @@
 
 @section('content')
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/pantauTransaksi.css') }}">
-
     <div class="dash-main">
         <div class="dash-content">
 
-            {{-- SUMMARY CARDS --}}
+            {{-- FLASH MESSAGES --}}
+            @if (session('success'))
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:12px 16px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                </div>
+            @endif
+
+            {{-- SUMMARY CARDS — data dari controller --}}
+            @php
+                $totalTrx    = $transaksiList->total();
+                $totalSelesai = \App\Models\Transaksi::where('status', 'lunas')->count();
+                $totalPendingCount = \App\Models\Transaksi::where('status', 'pending')->count();
+                $totalBatal  = \App\Models\Transaksi::where('status', 'batal')->count();
+            @endphp
+
             <div class="trx-summary">
-                <div class="summary-card filter-card active" data-filter-status="all" title="Tampilkan semua transaksi">
+                <div class="summary-card">
                     <div class="summary-icon icon-total">
                         <i class="fa-solid fa-receipt"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Transaksi</div>
-                        <div class="summary-value" id="count-total">0</div>
-                        <div class="summary-sub">Bulan ini</div>
+                        <div class="summary-value">{{ $totalTrx }}</div>
+                        <div class="summary-sub">Semua data</div>
                     </div>
                 </div>
 
-                <div class="summary-card filter-card" data-filter-status="selesai" title="Tampilkan transaksi selesai">
+                <div class="summary-card">
                     <div class="summary-icon icon-success">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="summary-info">
-                        <div class="summary-label">Transaksi Selesai</div>
-                        <div class="summary-value" id="count-selesai">0</div>
-                        <div class="summary-sub" id="sub-selesai">Rp 0</div>
+                        <div class="summary-label">Transaksi Lunas</div>
+                        <div class="summary-value">{{ $totalSelesai }}</div>
+                        <div class="summary-sub">
+                            Rp {{ number_format($totalLunas, 0, ',', '.') }}
+                        </div>
                     </div>
                 </div>
 
-                <div class="summary-card filter-card" data-filter-status="pending" title="Tampilkan transaksi pending">
+                <div class="summary-card">
                     <div class="summary-icon icon-pending">
                         <i class="fa-solid fa-hourglass-half"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Pending</div>
-                        <div class="summary-value" id="count-pending">0</div>
-                        <div class="summary-sub" id="sub-pending">Rp 0</div>
+                        <div class="summary-value">{{ $totalPending }}</div>
+                        <div class="summary-sub">Menunggu konfirmasi</div>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="summary-info">
+                        <div class="summary-label">Transaksi Batal</div>
+                        <div class="summary-value">{{ $totalBatal }}</div>
+                        <div class="summary-sub">Dibatalkan</div>
                     </div>
                 </div>
             </div>
 
-            {{-- FILTERS & SEARCH --}}
-            <div class="filter-section">
+            {{-- FILTERS & SEARCH — form GET --}}
+            <form method="GET" action="{{ route('pantauTransaksi') }}" class="filter-section" id="filterForm">
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="search-input"
-                           placeholder="Cari No. Transaksi atau nama pasien..."
+                    <input type="text" name="search" id="search-input"
+                           value="{{ request('search') }}"
+                           placeholder="Cari nama pasien..."
                            class="search-input">
-                    <button class="search-clear" id="search-clear" style="display:none;" title="Hapus pencarian">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
                 </div>
                 <div class="filter-group">
-                    <select class="filter-select" id="filter-type">
-                        <option value="">Semua Tipe</option>
-                        <option value="bpjs">BPJS</option>
-                        <option value="mandiri">Mandiri</option>
+                    <select class="filter-select" name="metode"
+                            onchange="document.getElementById('filterForm').submit()">
+                        <option value="">Semua Metode</option>
+                        <option value="bpjs"     {{ request('metode') === 'bpjs'     ? 'selected' : '' }}>BPJS</option>
+                        <option value="transfer" {{ request('metode') === 'transfer' ? 'selected' : '' }}>Mandiri</option>
+                        <option value="qris"     {{ request('metode') === 'qris'     ? 'selected' : '' }}>QRIS</option>
                     </select>
-                    <select class="filter-select" id="filter-status">
+                    <select class="filter-select" name="status"
+                            onchange="document.getElementById('filterForm').submit()">
                         <option value="">Semua Status</option>
-                        <option value="selesai">Selesai</option>
-                        <option value="pending">Pending</option>
+                        <option value="lunas"   {{ request('status') === 'lunas'   ? 'selected' : '' }}>Lunas</option>
+                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="batal"   {{ request('status') === 'batal'   ? 'selected' : '' }}>Batal</option>
                     </select>
+                    <input type="date" name="dari" class="filter-select"
+                           value="{{ request('dari') }}" title="Dari tanggal">
+                    <input type="date" name="sampai" class="filter-select"
+                           value="{{ request('sampai') }}" title="Sampai tanggal">
+                    <button type="submit" class="btn-tambah" style="background:linear-gradient(135deg,#475569,#334155);">
+                        <i class="fa-solid fa-magnifying-glass"></i> Cari
+                    </button>
+                    @if (request()->hasAny(['search','status','metode','dari','sampai']))
+                        <a href="{{ route('pantauTransaksi') }}" class="btn-tambah" style="background:linear-gradient(135deg,#94a3b8,#64748b);text-decoration:none;">
+                            <i class="fa-solid fa-xmark"></i> Reset
+                        </a>
+                    @endif
                 </div>
-            </div>
+            </form>
 
-            {{-- TRANSACTIONS TABLE --}}
+            {{-- TABEL TRANSAKSI — data dari $transaksiList --}}
             <div class="dash-card">
                 <div class="table-wrap">
                     <table class="dash-table transactions-table">
                         <thead>
                             <tr>
-                                <th width="4%"><input type="checkbox" id="check-all"></th>
                                 <th>No. Transaksi</th>
                                 <th>Nama Pasien</th>
-                                <th>No. RM</th>
-                                <th>Tipe</th>
+                                <th>Metode</th>
                                 <th>Total</th>
-                                <th>Waktu</th>
+                                <th>Tanggal</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="trx-tbody"></tbody>
+                        <tbody>
+                            @forelse ($transaksiList as $trx)
+                                @php
+                                    $noTrx = 'TRX-' . $trx->created_at->format('Y') . '-' . str_pad($trx->id_transaksi, 4, '0', STR_PAD_LEFT);
+                                    $metode = match($trx->metode) {
+                                        'bpjs'     => ['label' => 'BPJS',    'class' => 'type-bpjs'],
+                                        'transfer' => ['label' => 'Mandiri', 'class' => 'type-mandiri'],
+                                        'qris'     => ['label' => 'QRIS',    'class' => 'type-qris'],
+                                        default    => ['label' => 'Belum dipilih', 'class' => 'type-mandiri'],
+                                    };
+                                    $status = match($trx->status) {
+                                        'lunas'   => ['label' => 'Lunas',   'class' => 'status-selesai', 'icon' => 'fa-circle-check'],
+                                        'pending' => ['label' => 'Pending', 'class' => 'status-pending', 'icon' => 'fa-clock'],
+                                        'batal'   => ['label' => 'Batal',   'class' => 'status-batal',   'icon' => 'fa-circle-xmark'],
+                                        default   => ['label' => ucfirst($trx->status), 'class' => 'status-pending', 'icon' => 'fa-clock'],
+                                    };
+                                @endphp
+                                <tr>
+                                    <td><span class="trx-id">{{ $noTrx }}</span></td>
+                                    <td>
+                                        <span class="trx-name">{{ $trx->pasien->user->nama ?? '-' }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="trx-type {{ $metode['class'] }}">{{ $metode['label'] }}</span>
+                                    </td>
+                                    <td class="trx-amount">
+                                        Rp {{ number_format($trx->total_bayar, 0, ',', '.') }}
+                                    </td>
+                                    <td class="trx-date">
+                                        {{ $trx->created_at->format('d M Y') }}
+                                    </td>
+                                    <td>
+                                        <span class="status-badge {{ $status['class'] }}">
+                                            <i class="fa-solid {{ $status['icon'] }}" style="font-size:10px;"></i>
+                                            {{ $status['label'] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if ($trx->status === 'pending' && $trx->metode)
+                                            <div style="display:flex;gap:6px;">
+                                                <form method="POST"
+                                                      action="{{ route('admin.pembayaran.konfirmasi', $trx->id_transaksi) }}"
+                                                      onsubmit="return confirm('Konfirmasi pembayaran ini?')">
+                                                    @csrf
+                                                    <button type="submit" class="btn-aksi btn-konfirmasi" title="Konfirmasi Lunas">
+                                                        <i class="fa-solid fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <button type="button" class="btn-aksi btn-hapus" title="Batalkan"
+                                                        onclick="bukaModalBatal({{ $trx->id_transaksi }})">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </button>
+                                            </div>
+                                        @else
+                                            <span style="color:#cbd5e1;font-size:.75rem;">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">
+                                        <i class="fa-solid fa-receipt" style="font-size:2rem;"></i>
+                                        <p style="margin-top:10px;">Tidak ada transaksi ditemukan.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
                     </table>
-                    <div id="empty-state" style="display:none;" class="empty-state">
-                        <i class="fa-solid fa-receipt"></i>
-                        <p>Tidak ada transaksi yang ditemukan.</p>
-                    </div>
                 </div>
             </div>
 
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
-                    Menampilkan <strong id="pag-from">0</strong>–<strong id="pag-to">0</strong>
-                    dari <strong id="pag-total">0</strong> transaksi
+                    Menampilkan {{ $transaksiList->firstItem() ?? 0 }}–{{ $transaksiList->lastItem() ?? 0 }}
+                    dari {{ $transaksiList->total() }} transaksi
                 </div>
-                <div class="pagination" id="pagination-controls"></div>
+                <div class="pagination">
+                    {{ $transaksiList->withQueryString()->links() }}
+                </div>
             </div>
 
         </div>
     </div>
 
-    {{-- MODAL DETAIL --}}
-    <div class="modal-overlay" id="modal-detail" style="display:none;">
-        <div class="modal-box">
+    {{-- MODAL BATALKAN PEMBAYARAN --}}
+    <div class="modal-overlay" id="modalBatal" style="display:none;">
+        <div class="modal-box" style="max-width:440px;">
             <div class="modal-header">
-                <h3 class="modal-title">Detail Transaksi</h3>
-                <button class="modal-close" id="modal-detail-close">
+                <div class="modal-header-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="modal-header-text">
+                    <div class="modal-title">Batalkan Pembayaran</div>
+                    <div class="modal-subtitle">Masukkan alasan pembatalan</div>
+                </div>
+                <button class="modal-close" type="button" onclick="document.getElementById('modalBatal').style.display='none'">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="modal-body" id="modal-detail-body"></div>
-            <div class="modal-footer">
-                <button class="btn-modal-secondary" id="modal-detail-print">
-                    <i class="fa-solid fa-print"></i> Cetak
-                </button>
-                <button class="btn-modal-primary" id="modal-detail-close-btn">
-                    <i class="fa-solid fa-xmark"></i> Tutup
-                </button>
-            </div>
+            <form method="POST" id="formBatal" action="">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Keterangan <span style="color:#DC2626">*</span></label>
+                        <textarea name="keterangan" rows="3" required
+                                  placeholder="Contoh: Bukti transfer tidak valid..."
+                                  style="width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-family:inherit;resize:vertical;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-modal-cancel" type="button"
+                            onclick="document.getElementById('modalBatal').style.display='none'">Tutup</button>
+                    <button class="btn-modal-save" type="submit"
+                            style="background:linear-gradient(135deg,#ef4444,#dc2626);">
+                        <i class="fa-solid fa-circle-xmark"></i> Batalkan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    {{-- TOAST --}}
-    <div class="toast-container" id="toast-container"></div>
-
 </div>
 
-@endsection
+<script>
+    function bukaModalBatal(idTransaksi) {
+        const base = "{{ url('/admin/konfirmasiPembayaran') }}";
+        document.getElementById('formBatal').action = `${base}/${idTransaksi}/batal`;
+        document.getElementById('modalBatal').style.display = 'flex';
+    }
 
-@push('scripts')
-    <script src="{{ asset('js/pantauTransaksi.js') }}"></script>
-@endpush
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) overlay.style.display = 'none';
+        });
+    });
+</script>
+
+@endsection
