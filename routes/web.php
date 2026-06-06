@@ -4,27 +4,38 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApotekerController;
 use App\Http\Controllers\LoginController;
+<<<<<<< HEAD
 use App\Http\Controllers\PasienDashboardController;
+=======
+use App\Http\Controllers\PasienController;
+use App\Http\Controllers\ApotekerController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DokterController;
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 
-    // Agar saat menjalankan website otomatis langsung ke halaman homepage terlebih dahulu
-    Route::get('/', function () {
-        return view('homepage');    
-    });
+// ════════════════════════════════════════
+// PUBLIC ROUTES
+// ════════════════════════════════════════
 
-    // Agar saat menekan button daftar akan pergi ke web registrasi
-    Route::get('/register', function () {
-        return view('auth.registrasi');
-    });
+Route::get('/', fn() => view('homepage'));
+Route::get('/register', fn() => view('auth.registrasi'));
+Route::post('/register', [LoginController::class, 'register']);
+Route::get('/login',  [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/forgot', fn() => view('auth.forgot'));
+Route::post('/forgot-password',       [LoginController::class, 'checkEmail']);
+Route::get('/reset-password/{email}', [LoginController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password',        [LoginController::class, 'updatePassword']);
+Route::post('/logout',                [LoginController::class, 'logout'])->name('logout');
 
-    // Membuat akun pasien baru dengan role Pasien secara otomatis, dan menyimpan data ke database
-    Route::post('/register', [LoginController::class, 'register']);
 
-    // Agar saat menekan button masuk akan pergi ke web login
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
+// ════════════════════════════════════════
+// ADMIN
+// ════════════════════════════════════════
 
-    // Memproses data login
-    Route::post('/login', [LoginController::class, 'login']);
+Route::middleware(['auth', 'role:Admin'])->group(function () {
 
+<<<<<<< HEAD
     // Kalau Role Admin
     Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -87,11 +98,116 @@ use App\Http\Controllers\PasienDashboardController;
 
     // Memproses logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+=======
+    // Dashboard
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Kelola Akun Pengguna
+    Route::get('/admin/kelolaAkunPengguna',            [AdminController::class, 'kelolaAkun'])->name('kelolaAkunPengguna');
+    Route::get('/admin/kelolaAkunPengguna/create',     [AdminController::class, 'createAkun'])->name('admin.akun.create');
+    Route::post('/admin/kelolaAkunPengguna',           [AdminController::class, 'storeAkun'])->name('admin.akun.store');
+    Route::get('/admin/kelolaAkunPengguna/{id}/edit',  [AdminController::class, 'editAkun'])->name('admin.akun.edit');
+
+    // PERBAIKAN: update & destroy pakai id_user sebagai parameter nama yang jelas
+    Route::put('/admin/kelolaAkunPengguna/{id}',    [AdminController::class, 'updateAkun'])->name('admin.akun.update');
+    Route::delete('/admin/kelolaAkunPengguna/{id}', [AdminController::class, 'destroyAkun'])->name('admin.akun.destroy');
+
+    // Kelola Obat & Kategori
+    Route::get('/admin/kelolaDataObat',         [AdminController::class, 'kelolaObat'])->name('kelolaDataObat');
+    Route::post('/admin/kelolaDataObat',        [AdminController::class, 'storeObat'])->name('admin.obat.store');
+
+    // PERBAIKAN: update & destroy obat pakai PUT/DELETE
+    Route::put('/admin/kelolaDataObat/{id}',    [AdminController::class, 'updateObat'])->name('admin.obat.update');
+    Route::delete('/admin/kelolaDataObat/{id}', [AdminController::class, 'destroyObat'])->name('admin.obat.destroy');
+
+    Route::post('/admin/kategori',           [AdminController::class, 'storeKategori'])->name('admin.kategori.store');
+    Route::delete('/admin/kategori/{id}',    [AdminController::class, 'destroyKategori'])->name('admin.kategori.destroy');
+
+    // Konfirmasi Pembayaran
+    Route::get('/admin/konfirmasiPembayaran',             [AdminController::class, 'pembayaranPending'])->name('admin.pembayaran');
+    Route::post('/admin/konfirmasiPembayaran/{id}',       [AdminController::class, 'konfirmasiPembayaran'])->name('admin.pembayaran.konfirmasi');
+    Route::post('/admin/konfirmasiPembayaran/{id}/batal', [AdminController::class, 'batalkanPembayaran'])->name('admin.pembayaran.batal');
+
+    // Pantau Transaksi
+    Route::get('/admin/pantauTransaksi', [AdminController::class, 'pantauTransaksi'])->name('pantauTransaksi');
+
+    // Laporan & Analisis
+    Route::get('/admin/laporanAnalisisData', [AdminController::class, 'laporan'])->name('laporanAnalisisData');
+});
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 
 
+// ════════════════════════════════════════
+// DOKTER
+// ════════════════════════════════════════
+
+Route::middleware(['auth', 'role:Dokter'])->group(function () {
+
+    Route::get('/dokter/dashboard',    [DokterController::class, 'dashboard'])->name('dokter.dashboard');
+    Route::get('/dokter/pilih-pasien', [DokterController::class, 'pilihPasien'])->name('dokter.pilih.pasien');
+
+    // PERBAIKAN: /create harus didefinisikan sebelum /{id} agar tidak tertangkap sebagai id
+    Route::get('/dokter/resep/create', [DokterController::class, 'createResep'])->name('dokter.resep.create');
+    Route::post('/dokter/resep',       [DokterController::class, 'storeResep'])->name('dokter.resep.store');
+    Route::get('/dokter/resep',        [DokterController::class, 'resep'])->name('dokter.resep');
+    Route::get('/dokter/resep/{id}',   [DokterController::class, 'detailResep'])->name('dokter.resep.detail');
+
+    Route::get('/dokter/antrian', [DokterController::class, 'antrian'])->name('dokter.antrian');
+});
 
 
+<<<<<<< HEAD
     // Agar saat menekan button app akan pergi ke web app
     Route::get('/app', function () {
         return view('layouts.app');
     });
+=======
+// ════════════════════════════════════════
+// PASIEN
+// ════════════════════════════════════════
+
+Route::middleware(['auth', 'role:Pasien'])->group(function () {
+
+    Route::get('/pasien/dashboard', [PasienController::class, 'dashboard'])->name('pasien.dashboard');
+
+    Route::get('/pasien/resep',      [PasienController::class, 'resep'])->name('pasien.resep');
+    Route::get('/pasien/resep/{id}', [PasienController::class, 'detailResep'])->name('pasien.resep.detail');
+
+    // PERBAIKAN: /riwayat dan /bayar/{id} harus sebelum /proses agar tidak ambigu
+    Route::get('/pasien/pembayaran',            [PasienController::class, 'pembayaran'])->name('pasien.pembayaran');
+    Route::get('/pasien/pembayaran/riwayat',    [PasienController::class, 'riwayatPembayaran'])->name('pasien.pembayaran.riwayat');
+    Route::get('/pasien/pembayaran/bayar/{id}', [PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
+    Route::post('/pasien/pembayaran/proses',    [PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
+
+    Route::get('/pasien/rating',  [PasienController::class, 'rating'])->name('pasien.rating');
+    Route::post('/pasien/rating', [PasienController::class, 'simpanRating'])->name('pasien.rating.simpan');
+
+    Route::get('/pasien/profil',           [PasienController::class, 'profil'])->name('pasien.profil');
+    Route::post('/pasien/profil',          [PasienController::class, 'updateProfil'])->name('pasien.profil.update');
+    Route::post('/pasien/profil/password', [PasienController::class, 'updatePassword'])->name('pasien.profil.password');
+});
+
+
+// ════════════════════════════════════════
+// APOTEKER
+// ════════════════════════════════════════
+
+Route::middleware(['auth', 'role:Apoteker'])->group(function () {
+
+    Route::get('/apoteker/dashboard', [ApotekerController::class, 'dashboard'])->name('apoteker.dashboard');
+
+    // Tahap 1 — Validasi
+    Route::get('/apoteker/validasi',             [ApotekerController::class, 'menungguValidasi'])->name('apoteker.validasi');
+    Route::get('/apoteker/validasi/{id}',        [ApotekerController::class, 'detailValidasi'])->name('apoteker.validasi.detail');
+    Route::post('/apoteker/validasi/{id}',       [ApotekerController::class, 'validasi'])->name('apoteker.validasi.proses');
+    Route::post('/apoteker/validasi/{id}/tolak', [ApotekerController::class, 'tolakValidasi'])->name('apoteker.validasi.tolak');
+
+    // Tahap 2 — Menunggu Pembayaran
+    Route::get('/apoteker/pembayaran',       [ApotekerController::class, 'menungguPembayaran'])->name('apoteker.pembayaran');
+    Route::post('/apoteker/pembayaran/{id}', [ApotekerController::class, 'konfirmasiPembayaran'])->name('apoteker.pembayaran.konfirmasi');
+
+    // Tahap 3 — Diproses & Selesai
+    Route::get('/apoteker/diproses',               [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
+    Route::post('/apoteker/diproses/{id}/selesai', [ApotekerController::class, 'selesaikan'])->name('apoteker.diproses.selesai');
+});
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

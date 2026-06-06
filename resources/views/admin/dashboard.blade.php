@@ -2,25 +2,34 @@
 
 @section('title', 'Dashboard Admin - Sick Safe ON')
 
+@push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
+@endpush
+
 @section('content')
+
 <div class="dashboard-wrap">
-<link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">  
-
-    {{-- MAIN AREA --}}
     <div class="dash-main">
-
-        {{-- CONTENT --}}
         <div class="dash-content">
 
-            {{-- STAT CARDS --}}
+            {{-- ═══════════════════════════════════════════
+                 STAT CARDS — data dari controller
+            ═══════════════════════════════════════════ --}}
             <div class="stat-grid">
+
                 <div class="stat-card">
                     <div class="stat-icon pasien">
                         <i class="fa-solid fa-hospital-user"></i>
                     </div>
                     <div>
                         <div class="stat-label">Total Pasien</div>
+<<<<<<< HEAD
                         <div class="stat-value">{{ number_format($stats['pasien'] ?? 0, 0, ',', '.') }}</div>
+=======
+                        <div class="stat-value">{{ $totalPasien }}</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                         <div class="stat-sub">Terdaftar di sistem</div>
                     </div>
                 </div>
@@ -31,7 +40,11 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Dokter</div>
+<<<<<<< HEAD
                         <div class="stat-value">{{ number_format($stats['dokter'] ?? 0, 0, ',', '.') }}</div>
+=======
+                        <div class="stat-value">{{ $totalDokter }}</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                         <div class="stat-sub">Aktif bertugas</div>
                     </div>
                 </div>
@@ -42,8 +55,13 @@
                     </div>
                     <div>
                         <div class="stat-label">Apoteker</div>
+<<<<<<< HEAD
                         <div class="stat-value">{{ number_format($stats['apoteker'] ?? 0, 0, ',', '.') }}</div>
                         <div class="stat-sub">Aktif di sistem</div>
+=======
+                        <div class="stat-value">{{ $totalApoteker }}</div>
+                        <div class="stat-sub">Aktif bertugas</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
 
@@ -52,143 +70,128 @@
                         <i class="fa-solid fa-file-prescription"></i>
                     </div>
                     <div>
+<<<<<<< HEAD
                         <div class="stat-label">Resep Bulan Ini</div>
                         <div class="stat-value">{{ number_format($stats['resep_bulan_ini'] ?? 0, 0, ',', '.') }}</div>
                         <div class="stat-sub">Bulan ini</div>
+=======
+                        <div class="stat-label">Resep Menunggu</div>
+                        <div class="stat-value">{{ $resepMenunggu }}</div>
+                        <div class="stat-sub">
+                            <span style="color:#f59e0b;">{{ $resepDiproses }} diproses</span>
+                            &nbsp;·&nbsp;
+                            <span style="color:#22c55e;">{{ $resepSelesai }} selesai</span>
+                        </div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#059669);">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Total Pendapatan</div>
+                        <div class="stat-value" style="font-size:1.1rem;">
+                            Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
+                        </div>
+                        <div class="stat-sub">Transaksi lunas</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Transaksi Pending</div>
+                        <div class="stat-value">{{ $transaksiPending }}</div>
+                        <div class="stat-sub">{{ $transaksiHariIni }} lunas hari ini</div>
+                    </div>
+                </div>
+
             </div>
             {{-- /STAT CARDS --}}
 
-            {{-- MID GRID: CHART + STOK --}}
+            {{-- ═══════════════════════════════════════════
+                 MID GRID: GRAFIK PENDAPATAN + STOK MENIPIS
+            ═══════════════════════════════════════════ --}}
             <div class="mid-grid">
 
-                {{-- GRAFIK RESEP --}}
+                {{-- GRAFIK PENDAPATAN 7 HARI --}}
                 <div class="dash-card">
                     <div class="dash-card-header">
                         <div>
-                            <div class="dash-card-title">Grafik Resep (30 Hari Terakhir)</div>
-                            <div class="dash-card-sub">Jumlah resep harian</div>
+                            <div class="dash-card-title">Pendapatan 7 Hari Terakhir</div>
+                            <div class="dash-card-sub">Total transaksi lunas per hari</div>
                         </div>
-                        <button class="btn-link">Lihat Detail →</button>
+                        <a href="{{ route('pantauTransaksi') }}" class="btn-link">Lihat Detail →</a>
                     </div>
                     <div class="chart-area">
-                        <svg class="chart-svg" viewBox="0 0 560 160" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%"   stop-color="#3FBBA0" stop-opacity="0.25"/>
-                                    <stop offset="100%" stop-color="#3FBBA0" stop-opacity="0.02"/>
-                                </linearGradient>
-                            </defs>
-                            {{-- Grid lines --}}
-                            <line x1="0" y1="32"  x2="560" y2="32"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="64"  x2="560" y2="64"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="96"  x2="560" y2="96"  stroke="#E1F1FE" stroke-width="1"/>
-                            <line x1="0" y1="128" x2="560" y2="128" stroke="#E1F1FE" stroke-width="1"/>
-                            {{-- Y labels --}}
-                            <text x="0" y="30"  font-size="9" fill="#6a9ab5">60</text>
-                            <text x="0" y="62"  font-size="9" fill="#6a9ab5">40</text>
-                            <text x="0" y="94"  font-size="9" fill="#6a9ab5">20</text>
-                            <text x="0" y="126" font-size="9" fill="#6a9ab5">0</text>
-                            {{-- Area fill --}}
-                            <path d="M20,100 C50,90 80,115 110,95 C140,75 160,60 190,50 C220,40 240,70 270,55 C300,40 330,45 360,30 C390,18 420,35 450,28 C480,20 510,15 540,10 L540,140 L20,140 Z"
-                                  fill="url(#areaGrad)"/>
-                            {{-- Line --}}
-                            <polyline
-                                points="20,100 50,90 80,115 110,95 140,75 160,60 190,50 220,40 240,70 270,55 300,40 330,45 360,30 390,18 420,35 450,28 480,20 510,15 540,10"
-                                fill="none" stroke="#3FBBA0" stroke-width="2.5"
-                                stroke-linejoin="round" stroke-linecap="round"/>
-                            {{-- Highlight dots --}}
-                            <circle cx="360" cy="30" r="4" fill="#004369" stroke="white" stroke-width="1.5"/>
-                            <circle cx="540" cy="10" r="4" fill="#3FBBA0" stroke="white" stroke-width="1.5"/>
-                        </svg>
-                    </div>
-                    <div class="chart-labels">
-                        <span>20 Apr</span>
-                        <span>27 Apr</span>
-                        <span>4 Mei</span>
-                        <span>11 Mei</span>
-                        <span>18 Mei</span>
+                        <canvas id="chartPendapatan" height="160"></canvas>
                     </div>
                 </div>
-                {{-- /GRAFIK RESEP --}}
+                {{-- /GRAFIK PENDAPATAN --}}
 
                 {{-- STOK MENIPIS --}}
                 <div class="dash-card">
                     <div class="dash-card-header">
                         <div>
                             <div class="dash-card-title">Stok Obat Menipis</div>
-                            <div class="dash-card-sub">Perlu segera diisi ulang</div>
+                            <div class="dash-card-sub">Stok &lt; 10, perlu segera diisi ulang</div>
                         </div>
                     </div>
                     <div class="stok-list">
 
-                        <div class="stok-item">
-                            <div class="stok-dot" style="background:#3FBBA0;"></div>
-                            <div class="stok-info">
-                                <div class="stok-name">Paracetamol 500mg</div>
-                                <div class="stok-detail">Stok: 45 &nbsp;·&nbsp; Min: 100</div>
+                        @forelse ($obatHampirHabis as $obat)
+                            @php
+                                $pct   = $obat->stok > 0 ? min(100, $obat->stok) : 0;
+                                $color = $obat->stok <= 3 ? '#ef4444' : ($obat->stok <= 6 ? '#f59e0b' : '#3FBBA0');
+                                $badge = $obat->stok <= 3 ? 'badge-danger' : ($obat->stok <= 6 ? 'badge-warning' : 'badge-ok');
+                                $label = $obat->stok <= 3 ? 'Kritis' : ($obat->stok <= 6 ? 'Menipis' : 'Rendah');
+                            @endphp
+                            <div class="stok-item">
+                                <div class="stok-dot" style="background:{{ $color }};"></div>
+                                <div class="stok-info">
+                                    <div class="stok-name">{{ $obat->nama_obat }}</div>
+                                    <div class="stok-detail">
+                                        Stok: {{ $obat->stok }}
+                                        &nbsp;·&nbsp;
+                                        {{ $obat->kategori->kategori_obat ?? '-' }}
+                                    </div>
+                                </div>
+                                <div class="stok-bar-wrap">
+                                    <div class="stok-bar" style="width:{{ $pct }}%;background:{{ $color }};"></div>
+                                </div>
+                                <span class="stok-badge {{ $badge }}">{{ $label }}</span>
                             </div>
-                            <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:45%;background:#3FBBA0;"></div>
+                        @empty
+                            <div style="text-align:center;padding:24px;color:#94a3b8;">
+                                <i class="fa-solid fa-circle-check" style="font-size:1.5rem;color:#22c55e;"></i>
+                                <p style="margin-top:8px;">Semua stok obat dalam kondisi aman.</p>
                             </div>
-                            <span class="stok-badge badge-warning">Rendah</span>
-                        </div>
-
-                        <div class="stok-item">
-                            <div class="stok-dot" style="background:#004369;"></div>
-                            <div class="stok-info">
-                                <div class="stok-name">Amoxicillin 500mg</div>
-                                <div class="stok-detail">Stok: 32 &nbsp;·&nbsp; Min: 100</div>
-                            </div>
-                            <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:32%;background:#004369;"></div>
-                            </div>
-                            <span class="stok-badge badge-danger">Menipis</span>
-                        </div>
-
-                        <div class="stok-item">
-                            <div class="stok-dot" style="background:#b1ddff;"></div>
-                            <div class="stok-info">
-                                <div class="stok-name">CTM 4mg</div>
-                                <div class="stok-detail">Stok: 20 &nbsp;·&nbsp; Min: 50</div>
-                            </div>
-                            <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:40%;background:#b1ddff;"></div>
-                            </div>
-                            <span class="stok-badge badge-danger">Menipis</span>
-                        </div>
-
-                        <div class="stok-item">
-                            <div class="stok-dot" style="background:#3FBBA0;"></div>
-                            <div class="stok-info">
-                                <div class="stok-name">Vitamin C 500mg</div>
-                                <div class="stok-detail">Stok: 80 &nbsp;·&nbsp; Min: 100</div>
-                            </div>
-                            <div class="stok-bar-wrap">
-                                <div class="stok-bar" style="width:80%;background:#3FBBA0;"></div>
-                            </div>
-                            <span class="stok-badge badge-ok">Aman</span>
-                        </div>
+                        @endforelse
 
                     </div>
-                    <button class="btn-all full">
+                    <a href="{{ route('kelolaDataObat') }}" class="btn-all full">
                         <i class="fa-solid fa-box-open"></i> Lihat Semua Obat
-                    </button>
+                    </a>
                 </div>
                 {{-- /STOK MENIPIS --}}
 
             </div>
             {{-- /MID GRID --}}
 
-            {{-- TRANSAKSI TERBARU --}}
+            {{-- ═══════════════════════════════════════════
+                 TRANSAKSI TERBARU
+            ═══════════════════════════════════════════ --}}
             <div class="dash-card">
                 <div class="dash-card-header">
                     <div>
                         <div class="dash-card-title">Transaksi Terbaru</div>
-                        <div class="dash-card-sub">Data transaksi hari ini</div>
+                        <div class="dash-card-sub">5 transaksi terakhir masuk</div>
                     </div>
-                    <button class="btn-link">Lihat Semua →</button>
+                    <a href="{{ route('pantauTransaksi') }}" class="btn-link">Lihat Semua →</a>
                 </div>
                 <div class="table-wrap">
                     <table class="dash-table">
@@ -196,78 +199,161 @@
                             <tr>
                                 <th>No. Transaksi</th>
                                 <th>Nama Pasien</th>
-                                <th>Jenis</th>
+                                <th>Metode</th>
                                 <th>Total</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><span class="trx-id">TRX-2024-0081</span></td>
-                                <td><span class="trx-name">Kenzi nomik</span></td>
-                                <td><span class="trx-type type-bpjs">BPJS</span></td>
-                                <td class="trx-amount">Rp 125.000</td>
-                                <td class="trx-date">01 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="trx-id">TRX-2024-0080</span></td>
-                                <td><span class="trx-name">Jawak hiacek</span></td>
-                                <td><span class="trx-type type-mandiri">Mandiri</span></td>
-                                <td class="trx-amount">Rp 85.000</td>
-                                <td class="trx-date">10 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="trx-id">TRX-2024-0079</span></td>
-                                <td><span class="trx-name">Yeeree</span></td>
-                                <td><span class="trx-type type-bpjs">BPJS</span></td>
-                                <td class="trx-amount">Rp 210.000</td>
-                                <td class="trx-date">07 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-pending">
-                                        <i class="fa-solid fa-clock" style="font-size:10px;"></i> Pending
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="trx-id">TRX-2024-0078</span></td>
-                                <td><span class="trx-name">Regenn</span></td>
-                                <td><span class="trx-type type-mandiri">Mandiri</span></td>
-                                <td class="trx-amount">Rp 55.000</td>
-                                <td class="trx-date">10 Mei 2026</td>
-                                <td>
-                                    <span class="status-badge status-selesai">
-                                        <i class="fa-solid fa-circle-check" style="font-size:10px;"></i> Selesai
-                                    </span>
-                                </td>
-                            </tr>
+                            @forelse ($transaksiTerbaru as $trx)
+                                @php
+                                    $noTrx  = 'TRX-' . $trx->created_at->format('Y') . '-' . str_pad($trx->id_transaksi, 4, '0', STR_PAD_LEFT);
+                                    $metode = match($trx->metode) {
+                                        'bpjs'     => ['label' => 'BPJS',     'class' => 'type-bpjs'],
+                                        'transfer' => ['label' => 'Mandiri',  'class' => 'type-mandiri'],
+                                        'qris'     => ['label' => 'QRIS',     'class' => 'type-qris'],
+                                        default    => ['label' => 'Belum dipilih', 'class' => 'type-mandiri'],
+                                    };
+                                    $status = match($trx->status) {
+                                        'lunas'   => ['label' => 'Lunas',   'class' => 'status-selesai', 'icon' => 'fa-circle-check'],
+                                        'pending' => ['label' => 'Pending', 'class' => 'status-pending', 'icon' => 'fa-clock'],
+                                        'batal'   => ['label' => 'Batal',   'class' => 'status-batal',   'icon' => 'fa-circle-xmark'],
+                                        default   => ['label' => ucfirst($trx->status), 'class' => 'status-pending', 'icon' => 'fa-clock'],
+                                    };
+                                @endphp
+                                <tr>
+                                    <td><span class="trx-id">{{ $noTrx }}</span></td>
+                                    <td><span class="trx-name">{{ $trx->pasien->user->nama ?? '-' }}</span></td>
+                                    <td>
+                                        <span class="trx-type {{ $metode['class'] }}">
+                                            {{ $metode['label'] }}
+                                        </span>
+                                    </td>
+                                    <td class="trx-amount">
+                                        Rp {{ number_format($trx->total_bayar, 0, ',', '.') }}
+                                    </td>
+                                    <td class="trx-date">
+                                        {{ $trx->created_at->format('d M Y') }}
+                                    </td>
+                                    <td>
+                                        <span class="status-badge {{ $status['class'] }}">
+                                            <i class="fa-solid {{ $status['icon'] }}" style="font-size:10px;"></i>
+                                            {{ $status['label'] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if ($trx->status === 'pending' && $trx->metode)
+                                            <form method="POST" action="{{ route('admin.pembayaran.konfirmasi', $trx->id_transaksi) }}"
+                                                  style="display:inline;"
+                                                  onsubmit="return confirm('Konfirmasi pembayaran ini?')">
+                                                @csrf
+                                                <button type="submit" class="btn-aksi btn-konfirmasi"
+                                                        title="Konfirmasi Lunas">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span style="color:#cbd5e1;font-size:.75rem;">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">
+                                        <i class="fa-solid fa-receipt" style="font-size:1.5rem;"></i>
+                                        <p style="margin-top:8px;">Belum ada transaksi.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div class="btn-all-wrap">
-                    <button class="btn-all">
+                    <a href="{{ route('pantauTransaksi') }}" class="btn-all">
                         <i class="fa-solid fa-list"></i> Lihat Semua Transaksi
-                    </button>
+                    </a>
                 </div>
             </div>
             {{-- /TRANSAKSI TERBARU --}}
 
         </div>
-        {{-- /CONTENT --}}
-
     </div>
-    {{-- /MAIN AREA --}}
+</div>
+
+@endsection
+
+@push('scripts')
+{{-- Chart.js CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+    // ── Data dari controller (PHP → JS) ──────────────────
+    const grafikRaw = @json($grafikPendapatan);
+
+    // Siapkan label & nilai
+    const labels = grafikRaw.map(item => {
+        const d = new Date(item.tanggal);
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
+    });
+    const values = grafikRaw.map(item => parseFloat(item.total));
+
+    // ── Render Chart.js ───────────────────────────────────
+    const ctx = document.getElementById('chartPendapatan').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels.length ? labels : ['Tidak ada data'],
+            datasets: [{
+                label: 'Pendapatan (Rp)',
+                data: values.length ? values : [0],
+                borderColor: '#3FBBA0',
+                backgroundColor: 'rgba(63,187,160,0.12)',
+                borderWidth: 2.5,
+                pointBackgroundColor: '#004369',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                fill: true,
+                tension: 0.4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => 'Rp ' + ctx.parsed.y.toLocaleString('id-ID')
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: '#E1F1FE' },
+                    ticks: { font: { family: 'Plus Jakarta Sans', size: 11 }, color: '#6a9ab5' }
+                },
+                y: {
+                    grid: { color: '#E1F1FE' },
+                    ticks: {
+                        font: { family: 'Plus Jakarta Sans', size: 11 },
+                        color: '#6a9ab5',
+                        callback: val => 'Rp ' + (val / 1000).toFixed(0) + 'k'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 <script src="{{ asset('js/dashboardAdmin.js') }}"></script>
+<<<<<<< HEAD
 </div>
 @endsection
+=======
+@endpush
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

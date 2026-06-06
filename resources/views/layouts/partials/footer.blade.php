@@ -2,12 +2,11 @@
     <div class="footer-main">
         <div class="footer-container">
 
+            {{-- BRAND --}}
             <div class="footer-col brand-col">
                 <div class="logo-wrapper">
-                   
-                     <img src="{{ asset('image/logo.png') }}" alt="Logo Saya" width="45">
-                     <h2 class="footer-logo">Sick Safe <span class="logo-on">ON</span></h2>
-                    
+                    <img src="{{ asset('image/logo.png') }}" alt="Logo Sick Safe ON" width="45">
+                    <h2 class="footer-logo">Sick Safe <span class="logo-on">ON</span></h2>
                 </div>
                 <p class="brand-description">
                     Platform digital untuk manajemen farmasi rumah sakit yang terintegrasi, aman, dan mudah digunakan.
@@ -17,6 +16,7 @@
                 </div>
             </div>
 
+            {{-- KONTAK --}}
             <div class="footer-col">
                 <h4>Kontak</h4>
                 <ul class="contact-list">
@@ -26,6 +26,7 @@
                 </ul>
             </div>
 
+            {{-- LAYANAN --}}
             <div class="footer-col">
                 <h4>Layanan Kami</h4>
                 <ul>
@@ -36,6 +37,7 @@
                 </ul>
             </div>
 
+            {{-- PERUSAHAAN --}}
             <div class="footer-col">
                 <h4>Perusahaan</h4>
                 <ul>
@@ -46,6 +48,7 @@
                 </ul>
             </div>
 
+            {{-- DUKUNGAN --}}
             <div class="footer-col">
                 <h4>Dukungan</h4>
                 <ul>
@@ -63,29 +66,23 @@
 
     <div class="footer-bottom">
         <div class="bottom-container">
-            <p>© 2026 Sick Safe ON. All rights reserved.</p>
+            <p>© {{ date('Y') }} Sick Safe ON. All rights reserved.</p>
             <div class="bottom-links">
-                <a href="#">Privacy & Policy</a>
-                <a href="#">Terms & Condition</a>
+                <a href="#">Privacy &amp; Policy</a>
+                <a href="#">Terms &amp; Condition</a>
             </div>
         </div>
     </div>
 </footer>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
     .site-footer {
-    background-color: #b7ede1;
-    color: #004369;
-    width: calc(100% - 250px);    
-    margin-left: 0px;           
-    transition: margin-left 0.3s ease, width 0.3s ease;
-    border-top: 1px solid rgba(255,255,255,0.06);
-}
-    body.sidebar-collapsed .site-footer {
-         margin-left: 0;
-         width: 100%;
-    
-}
+        background-color: #0A2E3F;
+        color: #E1F1FE;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
     .footer-main { padding: 36px 28px 26px; }
 
     .footer-container {
@@ -96,35 +93,17 @@
         align-items: flex-start;
     }
 
-    .brand-col {
-         flex: 0 0 260px; 
-         min-width: 20px;
-         padding-top: 0;
-         margin-top: 0; }
+    .brand-col { flex: 0 0 260px; min-width: 200px; }
 
     .logo-wrapper {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 12px;
-        margin-top: 0;
     }
 
-    .logo-icon {
-        width: 34px;
-        height: 34px;
-        background: rgba(46,204,113,0.15);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(46,204,113,0.25);
-    }
-
-    .logo-icon i { color: #004369; font-size: 15px; }
-
-    .footer-logo { font-size: 1rem; font-weight: 700; color: #004369; }
-    .footer-logo span { color: #004369; }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo .logo-on { color: #2ecc71; }
 
     .brand-description {
         font-size: 0.8rem;
@@ -142,33 +121,23 @@
         gap: 5px;
         padding: 4px 11px;
         border-radius: 30px;
-        margin-bottom: 16px;
-        color: #004369;
+        color: #a8e6c3;
     }
 
     .security-badge i { color: #004369; }
 
-    .footer-col { 
-        min-width: 110px;
-        padding-top: 0;
-        
-    }
+    .footer-col { min-width: 110px; }
 
     .footer-col h4 {
         font-size: 0.68rem;
         font-weight: 600;
         margin-bottom: 14px;
-        padding-top: 0; 
-        color: #004369;
+        color: #fff;
         letter-spacing: 0.6px;
         text-transform: uppercase;
     }
 
-    .footer-col ul { 
-        list-style: none;
-        padding-left: 0;
-        margin-left: 0;
- }
+    .footer-col ul { list-style: none; padding-left: 0; margin: 0; }
     .footer-col ul li { margin-bottom: 8px; }
 
     .footer-col ul li a {
@@ -181,7 +150,7 @@
 
     .footer-col ul li a:hover { color: #2ecc71; transform: translateX(3px); }
 
-    .contact-list { list-style: none; }
+    .contact-list { list-style: none; padding-left: 0; margin: 0; }
 
     .contact-list li {
         display: flex;
@@ -218,6 +187,7 @@
     }
 
     .bottom-container p { font-size: 0.71rem; color: #5a7a8a; }
+
     .bottom-links { display: flex; gap: 16px; }
 
     .bottom-links a {
@@ -227,22 +197,11 @@
         transition: color 0.2s;
     }
 
-    .bottom-links a:hover { color: #004369; }
-
-    body.sidebar-collapsed .site-footer {
-    margin-left: 0;
-    width: 100%;
-}
-
+    .bottom-links a:hover { color: #2ecc71; }
 
     @media (max-width: 768px) {
-        .site-footer {
-        margin-left: 0;
-        width: 100%;
         .footer-container { flex-direction: column; gap: 22px; }
-        .brand-col { min-width: 100%; }
-        .footer-col { min-width: 100%; }
+        .brand-col, .footer-col { min-width: 100%; }
         .bottom-container { flex-direction: column; text-align: center; align-items: center; }
-     }
     }
 </style>

@@ -21,11 +21,11 @@ class MedicineFactory extends Factory
         $kadaluarsa = $this->faker->dateTimeBetween('+1 year', '+3 years');
 
         return [
-            'Nama_Obat'          => $this->faker->randomElement($obatList) . ' ' . $this->faker->randomElement($satuan),
-            'Stok'               => $this->faker->numberBetween(10, 500),
-            'Harga'              => $this->faker->randomElement([3000, 5000, 7000, 8000, 10000, 12000, 15000, 20000, 35000]),
-            'Tanggal_Produksi'   => $produksi->format('Y-m-d'),
-            'Tanggal_Kadaluarsa' => $kadaluarsa->format('Y-m-d'),
+            'nama_Obat'          => $this->faker->randomElement($obatList) . ' ' . $this->faker->randomElement($satuan),
+            'stok'               => $this->faker->numberBetween(10, 500),
+            'harga'              => $this->faker->randomElement([3000, 5000, 7000, 8000, 10000, 12000, 15000, 20000, 35000]),
+            'tanggal_produksi'   => $produksi->format('Y-m-d'),
+            'tanggal_kadaluarsa' => $kadaluarsa->format('Y-m-d'),
         ];
     }
 }

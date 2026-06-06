@@ -3,6 +3,8 @@
 @section('title', 'Menunggu Validasi - Sick Safe ON')
 
 @push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboardApoteker.css') }}">
 @endpush
 
@@ -19,11 +21,11 @@
 
             {{-- TABS --}}
             <div class="tabs">
-                <a href="{{ route('apoteker.menunggu-validasi') }}" class="tab active">
+                <a href="{{ route('apoteker.validasi') }}" class="tab active">
                     <span class="tab-label">Menunggu Validasi</span>
                     <span class="tab-badge badge-warning">3</span>
                 </a>
-                <a href="{{ route('apoteker.menunggu-pembayaran') }}" class="tab">
+                <a href="{{ route('apoteker.pembayaran') }}" class="tab">
                     <span class="tab-label">Menunggu Pembayaran</span>
                     <span class="tab-badge badge-info">2</span>
                 </a>

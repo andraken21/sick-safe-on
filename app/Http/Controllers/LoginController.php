@@ -33,7 +33,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'password' => Hash::make($request->password),
-            'role' => 'pasien', // Tetap dikunci sebagai pasien
+            'role' => 'Pasien', // FIX: lowercase
         ]);
 
         return redirect('/login')->with('success', 'Akun berhasil dibuat!');
@@ -44,32 +44,25 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+        public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email'    => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Ambil data role user yang sedang login
-            $role = Auth::user()->role; 
-
-            // Arahkan ke dashboard masing-masing sesuai role
-            if ($role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
-            } elseif ($role === 'dokter') {
-                return redirect()->intended('/dokter/dashboard');
-            } elseif ($role === 'pasien') {
-                return redirect()->intended('/pasien/dashboard');
-            } elseif ($role === 'apoteker') {
-                return redirect()->intended('/apoteker/dashboard');
-            }
-
-            // Default jika role tidak dikenali
-            return redirect('/');
+            // Gunakan redirect eksplisit, BUKAN intended()
+            // intended() bisa mengarah ke URL lama yang salah
+            return match(Auth::user()->role) {
+                'Admin'    => redirect('/admin/dashboard'),
+                'Dokter'   => redirect('/dokter/dashboard'),
+                'Pasien'   => redirect('/pasien/dashboard'),
+                'Apoteker' => redirect('/apoteker/dashboard'),
+                default    => redirect('/'),
+            };
         }
 
         return back()->withErrors([
@@ -83,7 +76,6 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            // Jika email ada, pindah ke form Gambar 2 sambil membawa email-nya
             return redirect()->route('password.reset', ['email' => $request->email]);
         }
 
@@ -91,7 +83,7 @@ class LoginController extends Controller
     }
 
     public function showResetForm($email) {
-        return view('auth.forgot-reset', ['email' => $email]); // Gambar 2
+        return view('auth.forgot-reset', ['email' => $email]);
     }
 
     public function updatePassword(Request $request) {
@@ -115,11 +107,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
-
 }

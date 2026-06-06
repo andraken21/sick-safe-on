@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Apoteker extends Model
 {
-    protected $table = 'apoteker';
-    protected $primaryKey = 'ID_Apoteker';
+    use HasFactory;
+
+    protected $table      = 'apoteker';
+    protected $primaryKey = 'id_apoteker';
 
     protected $fillable = [
-        'ID_User',
+        'id_user',
     ];
+
+    // ── Relasi ──────────────────────────────────────────
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'ID_User', 'ID_User');
-    }
-
-    public function prescriptions()
-    {
-        return $this->hasMany(Prescription::class, 'ID_Apoteker', 'ID_Apoteker');
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }
