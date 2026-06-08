@@ -1,11 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApotekerController;
 use App\Http\Controllers\LoginController;
+<<<<<<< HEAD
+use App\Http\Controllers\PasienDashboardController;
+=======
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\ApotekerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DokterController;
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 
 // ════════════════════════════════════════
 // PUBLIC ROUTES
@@ -29,6 +35,70 @@ Route::post('/logout',                [LoginController::class, 'logout'])->name(
 
 Route::middleware(['auth', 'role:Admin'])->group(function () {
 
+<<<<<<< HEAD
+    // Kalau Role Admin
+    Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/kelolaAkunPengguna', [AdminController::class, 'kelolaAkunPengguna'])->name('admin.kelola-akun-pengguna');
+        Route::get('/kelolaDataObat', [AdminController::class, 'kelolaDataObat'])->name('admin.kelola-data-obat');
+        Route::get('/laporanAnalisisData', [AdminController::class, 'laporanAnalisisData'])->name('admin.laporan-analisis-data');
+        Route::get('/pantauTransaksi', [AdminController::class, 'pantauTransaksi'])->name('admin.pantau-transaksi');
+    });
+
+    // Kalau Role Dokter
+    Route::middleware(['auth', 'role:dokter'])->group(function () {
+        Route::get('/dokter/dashboard', function () {
+            return view('dokter.dashboard');
+        });
+    });
+
+    // Kalau Role Pasien
+    Route::middleware(['auth'])->group(function () {
+     Route::prefix('pasien')->group(function () {
+        Route::get('/dashboard', [PasienDashboardController::class, 'dashboard'])->name('pasien.dashboard');
+        Route::get('/resep', [PasienDashboardController::class, 'resep'])->name('pasien.resep.index');
+        Route::get('/pembayaran', [PasienDashboardController::class, 'pembayaran'])->name('pasien.pembayaran.index');
+    });
+});
+ 
+
+    // Kalau Role Apoteker
+    Route::middleware(['auth', 'role:apoteker'])->group (function () {
+        Route::get('/apoteker/dashboard', function(){
+        return view('apoteker.dashboard');
+        });
+
+        Route::get('/apoteker/diproses', function(){
+        return view('apoteker.diproses');
+        });
+
+        // 1. Menunggu Validasi
+        Route::get('/menunggu-validasi', [ApotekerController::class, 'menungguValidasi'])->name('apoteker.menunggu-validasi');
+        
+        // 2. Menunggu Pembayaran
+        Route::get('/menunggu-pembayaran', [ApotekerController::class, 'menungguPembayaran'])->name('apoteker.menunggu-pembayaran');
+        
+        // 3. Diproses
+        Route::get('/diproses', [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
+        
+    
+    });
+
+    // Agar saat menekan button forgot akan pergi ke web forgot
+    Route::get('/forgot', function () {
+        return view('auth.forgot');
+    });
+        
+    // Halaman Input Email (Gambar 1)
+    Route::post('/forgot-password', [LoginController::class, 'checkEmail']);
+
+    // Halaman Buat Password Baru (Gambar 2)
+    Route::get('/reset-password/{email}', [LoginController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [LoginController::class, 'updatePassword']);
+
+    // Memproses logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+=======
     // Dashboard
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -64,6 +134,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     // Laporan & Analisis
     Route::get('/admin/laporanAnalisisData', [AdminController::class, 'laporan'])->name('laporanAnalisisData');
 });
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 
 
 // ════════════════════════════════════════
@@ -85,6 +156,12 @@ Route::middleware(['auth', 'role:Dokter'])->group(function () {
 });
 
 
+<<<<<<< HEAD
+    // Agar saat menekan button app akan pergi ke web app
+    Route::get('/app', function () {
+        return view('layouts.app');
+    });
+=======
 // ════════════════════════════════════════
 // PASIEN
 // ════════════════════════════════════════
@@ -134,3 +211,4 @@ Route::middleware(['auth', 'role:Apoteker'])->group(function () {
     Route::get('/apoteker/diproses',               [ApotekerController::class, 'diproses'])->name('apoteker.diproses');
     Route::post('/apoteker/diproses/{id}/selesai', [ApotekerController::class, 'selesaikan'])->name('apoteker.diproses.selesai');
 });
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

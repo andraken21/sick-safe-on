@@ -37,8 +37,13 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Transaksi</div>
-                        <div class="summary-value">{{ $transaksiList->total() }}</div>
+<<<<<<< HEAD
+                        <div class="summary-value">{{ number_format($summary['total'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Bulan ini</div>
+=======
+                        <div class="summary-value">{{ $totalTrx }}</div>
                         <div class="summary-sub">Semua data</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
 
@@ -47,11 +52,17 @@
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="summary-info">
-                        <div class="summary-label">Total Pendapatan Lunas</div>
-                        <div class="summary-value" style="font-size:1rem;">
+<<<<<<< HEAD
+                        <div class="summary-label">Transaksi Selesai</div>
+                        <div class="summary-value">{{ number_format($summary['selesai'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['selesai_nominal'] ?? 0, 0, ',', '.') }}</div>
+=======
+                        <div class="summary-label">Transaksi Lunas</div>
+                        <div class="summary-value">{{ $totalSelesai }}</div>
+                        <div class="summary-sub">
                             Rp {{ number_format($totalLunas, 0, ',', '.') }}
                         </div>
-                        <div class="summary-sub">Semua waktu</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
 
@@ -61,8 +72,30 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Transaksi Pending</div>
+<<<<<<< HEAD
+                        <div class="summary-value">{{ number_format($summary['pending'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['pending_nominal'] ?? 0, 0, ',', '.') }}</div>
+=======
                         <div class="summary-value">{{ $totalPending }}</div>
                         <div class="summary-sub">Menunggu konfirmasi</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="summary-info">
+<<<<<<< HEAD
+                        <div class="summary-label">Transaksi Gagal</div>
+                        <div class="summary-value">{{ number_format($summary['gagal'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="summary-sub">Rp {{ number_format($summary['gagal_nominal'] ?? 0, 0, ',', '.') }}</div>
+=======
+                        <div class="summary-label">Transaksi Batal</div>
+                        <div class="summary-value">{{ $totalBatal }}</div>
+                        <div class="summary-sub">Dibatalkan</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
             </div>
@@ -120,6 +153,266 @@
                             </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
+                            @forelse($transactions ?? [] as $transaction)
+                            @php
+                                $prescription = $transaction->prescription;
+                                $pasien = optional(optional($prescription)->pasien);
+                                $pasienUser = optional($pasien->user);
+                                $kasirUser = optional(optional(optional($prescription)->apoteker)->user);
+                                $statusClass = $transaction->Status === 'lunas' ? 'selesai' : $transaction->Status;
+                                $statusLabel = $transaction->Status === 'lunas' ? 'Selesai' : ucfirst($transaction->Status);
+                                $metode = $transaction->Metode ?: 'Mandiri';
+                            @endphp
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td><span class="trx-id">TRX-{{ now()->year }}-{{ str_pad((string) $transaction->ID_Pembayaran, 4, '0', STR_PAD_LEFT) }}</span></td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">{{ $pasienUser->nama ?? 'Pasien tidak ditemukan' }}</div>
+                                        <div class="patient-sub">{{ $pasien->No_BPJS ? 'Pasien BPJS' : 'Pasien Umum' }}</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-{{ str_pad((string) optional($prescription)->ID_Pasien, 5, '0', STR_PAD_LEFT) }}</span></td>
+                                <td><span class="type-badge type-{{ strtolower($metode) === 'bpjs' ? 'bpjs' : 'mandiri' }}">{{ $metode }}</span></td>
+                                <td class="amount-cell">Rp {{ number_format($transaction->Total_Bayar, 0, ',', '.') }}</td>
+                                <td class="time-cell">
+                                    <div>{{ optional($transaction->Tanggal_Bayar)->format('d M Y') ?? '-' }}</div>
+                                    <div class="time-sub">{{ optional($transaction->created_at)->format('H:i') ?? '--:--' }} WIB</div>
+                                </td>
+                                <td>{{ $kasirUser->nama ?? '-' }}</td>
+                                <td><span class="status-badge status-{{ $statusClass }}">{{ $statusLabel }}</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            {{-- Transaction 1 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0847</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Andi Setiawan</div>
+                                        <div class="patient-sub">Pasien Umum</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-02456</span></td>
+                                <td><span class="type-badge type-bpjs">BPJS</span></td>
+                                <td class="amount-cell">Rp 125.000</td>
+                                <td class="time-cell">
+                                    <div>16 Mei 2026</div>
+                                    <div class="time-sub">14:32 WIB</div>
+                                </td>
+                                <td>Siti Indriyani</td>
+                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Transaction 2 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0846</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Dewi Kusuma</div>
+                                        <div class="patient-sub">Pasien BPJS</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-01298</span></td>
+                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
+                                <td class="amount-cell">Rp 85.000</td>
+                                <td class="time-cell">
+                                    <div>16 Mei 2026</div>
+                                    <div class="time-sub">13:15 WIB</div>
+                                </td>
+                                <td>Reza Pratama</td>
+                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Transaction 3 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0845</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Bambang Sutrisno</div>
+                                        <div class="patient-sub">Pasien Umum</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-03121</span></td>
+                                <td><span class="type-badge type-bpjs">BPJS</span></td>
+                                <td class="amount-cell">Rp 210.000</td>
+                                <td class="time-cell">
+                                    <div>16 Mei 2026</div>
+                                    <div class="time-sub">12:45 WIB</div>
+                                </td>
+                                <td>Aprina Santoso</td>
+                                <td><span class="status-badge status-pending">⏳ Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Transaction 4 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0844</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Lina Maulida</div>
+                                        <div class="patient-sub">Pasien BPJS</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-02897</span></td>
+                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
+                                <td class="amount-cell">Rp 55.000</td>
+                                <td class="time-cell">
+                                    <div>16 Mei 2026</div>
+                                    <div class="time-sub">11:20 WIB</div>
+                                </td>
+                                <td>Siti Indriyani</td>
+                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Transaction 5 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0843</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Hendra Gunawan</div>
+                                        <div class="patient-sub">Pasien Umum</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-01567</span></td>
+                                <td><span class="type-badge type-bpjs">BPJS</span></td>
+                                <td class="amount-cell">Rp 320.000</td>
+                                <td class="time-cell">
+                                    <div>15 Mei 2026</div>
+                                    <div class="time-sub">16:05 WIB</div>
+                                </td>
+                                <td>Nurul Putri</td>
+                                <td><span class="status-badge status-gagal">✗ Gagal</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Transaction 6 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <span class="trx-id">TRX-2026-0842</span>
+                                </td>
+                                <td>
+                                    <div class="patient-info">
+                                        <div class="patient-name">Maya Safitri</div>
+                                        <div class="patient-sub">Pasien BPJS</div>
+                                    </div>
+                                </td>
+                                <td><span class="rm-number">RM-02345</span></td>
+                                <td><span class="type-badge type-mandiri">Mandiri</span></td>
+                                <td class="amount-cell">Rp 175.000</td>
+                                <td class="time-cell">
+                                    <div>15 Mei 2026</div>
+                                    <div class="time-sub">15:30 WIB</div>
+                                </td>
+                                <td>Reza Pratama</td>
+                                <td><span class="status-badge status-selesai">✓ Selesai</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-print" title="Cetak">
+                                            <i class="fa-solid fa-print"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+=======
                             @forelse ($transaksiList as $trx)
                                 @php
                                     $noTrx = 'TRX-' . $trx->created_at->format('Y') . '-' . str_pad($trx->id_transaksi, 4, '0', STR_PAD_LEFT);
@@ -187,6 +480,7 @@
                                         <p style="margin-top:10px;">Tidak ada transaksi ditemukan.</p>
                                     </td>
                                 </tr>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                             @endforelse
                         </tbody>
                     </table>
@@ -196,8 +490,12 @@
             {{-- PAGINATION --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
+<<<<<<< HEAD
+                    Menampilkan <strong>{{ method_exists($transactions ?? null, 'firstItem') ? ($transactions->firstItem() ?? 0) : 0 }}-{{ method_exists($transactions ?? null, 'lastItem') ? ($transactions->lastItem() ?? 0) : 0 }}</strong> dari <strong>{{ method_exists($transactions ?? null, 'total') ? $transactions->total() : 0 }}</strong> transaksi
+=======
                     Menampilkan {{ $transaksiList->firstItem() ?? 0 }}–{{ $transaksiList->lastItem() ?? 0 }}
                     dari {{ $transaksiList->total() }} transaksi
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                 </div>
                 <div class="pagination">
                     {{ $transaksiList->withQueryString()->links() }}
@@ -207,6 +505,11 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+<script src="{{ asset('js/pantauTransaksi.js') }}"></script>
+</div>
+@endsection
+=======
     {{-- MODAL BATALKAN PEMBAYARAN --}}
     <div class="modal-overlay" id="modalBatal" style="display:none;">
         <div class="modal-box">
@@ -266,4 +569,6 @@ document.getElementById('modalBatal').addEventListener('click', function(e) {
     if (e.target === this) this.style.display = 'none';
 });
 </script>
-@endpush
+
+@endsection
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

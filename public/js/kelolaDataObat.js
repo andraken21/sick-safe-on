@@ -13,6 +13,81 @@
 /* ============================
    DATA DUMMY
 ============================ */
+<<<<<<< HEAD
+let medicineData = window.medicineData || [
+    {
+        id: 1, code: 'PAR-001', name: 'Paracetamol 500mg',
+        category: 'analgesik', stock: 45, min: 100,
+        price: 2500, supplier: 'PT Dexa Medica',
+        exp: '2026-12-15', status: 'rendah'
+    },
+    {
+        id: 2, code: 'AMX-001', name: 'Amoxicillin 500mg',
+        category: 'antibiotik', stock: 32, min: 100,
+        price: 8500, supplier: 'PT Kimia Farma',
+        exp: '2026-11-22', status: 'menipis'
+    },
+    {
+        id: 3, code: 'CTM-001', name: 'CTM 4mg',
+        category: 'antihistamin', stock: 20, min: 50,
+        price: 1200, supplier: 'PT Fahrenheit',
+        exp: '2026-10-10', status: 'menipis'
+    },
+    {
+        id: 4, code: 'VIT-001', name: 'Vitamin C 500mg',
+        category: 'vitamin', stock: 250, min: 100,
+        price: 3500, supplier: 'PT Bayer',
+        exp: '2027-01-05', status: 'aman'
+    },
+    {
+        id: 5, code: 'IBU-001', name: 'Ibuprofen 200mg',
+        category: 'analgesik', stock: 0, min: 75,
+        price: 4500, supplier: 'PT Mepro',
+        exp: '2026-09-20', status: 'habis'
+    },
+    {
+        id: 6, code: 'KLR-001', name: 'Kalium Klorida 250mg',
+        category: 'vitamin', stock: 120, min: 100,
+        price: 5000, supplier: 'PT Sanbe Farma',
+        exp: '2026-08-08', status: 'aman'
+    },
+    {
+        id: 7, code: 'DXM-001', name: 'Dexamethasone 0.5mg',
+        category: 'analgesik', stock: 0, min: 50,
+        price: 3200, supplier: 'PT Dexa Medica',
+        exp: '2026-07-30', status: 'habis'
+    },
+    {
+        id: 8, code: 'ANT-001', name: 'Antasida DOEN',
+        category: 'antihistamin', stock: 180, min: 80,
+        price: 1800, supplier: 'PT Kimia Farma',
+        exp: '2027-03-15', status: 'aman'
+    },
+    {
+        id: 9, code: 'CIP-001', name: 'Ciprofloxacin 500mg',
+        category: 'antibiotik', stock: 15, min: 60,
+        price: 12000, supplier: 'PT Sanbe Farma',
+        exp: '2026-12-01', status: 'menipis'
+    },
+    {
+        id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',
+        category: 'vitamin', stock: 300, min: 100,
+        price: 6000, supplier: 'PT Bayer',
+        exp: '2027-06-20', status: 'aman'
+    },
+    {
+        id: 11, code: 'MET-001', name: 'Metformin 500mg',
+        category: 'analgesik', stock: 55, min: 80,
+        price: 4000, supplier: 'PT Mepro',
+        exp: '2026-11-10', status: 'rendah'
+    },
+    {
+        id: 12, code: 'LOR-001', name: 'Loratadine 10mg',
+        category: 'antihistamin', stock: 0, min: 60,
+        price: 5500, supplier: 'PT Fahrenheit',
+        exp: '2027-02-28', status: 'habis'
+    },
+=======
 let medicineData = [
     { id: 1,  code: 'PAR-001', name: 'Paracetamol 500mg',    category: 'analgesik',   stock: 45,  min: 100, price: 2500,  supplier: 'PT Dexa Medica',  exp: '2026-12-15', status: 'rendah'  },
     { id: 2,  code: 'AMX-001', name: 'Amoxicillin 500mg',    category: 'antibiotik',  stock: 32,  min: 100, price: 8500,  supplier: 'PT Kimia Farma',  exp: '2026-11-22', status: 'menipis' },
@@ -26,6 +101,7 @@ let medicineData = [
     { id: 10, code: 'VTD-001', name: 'Vitamin D3 1000IU',    category: 'vitamin',     stock: 300, min: 100, price: 6000,  supplier: 'PT Bayer',        exp: '2027-06-20', status: 'aman'    },
     { id: 11, code: 'MET-001', name: 'Metformin 500mg',      category: 'analgesik',   stock: 55,  min: 80,  price: 4000,  supplier: 'PT Mepro',        exp: '2026-11-10', status: 'rendah'  },
     { id: 12, code: 'LOR-001', name: 'Loratadine 10mg',      category: 'antihistamin',stock: 0,   min: 60,  price: 5500,  supplier: 'PT Fahrenheit',   exp: '2027-02-28', status: 'habis'   },
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 ];
 
 /* ============================
@@ -57,6 +133,16 @@ function statusLabel(s) {
 }
 
 function categoryLabel(c) {
+<<<<<<< HEAD
+    const map = {
+        analgesik: 'Analgesik',
+        antibiotik: 'Antibiotik',
+        antihistamin: 'Antihistamin',
+        vitamin: 'Vitamin',
+        umum: 'Umum',
+    };
+    return map[c] || c;
+=======
     return { analgesik: 'Analgesik', antibiotik: 'Antibiotik', antihistamin: 'Antihistamin', vitamin: 'Vitamin' }[c] || c;
 }
 
@@ -66,6 +152,7 @@ function computeStatus(m) {
     if (ratio < 0.3) return 'menipis';
     if (ratio < 0.7) return 'rendah';
     return 'aman';
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 }
 
 /* ============================
@@ -514,5 +601,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check-all
     bindCheckAll();
+<<<<<<< HEAD
+    const observer = new MutationObserver(bindCheckAll);
+    observer.observe(document.getElementById('medicine-tbody'), { childList: true });
+});
+=======
     new MutationObserver(bindCheckAll).observe(document.getElementById('medicine-tbody'), { childList: true });
 });
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

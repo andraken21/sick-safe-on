@@ -75,6 +75,49 @@
                             </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
+                            @forelse($users ?? [] as $user)
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">{{ strtoupper(substr($user->nama ?? 'U', 0, 2)) }}</div>
+                                        <div class="user-info">
+                                            <div class="user-name">{{ $user->nama }}</div>
+                                            <div class="user-id">ID: USR-{{ str_pad((string) $user->ID_User, 4, '0', STR_PAD_LEFT) }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:{{ $user->email }}" class="email-link">{{ $user->email }}</a></td>
+                                <td><span class="role-badge role-{{ strtolower($user->role) }}">{{ ucfirst($user->role) }}</span></td>
+                                <td>{{ $user->no_telp ?? '-' }}</td>
+                                <td>{{ optional($user->created_at)->format('d M Y') ?? '-' }}</td>
+                                <td><span class="status-badge status-{{ strtolower($user->status ?? 'aktif') }}">{{ ucfirst($user->status ?? 'aktif') }}</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            {{-- User 1 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">DR</div>
+                                        <div class="user-info">
+                                            <div class="user-name">Dr. Reza Pratama</div>
+                                            <div class="user-id">ID: USR-2026-001</div>
+=======
                             @forelse ($users as $user)
                                 @php
                                     $roleColor = match($user->role) {
@@ -109,6 +152,7 @@
                                                     ID #{{ $user->id_user }}
                                                 </div>
                                             </div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                                         </div>
                                     </td>
                                     <td style="color:#475569;">{{ $user->email }}</td>
@@ -150,6 +194,125 @@
                                                 <span style="color:#cbd5e1;font-size:.75rem;padding:4px;">Anda</span>
                                             @endif
                                         </div>
+<<<<<<< HEAD
+                                    </div>
+                                </td>
+                                <td><a href="mailto:aprina@sicksafe.com" class="email-link">aprina@sicksafe.com</a></td>
+                                <td><span class="role-badge role-apoteker">Apoteker</span></td>
+                                <td>+62 812-9876-5432</td>
+                                <td>20 Jan 2026</td>
+                                <td><span class="status-badge status-aktif">✓ Aktif</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- User 3 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">SI</div>
+                                        <div class="user-info">
+                                            <div class="user-name">Siti Indriyani</div>
+                                            <div class="user-id">ID: USR-2026-003</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:siti@sicksafe.com" class="email-link">siti@sicksafe.com</a></td>
+                                <td><span class="role-badge role-resepsionis">Resepsionis</span></td>
+                                <td>+62 812-1111-2222</td>
+                                <td>10 Feb 2026</td>
+                                <td><span class="status-badge status-aktif">✓ Aktif</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- User 4 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">BW</div>
+                                        <div class="user-info">
+                                            <div class="user-name">Budi Wijaya</div>
+                                            <div class="user-id">ID: USR-2026-004</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:budi@sicksafe.com" class="email-link">budi@sicksafe.com</a></td>
+                                <td><span class="role-badge role-dokter">Dokter</span></td>
+                                <td>+62 812-3333-4444</td>
+                                <td>25 Feb 2026</td>
+                                <td><span class="status-badge status-nonaktif">✗ Non-Aktif</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- User 5 --}}
+                            <tr>
+                                <td><input type="checkbox" class="check-row"></td>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">NP</div>
+                                        <div class="user-info">
+                                            <div class="user-name">Nurul Putri</div>
+                                            <div class="user-id">ID: USR-2026-005</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:nurul@sicksafe.com" class="email-link">nurul@sicksafe.com</a></td>
+                                <td><span class="role-badge role-apoteker">Apoteker</span></td>
+                                <td>+62 812-5555-6666</td>
+                                <td>01 Mar 2026</td>
+                                <td><span class="status-badge status-aktif">✓ Aktif</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-view" title="Lihat Detail">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button class="btn-action btn-more" title="Lebih Lanjut">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+=======
                                     </td>
                                 </tr>
                             @empty
@@ -159,6 +322,7 @@
                                         <p style="margin-top:10px;">Tidak ada pengguna ditemukan.</p>
                                     </td>
                                 </tr>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                             @endforelse
                         </tbody>
                     </table>
@@ -168,8 +332,12 @@
             {{-- ── PAGINATION ──────────────────────────────── --}}
             <div class="pagination-wrap">
                 <div class="pagination-info">
+<<<<<<< HEAD
+                    Menampilkan <strong>{{ method_exists($users ?? null, 'firstItem') ? ($users->firstItem() ?? 0) : 0 }}-{{ method_exists($users ?? null, 'lastItem') ? ($users->lastItem() ?? 0) : 0 }}</strong> dari <strong>{{ method_exists($users ?? null, 'total') ? $users->total() : 0 }}</strong> pengguna
+=======
                     Menampilkan {{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}
                     dari {{ $users->total() }} pengguna
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                 </div>
                 <div class="pagination">
                     {{ $users->withQueryString()->links() }}
@@ -179,6 +347,10 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+</div>
+@endsection
+=======
     {{-- ════════════════════════════════════════════════
          MODAL: TAMBAH PENGGUNA
     ════════════════════════════════════════════════ --}}
@@ -625,3 +797,4 @@ function bukaModalEdit(idUser) {
 </script>
 <script src="{{ asset('js/kelolaAkunPengguna.js') }}"></script>
 @endpush
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

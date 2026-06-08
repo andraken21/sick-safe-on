@@ -25,7 +25,11 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Pasien</div>
+<<<<<<< HEAD
+                        <div class="stat-value">{{ number_format($stats['pasien'] ?? 0, 0, ',', '.') }}</div>
+=======
                         <div class="stat-value">{{ $totalPasien }}</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                         <div class="stat-sub">Terdaftar di sistem</div>
                     </div>
                 </div>
@@ -36,7 +40,11 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Dokter</div>
+<<<<<<< HEAD
+                        <div class="stat-value">{{ number_format($stats['dokter'] ?? 0, 0, ',', '.') }}</div>
+=======
                         <div class="stat-value">{{ $totalDokter }}</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                         <div class="stat-sub">Aktif bertugas</div>
                     </div>
                 </div>
@@ -47,8 +55,13 @@
                     </div>
                     <div>
                         <div class="stat-label">Apoteker</div>
+<<<<<<< HEAD
+                        <div class="stat-value">{{ number_format($stats['apoteker'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="stat-sub">Aktif di sistem</div>
+=======
                         <div class="stat-value">{{ $totalApoteker }}</div>
                         <div class="stat-sub">Aktif bertugas</div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
 
@@ -57,6 +70,11 @@
                         <i class="fa-solid fa-file-prescription"></i>
                     </div>
                     <div>
+<<<<<<< HEAD
+                        <div class="stat-label">Resep Bulan Ini</div>
+                        <div class="stat-value">{{ number_format($stats['resep_bulan_ini'] ?? 0, 0, ',', '.') }}</div>
+                        <div class="stat-sub">Bulan ini</div>
+=======
                         <div class="stat-label">Resep Menunggu</div>
                         <div class="stat-value">{{ $resepMenunggu }}</div>
                         <div class="stat-sub">
@@ -64,6 +82,7 @@
                             &nbsp;·&nbsp;
                             <span style="color:#22c55e;">{{ $resepSelesai }} selesai</span>
                         </div>
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </div>
                 </div>
 
@@ -332,4 +351,9 @@
 </script>
 
 <script src="{{ asset('js/dashboardAdmin.js') }}"></script>
+<<<<<<< HEAD
+</div>
+@endsection
+=======
 @endpush
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

@@ -266,3 +266,4 @@ document.getElementById('btn-export-pdf').addEventListener('click', () => {
 });
 </script>
 @endpush
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

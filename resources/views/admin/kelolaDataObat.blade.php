@@ -88,12 +88,20 @@
                     {{-- Kategori dari DB --}}
                     <select class="filter-select" name="kategori" onchange="this.form.submit()">
                         <option value="">Semua Kategori</option>
+<<<<<<< HEAD
+                        <option value="umum">Umum</option>
+                        <option value="analgesik">Analgesik</option>
+                        <option value="antibiotik">Antibiotik</option>
+                        <option value="antihistamin">Antihistamin</option>
+                        <option value="vitamin">Vitamin</option>
+=======
                         @foreach ($kategori as $kat)
                             <option value="{{ $kat->id_kategori }}"
                                 {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
                                 {{ $kat->kategori_obat }}
                             </option>
                         @endforeach
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
                     </select>
                     <select class="filter-select" name="status" onchange="this.form.submit()">
                         <option value="">Semua Status</option>
@@ -520,3 +528,4 @@ function bukaModalEdit(idObat) {
 </script>
 <script src="{{ asset('js/kelolaDataObat.js') }}"></script>
 @endpush
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92

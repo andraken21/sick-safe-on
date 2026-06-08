@@ -10,8 +10,18 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+<<<<<<< HEAD
+    protected $primaryKey = 'ID_User';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+=======
     protected $primaryKey = 'id_user';
 
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
     protected $fillable = [
         'email',
         'nama',
@@ -22,6 +32,7 @@ class User extends Authenticatable
         'role',
         'nik',
         'alamat',
+        'status',
     ];
 
     protected $hidden = [
@@ -37,20 +48,34 @@ class User extends Authenticatable
         ];
     }
 
+<<<<<<< HEAD
+    public function pasien()
+    {
+        return $this->hasOne(Pasien::class, 'ID_User', 'ID_User');
+=======
     // ── Relasi ──────────────────────────────────────────
 
     public function pasien()
     {
         return $this->hasOne(Pasien::class, 'id_user', 'id_user');
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
     }
 
     public function dokter()
     {
+<<<<<<< HEAD
+        return $this->hasOne(Dokter::class, 'ID_User', 'ID_User');
+=======
         return $this->hasOne(Dokter::class, 'id_user', 'id_user');
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
     }
 
     public function apoteker()
     {
+<<<<<<< HEAD
+        return $this->hasOne(Apoteker::class, 'ID_User', 'ID_User');
+    }
+=======
         return $this->hasOne(Apoteker::class, 'id_user', 'id_user');
     }
 
@@ -65,4 +90,5 @@ class User extends Authenticatable
     public function isDokter(): bool  { return $this->role === 'Dokter'; }
     public function isApoteker(): bool { return $this->role === 'Apoteker'; }
     public function isAdmin(): bool   { return $this->role === 'Admin'; }
+>>>>>>> 64fd7eb8506e9dd968d7932ce49d215139a6ea92
 }
