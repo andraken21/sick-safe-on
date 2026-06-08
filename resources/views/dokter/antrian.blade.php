@@ -34,6 +34,7 @@
                         <th>Pasien</th>
                         <th>Tanggal</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,10 +44,15 @@
                             <td>{{ $antrian->pasien->user->nama ?? '-' }}</td>
                             <td>{{ optional($antrian->tanggal)->format('d M Y') }}</td>
                             <td><span class="status-badge status-success">{{ ucfirst($antrian->status) }}</span></td>
+                            <td>
+                                <a href="{{ route('dokter.resep.create', ['id_pasien' => $antrian->pasien->id_pasien]) }}" class="btn-pilih">
+                                    <i class="bi bi-cursor-fill"></i> Pilih
+                                </a>                            
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" style="text-align:center;">Tidak ada antrian pada tanggal ini.</td>
+                            <td colspan="5" style="text-align:center;">Tidak ada antrian pada tanggal ini.</td>
                         </tr>
                     @endforelse
                 </tbody>

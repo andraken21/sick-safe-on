@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('no_telp', 15)->nullable();
             $table->enum('role', ['Pasien', 'Dokter', 'Apoteker', 'Admin']);
-            $table->string('nik', 16)->unique()->nullable();
+            $table->string('nik', 16)->nullable();
             $table->text('alamat')->nullable();
             $table->timestamps();
         });

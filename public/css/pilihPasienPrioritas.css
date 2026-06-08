@@ -1,0 +1,209 @@
+/*
+ * pilihPasien-priority.css
+ * Tambahkan ke file pilihPasien.css Anda (atau @import di sana),
+ * atau pasang sebagai <link> tambahan di blade.
+ *
+ * Berisi style untuk:
+ *  - .priority-section   → area kartu pilihan prioritas
+ *  - .priority-card      → kartu Mandiri / BPJS / Reset
+ *  - badge BPJS & Mandiri di kolom tabel
+ */
+
+/* ─── Priority Section ───────────────────────────── */
+.priority-section {
+    margin-bottom: 20px;
+}
+
+.priority-label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.priority-cards {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* ─── Individual Priority Card ───────────────────── */
+.priority-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: 2px solid #e2e8f0;
+    background: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1e293b;
+    transition: border-color .18s, box-shadow .18s, transform .15s;
+    min-width: 210px;
+    position: relative;
+}
+
+.priority-card:hover {
+    border-color: #94a3b8;
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    transform: translateY(-2px);
+}
+
+/* ─── Active state ───────────────────────────────── */
+.priority-card.active {
+    border-color: transparent;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+
+.priority-card.active.mandiri-card,
+.priority-card:has(.pcard-icon.mandiri).active {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: #3b82f6;
+}
+
+.priority-card.active {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #22c55e;
+}
+
+/* Kartu BPJS active */
+.priority-card:has(.pcard-icon.bpjs).active {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #16a34a;
+}
+
+/* Kartu Mandiri active */
+.priority-card:has(.pcard-icon.mandiri).active {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: #2563eb;
+}
+
+/* ─── Icon dalam kartu ───────────────────────────── */
+.pcard-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.pcard-icon.mandiri {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.pcard-icon.bpjs {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.pcard-icon.reset {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+/* ─── Text dalam kartu ───────────────────────────── */
+.pcard-body {
+    flex: 1;
+}
+
+.pcard-title {
+    font-size: .93rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.pcard-sub {
+    font-size: .78rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* ─── Checkmark (hanya muncul saat active) ───────── */
+.pcard-check {
+    color: transparent;
+    font-size: 1.1rem;
+    transition: color .18s;
+}
+
+.priority-card.active .pcard-check {
+    color: #16a34a;
+}
+
+.priority-card:has(.pcard-icon.mandiri).active .pcard-check {
+    color: #2563eb;
+}
+
+/* Reset card tidak perlu checkmark */
+.reset-card .pcard-check {
+    display: none;
+}
+
+/* ─── Header badge (di atas tabel) ──────────────── */
+.header-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.mandiri-badge {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.bpjs-badge {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* ─── Badge di kolom tabel ───────────────────────── */
+.badge-bpjs {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: .78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-mandiri {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: .78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ─── Responsive ─────────────────────────────────── */
+@media (max-width: 640px) {
+    .priority-cards {
+        flex-direction: column;
+    }
+    .priority-card {
+        min-width: unset;
+    }
+}

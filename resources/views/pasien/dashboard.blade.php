@@ -28,8 +28,8 @@
     <div class="stat-grid">
 
         <div class="stat-card">
-            <span class="stat-number">{{ $stats['resep_aktif'] ?? 2 }}</span>
-            <span class="stat-label">Resep Aktif</span>
+            <span class="stat-number">{{ $stats['total_resep'] ?? 2 }}</span>
+            <span class="stat-label">Resep</span>
         </div>
 
         <div class="stat-card stat-card--warning">
@@ -40,11 +40,6 @@
         <div class="stat-card stat-card--info">
             <span class="stat-number">{{ $stats['sedang_diproses'] ?? 1 }}</span>
             <span class="stat-label">Sedang Diproses</span>
-        </div>
-
-        <div class="stat-card stat-card--success">
-            <span class="stat-number">{{ $stats['siap_diambil'] ?? 0 }}</span>
-            <span class="stat-label">Siap Diambil/Dikirim</span>
         </div>
 
     </div>

@@ -8,182 +8,162 @@
     <link rel="stylesheet" href="{{ asset('css/LaporanAnalisisData.css') }}">
 @endpush
 
-
 @section('content')
 <div class="dashboard-wrap">
-
     <div class="dash-main">
         <div class="dash-content">
 
-            {{-- REPORT FILTERS --}}
-            <div class="report-filters">
+            {{-- REPORT FILTERS — filter bulan & tahun --}}
+            <form method="GET" action="{{ route('laporanAnalisisData') }}" class="report-filters" id="filterForm">
                 <div class="filter-group">
-                    <label class="filter-label">Tipe Laporan</label>
-                    <select class="filter-select" id="filter-type">
-                        <option value="">Pilih Tipe Laporan</option>
-                        <option value="transaksi">Laporan Transaksi</option>
-                        <option value="pasien">Laporan Pasien</option>
-                        <option value="obat">Laporan Stok Obat</option>
-                        <option value="kinerja">Laporan Kinerja Staf</option>
-                        <option value="finansial">Laporan Finansial</option>
+                    <label class="filter-label">Bulan</label>
+                    <select class="filter-select" name="bulan" onchange="this.form.submit()">
+                        @foreach(range(1, 12) as $m)
+                            <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>
+                                {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="filter-group">
-                    <label class="filter-label">Periode</label>
-                    <select class="filter-select" id="filter-period">
-                        <option value="today">Hari Ini</option>
-                        <option value="week">Minggu Ini</option>
-                        <option value="month" selected>Bulan Ini</option>
-                        <option value="year">Tahun Ini</option>
-                        <option value="custom">Custom</option>
+                    <label class="filter-label">Tahun</label>
+                    <select class="filter-select" name="tahun" onchange="this.form.submit()">
+                        @foreach(range(now()->year, now()->year - 3) as $y)
+                            <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="filter-group">
-                    <label class="filter-label">Format</label>
-                    <select class="filter-select" id="filter-format">
-                        <option value="pdf">PDF</option>
-                        <option value="excel">Excel</option>
-                    </select>
+                    <label class="filter-label">Export</label>
+                    <button type="button" class="btn-generate" id="btn-export-pdf">
+                        <i class="fa-solid fa-file-pdf"></i> PDF
+                    </button>
                 </div>
+            </form>
 
-                <button class="btn-generate" id="btn-generate">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Laporan
-                </button>
+            {{-- KEY METRICS — dari DB --}}
+            <div class="key-metrics">
+                <div class="metric-card">
+                    <div class="metric-label">Pendapatan Bulan Ini</div>
+                    <div class="metric-value">
+                        Rp {{ number_format($totalPendapatanBulanIni, 0, ',', '.') }}
+                    </div>
+                    <div class="metric-change">
+                        Transaksi lunas {{ \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') }} {{ $tahun }}
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Resep Selesai</div>
+                    <div class="metric-value">{{ number_format($totalResepBulanIni, 0, ',', '.') }}</div>
+                    <div class="metric-change">Resep selesai bulan ini</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Pasien Baru</div>
+                    <div class="metric-value">{{ $totalPasienBaru }}</div>
+                    <div class="metric-change">Daftar bulan ini</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Dokter Paling Aktif</div>
+                    @if($dokterAktif->isNotEmpty())
+                        <div class="metric-value" style="font-size:1rem;">
+                            {{ $dokterAktif->first()->dokter->user->nama ?? '-' }}
+                        </div>
+                        <div class="metric-change">
+                            {{ $dokterAktif->first()->total_pasien }} resep ditangani
+                        </div>
+                    @else
+                        <div class="metric-value" style="font-size:1rem;">-</div>
+                        <div class="metric-change">Belum ada data</div>
+                    @endif
+                </div>
             </div>
 
             {{-- DASHBOARD ANALYTICS --}}
             <div class="analytics-section">
-                <h3 class="section-title">Analitik Sistem</h3>
+                <h3 class="section-title">
+                    Analitik — {{ \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') }} {{ $tahun }}
+                </h3>
 
                 <div class="charts-grid">
-                    {{-- Transaksi Per Hari --}}
+                    {{-- Pendapatan per bulan sepanjang tahun --}}
                     <div class="dash-card chart-card">
                         <div class="dash-card-header">
                             <div>
-                                <div class="dash-card-title">Transaksi Per Hari</div>
-                                <div class="dash-card-sub">30 hari terakhir</div>
+                                <div class="dash-card-title">Pendapatan Per Bulan</div>
+                                <div class="dash-card-sub">Sepanjang tahun {{ $tahun }}</div>
                             </div>
-                            <button class="btn-link" id="btn-detail-trx">Detail →</button>
                         </div>
                         <div class="chart-container">
-                            <canvas id="chart-trx"></canvas>
+                            <canvas id="chart-pendapatan"></canvas>
                         </div>
                     </div>
 
-                    {{-- BPJS vs Mandiri --}}
+                    {{-- Obat terlaris --}}
                     <div class="dash-card chart-card">
                         <div class="dash-card-header">
                             <div>
-                                <div class="dash-card-title">BPJS vs Mandiri</div>
-                                <div class="dash-card-sub">Perbandingan tipe pembayaran</div>
+                                <div class="dash-card-title">Obat Paling Banyak Diresepkan</div>
+                                <div class="dash-card-sub">Top 10 bulan ini</div>
                             </div>
-                            <button class="btn-link" id="btn-detail-pay">Detail →</button>
-                        </div>
-                        <div class="chart-container pie-container">
-                            <canvas id="chart-pay"></canvas>
-                            <div class="pie-legend" id="pie-legend"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="charts-grid">
-                    {{-- Obat Terpopuler --}}
-                    <div class="dash-card chart-card">
-                        <div class="dash-card-header">
-                            <div>
-                                <div class="dash-card-title">Obat Terpopuler</div>
-                                <div class="dash-card-sub">Top 5 obat yang paling banyak diresepkan</div>
-                            </div>
-                            <button class="btn-link" id="btn-all-obat">Lihat Semua →</button>
                         </div>
                         <div class="chart-container">
                             <canvas id="chart-obat"></canvas>
                         </div>
                     </div>
+                </div>
 
-                    {{-- Kunjungan Pasien --}}
-                    <div class="dash-card chart-card">
-                        <div class="dash-card-header">
-                            <div>
-                                <div class="dash-card-title">Kunjungan Pasien</div>
-                                <div class="dash-card-sub">Per hari dalam bulan ini</div>
-                            </div>
-                            <button class="btn-link" id="btn-detail-visit">Detail →</button>
+                {{-- Tabel Dokter Aktif --}}
+                <div class="dash-card" style="margin-top:20px;">
+                    <div class="dash-card-header">
+                        <div>
+                            <div class="dash-card-title">Dokter Paling Aktif Bulan Ini</div>
+                            <div class="dash-card-sub">Berdasarkan jumlah resep yang ditangani</div>
                         </div>
-                        <div class="stats-grid-mini">
-                            <div class="stat-mini">
-                                <div class="stat-label-mini">Total</div>
-                                <div class="stat-value-mini">1.245</div>
-                                <div class="stat-trend up">↑ 12%</div>
-                            </div>
-                            <div class="stat-mini">
-                                <div class="stat-label-mini">Rata-rata/Hari</div>
-                                <div class="stat-value-mini">40</div>
-                                <div class="stat-trend neutral">→ 0%</div>
-                            </div>
-                            <div class="stat-mini">
-                                <div class="stat-label-mini">Puncak</div>
-                                <div class="stat-value-mini">65</div>
-                                <div class="stat-trend-date">12 Mei</div>
-                            </div>
-                        </div>
-                        <div class="sparkline-container">
-                            <canvas id="chart-visit"></canvas>
-                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="dash-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama Dokter</th>
+                                    <th>Spesialis</th>
+                                    <th style="text-align:center;">Jumlah Pasien</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($dokterAktif as $i => $da)
+                                    <tr>
+                                        <td>{{ $i + 1 }}</td>
+                                        <td>
+                                            <div style="font-weight:600;color:#1e293b;">
+                                                {{ $da->dokter->user->nama ?? '-' }}
+                                            </div>
+                                        </td>
+                                        <td style="color:#64748b;">
+                                            {{ $da->dokter->spesialis ?? '-' }}
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span style="font-weight:700;color:#0369a1;">
+                                                {{ $da->total_pasien }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" style="text-align:center;padding:30px;color:#94a3b8;">
+                                            Belum ada data dokter aktif bulan ini.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                {{-- Key Metrics --}}
-                <div class="key-metrics">
-                    <div class="metric-card">
-                        <div class="metric-label">Pendapatan Bulan Ini</div>
-                        <div class="metric-value">Rp 245,5 Juta</div>
-                        <div class="metric-change up">↑ 18% dari bulan lalu</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Rata-rata Transaksi</div>
-                        <div class="metric-value">Rp 289.500</div>
-                        <div class="metric-change up">↑ 5% dari bulan lalu</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Dokter Paling Aktif</div>
-                        <div class="metric-value">Dr. Reza Pratama</div>
-                        <div class="metric-change">185 konsultasi</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Waktu Pelayanan Rata-rata</div>
-                        <div class="metric-value">15 Menit</div>
-                        <div class="metric-change down">↓ 2 menit dari bulan lalu</div>
-                    </div>
-                </div>
             </div>
 
-            {{-- RECENT REPORTS --}}
-            <div class="reports-section">
-                <h3 class="section-title">Laporan Terbaru</h3>
-                <div class="dash-card">
-                    <div class="reports-list" id="reports-list">
-                        {{-- injected by JS --}}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    {{-- MODAL LAPORAN --}}
-    <div class="modal-overlay" id="modal-report" style="display:none;">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-report-title">Detail Laporan</h3>
-                <button class="modal-close" id="modal-report-close"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body" id="modal-report-body"></div>
-            <div class="modal-footer">
-                <button class="btn-modal-primary" id="modal-report-close-btn">Tutup</button>
-            </div>
         </div>
     </div>
 
@@ -194,7 +174,95 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="{{ asset('js/laporanAnalisisData.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+// ── Data dari controller (PHP → JS) ─────────────────────
+const pendapatanBulanan = @json($pendapatanBulanan);
+const obatTerlaris      = @json($obatTerlaris);
+
+// ── Label bulan Indonesia ────────────────────────────────
+const namaBulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+// Siapkan array 12 bulan (isi 0 jika tidak ada data)
+const pendapatanArr = Array(12).fill(0);
+pendapatanBulanan.forEach(row => {
+    pendapatanArr[row.bulan - 1] = parseFloat(row.total);
+});
+
+// ── Chart Pendapatan Per Bulan ───────────────────────────
+const ctxPendapatan = document.getElementById('chart-pendapatan').getContext('2d');
+new Chart(ctxPendapatan, {
+    type: 'bar',
+    data: {
+        labels: namaBulan,
+        datasets: [{
+            label: 'Pendapatan (Rp)',
+            data: pendapatanArr,
+            backgroundColor: 'rgba(63,187,160,0.75)',
+            borderColor: '#3FBBA0',
+            borderWidth: 1.5,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: ctx => 'Rp ' + ctx.parsed.y.toLocaleString('id-ID')
+                }
+            }
+        },
+        scales: {
+            x: { grid: { color: '#E1F1FE' }, ticks: { color: '#6a9ab5', font: { size: 11 } } },
+            y: {
+                grid: { color: '#E1F1FE' },
+                beginAtZero: true,
+                ticks: {
+                    color: '#6a9ab5', font: { size: 11 },
+                    callback: val => 'Rp ' + (val / 1000000).toFixed(1) + 'jt'
+                }
+            }
+        }
+    }
+});
+
+// ── Chart Obat Terlaris ──────────────────────────────────
+const ctxObat = document.getElementById('chart-obat').getContext('2d');
+new Chart(ctxObat, {
+    type: 'bar',
+    data: {
+        labels: obatTerlaris.map(o => o.nama_obat),
+        datasets: [{
+            label: 'Total Terjual',
+            data: obatTerlaris.map(o => parseInt(o.total_terjual)),
+            backgroundColor: 'rgba(14,116,175,0.75)',
+            borderColor: '#0e74af',
+            borderWidth: 1.5,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ctx.parsed.x + ' unit' } }
+        },
+        scales: {
+            x: { grid: { color: '#E1F1FE' }, beginAtZero: true, ticks: { color: '#6a9ab5', font: { size: 11 } } },
+            y: { grid: { display: false }, ticks: { color: '#334155', font: { size: 11 } } }
+        }
+    }
+});
+
+// ── Export PDF sederhana (print) ─────────────────────────
+document.getElementById('btn-export-pdf').addEventListener('click', () => {
+    window.print();
+});
+</script>
 @endpush

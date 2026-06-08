@@ -102,12 +102,13 @@ Route::middleware(['auth', 'role:Pasien'])->group(function () {
     Route::get('/pasien/pembayaran/bayar/{id}', [PasienController::class, 'halamanBayar'])->name('pasien.pembayaran.bayar');
     Route::post('/pasien/pembayaran/proses',    [PasienController::class, 'prosesBayar'])->name('pasien.pembayaran.proses');
 
-    Route::get('/pasien/rating',  [PasienController::class, 'rating'])->name('pasien.rating');
-    Route::post('/pasien/rating', [PasienController::class, 'simpanRating'])->name('pasien.rating.simpan');
+    Route::get('/pasien/ulasan', [PasienController::class, 'ulasan'])->name('pasien.ulasan');
+    Route::post('/pasien/ulasan/simpan', [PasienController::class, 'simpanUlasan'])->name('pasien.ulasan.simpan');
 
     Route::get('/pasien/profil',           [PasienController::class, 'profil'])->name('pasien.profil');
-    Route::post('/pasien/profil',          [PasienController::class, 'updateProfil'])->name('pasien.profil.update');
+    Route::put('/pasien/profil',          [PasienController::class, 'updateProfil'])->name('pasien.profil.update');
     Route::post('/pasien/profil/password', [PasienController::class, 'updatePassword'])->name('pasien.profil.password');
+    Route::delete('/pasien/profil/delete', [PasienController::class, 'deleteProfil'])->name('pasien.profil.delete');
 });
 
 

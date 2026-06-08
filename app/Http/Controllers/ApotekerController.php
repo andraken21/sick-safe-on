@@ -18,7 +18,7 @@ class ApotekerController extends Controller
 
     public function dashboard()
     {
-        return redirect()->route('apoteker.validasi');
+        return view('apoteker.dashboard');
     }
 
     // ────────────────────────────────────────────────────

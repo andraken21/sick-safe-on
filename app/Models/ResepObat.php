@@ -17,6 +17,8 @@ class ResepObat extends Model
         'id_obat',
         'jumlah',
         'dosis',
+        'satuan',
+        'aturan_pakai',
     ];
 
     // ── Relasi ──────────────────────────────────────────

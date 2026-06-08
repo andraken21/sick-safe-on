@@ -70,7 +70,7 @@
         Controller: storeResep()
         Field yang divalidasi:
           id_pasien, keluhan, diagnosa, keterangan (optional)
-          obat[*][id_obat], obat[*][jumlah], obat[*][dosis]
+          obat[*][id_obat], obat[*][jumlah], obat[*][dosis], obat[*][aturan_pakai]
     --}}
     <form id="formResep" method="POST" action="{{ route('dokter.resep.store') }}">
         @csrf
@@ -100,19 +100,17 @@
                                        value="{{ old('diagnosa') }}" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Catatan Tambahan</label>
-                            <textarea name="keterangan" placeholder="Catatan untuk apoteker atau pasien..." style="min-height:64px">{{ old('keterangan') }}</textarea>
-                        </div>
+                        {{-- Keterangan tambahan dihapus sesuai permintaan --}}
                     </div>
                 </div>
 
-                {{-- Daftar Obat --}}
                 {{--
-                    Setiap baris obat dikirim sebagai array:
-                      obat[0][id_obat], obat[0][jumlah], obat[0][dosis]
-                      obat[1][id_obat], obat[1][jumlah], obat[1][dosis]  dst.
-                    Sesuai validasi controller: 'obat.*.id_obat', 'obat.*.jumlah', 'obat.*.dosis'
+                    TABEL OBAT
+                    Kolom:  # | Nama Obat | Dosis | Jumlah (besar) | Aturan Pakai | (hapus)
+                    - "Dosis / Aturan Pakai" → "Dosis"
+                    - "Harga Satuan" → "Aturan Pakai"
+                    - Kolom Stok dihapus dari tampilan (validasi stok tetap di controller)
+                    - Input Jumlah diperbesar
                 --}}
                 <div class="section-card">
                     <div class="section-card-header">
@@ -125,10 +123,9 @@
                                 <tr>
                                     <th class="col-no">#</th>
                                     <th class="col-nama">Nama Obat</th>
-                                    <th class="col-dosis">Dosis / Aturan Pakai</th>
+                                    <th class="col-dosis">Dosis</th>
                                     <th class="col-jml">Jumlah</th>
-                                    <th class="col-stok">Stok</th>
-                                    <th class="col-harga">Harga Sat.</th>
+                                    <th class="col-aturan">Aturan Pakai</th>
                                     <th class="col-del"></th>
                                 </tr>
                             </thead>
@@ -177,10 +174,6 @@
                         <div class="ringkasan-obat-count">
                             <span class="label"><i class="bi bi-capsule-pill"></i> Jenis Obat</span>
                             <span class="count" id="rkObatCount">0</span>
-                        </div>
-                        <div class="ringkasan-row" style="margin-top:8px;font-weight:700;">
-                            <span class="rk-label">Est. Total</span>
-                            <span class="rk-value" id="rkTotal" style="color:#0e7490;">Rp 0</span>
                         </div>
                     </div>
                 </div>

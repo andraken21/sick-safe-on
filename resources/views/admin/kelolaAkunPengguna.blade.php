@@ -391,6 +391,7 @@
             </div>
 
             <form method="POST" id="formEdit" action="">
+                @method('PUT')
                 @csrf
                 <div class="modal-body">
 
@@ -506,8 +507,8 @@
 </div>
 
 {{-- Data user untuk modal edit (JSON tersembunyi) --}}
-<script>
-    const USERS_DATA = @json($users->keyBy('id_user')->map(function($u) {
+@php
+    $usersJson = $users->keyBy('id_user')->map(function($u) {
         return [
             'id_user'          => $u->id_user,
             'nama'             => $u->nama,
@@ -522,8 +523,10 @@
             'no_bpjs'          => $u->pasien?->no_bpjs,
             'riwayat_penyakit' => $u->pasien?->riwayat_penyakit,
         ];
-    }));
-
+    });
+@endphp
+<script>
+    const USERS_DATA = @json($usersJson);
     const ROUTE_UPDATE_BASE = "{{ url('/admin/kelolaAkunPengguna') }}";
 </script>
 

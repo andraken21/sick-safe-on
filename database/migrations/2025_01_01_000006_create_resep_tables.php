@@ -18,7 +18,9 @@ return new class extends Migration
             $table->foreignId('id_resep')->constrained('resep', 'id_resep')->cascadeOnDelete();
             $table->foreignId('id_obat')->constrained('obat', 'id_obat')->restrictOnDelete();
             $table->unsignedSmallInteger('jumlah');
-            $table->string('dosis')->comment('Contoh: 3x1, 2x1/2');
+            $table->string('dosis')->comment('Contoh: 500mg, 1g');
+            $table->string('satuan')->comment('Contoh: tablet, botol, strip');
+            $table->string('aturan_pakai')->comment('Contoh: 3x1, 2x1/2');
             $table->timestamps();
         });
 

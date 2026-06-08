@@ -51,8 +51,7 @@ class PasienController extends Controller
         $totalTransaksi = Transaksi::where('id_pasien', $pasien->id_pasien)
                             ->where('status', 'lunas')->count();
         $stats = [
-            'resep_aktif' => DetailResep::where('id_pasien', $pasien->id_pasien)
-                ->whereIn('status', ['menunggu', 'menunggu_pembayaran', 'diproses'])
+            'total_resep' => DetailResep::where('id_pasien', $pasien->id_pasien)
                 ->count(),
             'menunggu_bayar' => DetailResep::where('id_pasien', $pasien->id_pasien)
                 ->where('status', 'menunggu_pembayaran')

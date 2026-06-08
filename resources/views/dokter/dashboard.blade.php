@@ -10,7 +10,7 @@
 @section('content')
 <div class="dashboard-wrap">
     <div class="page-header">
-        <h1>Selamat datang, Dr. {{ Auth::user()->nama }}</h1>
+        <h1>Selamat datang, {{ Auth::user()->nama }}</h1>
         <p>Dashboard Dokter - {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}</p>
     </div>
 
@@ -20,7 +20,6 @@
             <div class="stat-info">
                 <span class="stat-value">{{ $antrianHariIni ?? 0 }}</span>
                 <span class="stat-label">Antrian Pasien</span>
-                <span class="stat-sub">Hari ini</span>
             </div>
         </div>
         <div class="stat-card">
@@ -28,7 +27,6 @@
             <div class="stat-info">
                 <span class="stat-value">{{ $resepHariIni ?? 0 }}</span>
                 <span class="stat-label">Resep Dibuat</span>
-                <span class="stat-sub">Hari ini</span>
             </div>
         </div>
         <div class="stat-card">

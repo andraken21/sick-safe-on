@@ -39,7 +39,7 @@
                class="nav-item {{ request()->is('dokter/pilih-pasien') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Pilih Pasien
             </a>
-            <a href="{{ route('dokter.pilih.pasien') }}"
+            <a href="{{ route('dokter.resep.create') }}"
                class="nav-item {{ request()->is('dokter/resep/create') ? 'active' : '' }}">
                 <i class="fas fa-file-prescription"></i> Buat Resep
             </a>
@@ -90,6 +90,12 @@
         @endif
 
         <div class="nav-label">Akun</div>
+            @if($role === 'Pasien')
+                <a href="{{ route('pasien.profil') }}"
+                    class="nav-item {{ request()->is('pasien/profil') ? 'active' : '' }}">
+                    <i class="fas fa-user"></i> Profil Saya
+                </a>   
+            @endif
         <form action="{{ route('logout') }}" method="POST" style="margin:0">
             @csrf
             <button type="submit" class="nav-item nav-item-btn">

@@ -15,27 +15,27 @@
 
             {{-- FLASH MESSAGES --}}
             @if (session('success'))
-                <div class="alert alert-success" style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:12px 16px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;
+                            padding:12px 16px;border-radius:10px;margin-bottom:16px;
+                            display:flex;align-items:center;gap:10px;">
                     <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
                 </div>
             @endif
             @if (session('error'))
-                <div class="alert alert-danger" style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:12px 16px;border-radius:10px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                <div style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;
+                            padding:12px 16px;border-radius:10px;margin-bottom:16px;
+                            display:flex;align-items:center;gap:10px;">
                     <i class="fa-solid fa-circle-exclamation"></i> {{ session('error') }}
                 </div>
             @endif
 
-            {{-- SUMMARY CARDS — data dari $obatList --}}
+            {{-- SUMMARY CARDS — dari DB --}}
             @php
-                $allObat       = \App\Models\Obat::with('kategori')->get();
-                $totalObat     = $allObat->count();
-                $stokMenipis   = $allObat->where('stok', '>', 0)->where('stok', '<', 10)->count();
-                $stokHabis     = $allObat->where('stok', '<=', 0)->count();
-                $akanKadaluarsa = $allObat->filter(function($o) {
-                    return $o->tanggal_kadaluarsa && $o->tanggal_kadaluarsa->diffInDays(now()) <= 30 && $o->tanggal_kadaluarsa >= now();
-                })->count();
+                $countTotal   = $obatList->total();
+                $countRendah  = \App\Models\Obat::whereBetween('stok', [1, 9])->count();
+                $countHabis   = \App\Models\Obat::where('stok', 0)->count();
+                $countExpired = \App\Models\Obat::where('status', 'kadaluarsa')->count();
             @endphp
-
             <div class="med-summary">
                 <div class="summary-card">
                     <div class="summary-icon icon-total">
@@ -43,42 +43,39 @@
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Total Obat</div>
-                        <div class="summary-value">{{ $totalObat }}</div>
+                        <div class="summary-value">{{ $countTotal }}</div>
                     </div>
                 </div>
-
                 <div class="summary-card">
                     <div class="summary-icon icon-low">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Stok Menipis</div>
-                        <div class="summary-value">{{ $stokMenipis }}</div>
+                        <div class="summary-value">{{ $countRendah }}</div>
                     </div>
                 </div>
-
                 <div class="summary-card">
                     <div class="summary-icon icon-empty">
                         <i class="fa-solid fa-ban"></i>
                     </div>
                     <div class="summary-info">
                         <div class="summary-label">Stok Habis</div>
-                        <div class="summary-value">{{ $stokHabis }}</div>
+                        <div class="summary-value">{{ $countHabis }}</div>
                     </div>
                 </div>
-
                 <div class="summary-card">
                     <div class="summary-icon icon-expired">
                         <i class="fa-solid fa-calendar-xmark"></i>
                     </div>
                     <div class="summary-info">
-                        <div class="summary-label">Akan Kadaluarsa</div>
-                        <div class="summary-value">{{ $akanKadaluarsa }}</div>
+                        <div class="summary-label">Kadaluarsa</div>
+                        <div class="summary-value">{{ $countExpired }}</div>
                     </div>
                 </div>
             </div>
 
-            {{-- FILTERS & SEARCH — form GET, kategori dari DB --}}
+            {{-- FILTERS & SEARCH — GET form --}}
             <form method="GET" action="{{ route('kelolaDataObat') }}" class="filter-section" id="filterForm">
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -87,48 +84,52 @@
                            placeholder="Cari nama obat..."
                            class="search-input">
                 </div>
-
                 <div class="filter-group">
-                    <select class="filter-select" name="kategori" id="filter-category"
-                            onchange="document.getElementById('filterForm').submit()">
+                    {{-- Kategori dari DB --}}
+                    <select class="filter-select" name="kategori" onchange="this.form.submit()">
                         <option value="">Semua Kategori</option>
                         @foreach ($kategori as $kat)
                             <option value="{{ $kat->id_kategori }}"
-                                    {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
+                                {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
                                 {{ $kat->kategori_obat }}
                             </option>
                         @endforeach
                     </select>
-
-                    <select class="filter-select" name="status" id="filter-status"
-                            onchange="document.getElementById('filterForm').submit()">
+                    <select class="filter-select" name="status" onchange="this.form.submit()">
                         <option value="">Semua Status</option>
                         <option value="tersedia"   {{ request('status') === 'tersedia'   ? 'selected' : '' }}>Tersedia</option>
                         <option value="habis"      {{ request('status') === 'habis'      ? 'selected' : '' }}>Habis</option>
                         <option value="kadaluarsa" {{ request('status') === 'kadaluarsa' ? 'selected' : '' }}>Kadaluarsa</option>
                     </select>
-
                     <button type="submit" class="btn-tambah" style="background:linear-gradient(135deg,#475569,#334155);">
                         <i class="fa-solid fa-magnifying-glass"></i> Cari
                     </button>
-
+                    @if(request()->hasAny(['search','kategori','status']))
+                        <a href="{{ route('kelolaDataObat') }}" class="btn-tambah" style="background:linear-gradient(135deg,#94a3b8,#64748b);">
+                            <i class="fa-solid fa-xmark"></i> Reset
+                        </a>
+                    @endif
                     <button type="button" class="btn-tambah" id="btnTambahObat">
                         <i class="fa-solid fa-plus"></i> Tambah Obat
+                    </button>
+                    <button type="button" class="btn-tambah" id="btnKelolaKategori"
+                            style="background:linear-gradient(135deg,#7c3aed,#6d28d9);">
+                        <i class="fa-solid fa-tags"></i> Kategori
                     </button>
                 </div>
             </form>
 
-            {{-- TABEL OBAT — data dari $obatList --}}
+            {{-- MEDICINES TABLE — dari DB --}}
             <div class="dash-card">
                 <div class="table-wrap">
                     <table class="dash-table medicines-table">
                         <thead>
                             <tr>
-                                <th style="text-align:center;">Nama Obat</th>
-                                <th style="text-align:center;">Kategori</th>
+                                <th>Nama Obat</th>
+                                <th>Kategori</th>
                                 <th style="text-align:center;">Stok</th>
-                                <th style="text-align:center;">Harga</th>
-                                <th style="text-align:center;">Tgl Kadaluarsa</th>
+                                <th>Harga</th>
+                                <th>Tgl Kadaluarsa</th>
                                 <th style="text-align:center;">Status</th>
                                 <th style="text-align:center;">Aksi</th>
                             </tr>
@@ -136,49 +137,38 @@
                         <tbody>
                             @forelse ($obatList as $obat)
                                 @php
-                                    $stokColor = $obat->stok <= 0 ? '#ef4444' : ($obat->stok < 10 ? '#f59e0b' : '#22c55e');
-                                    $statusClass = match($obat->status) {
-                                        'tersedia'   => 'badge-ok',
-                                        'habis'      => 'badge-danger',
-                                        'kadaluarsa' => 'badge-expired',
-                                        default      => 'badge-ok',
+                                    $statusInfo = match($obat->status) {
+                                        'tersedia'   => ['label' => 'Tersedia',   'class' => 'status-selesai'],
+                                        'habis'      => ['label' => 'Habis',      'class' => 'status-batal'],
+                                        'kadaluarsa' => ['label' => 'Kadaluarsa', 'class' => 'status-batal'],
+                                        default      => ['label' => ucfirst($obat->status), 'class' => 'status-pending'],
                                     };
-                                    $statusLabel = match($obat->status) {
-                                        'tersedia'   => 'Tersedia',
-                                        'habis'      => 'Habis',
-                                        'kadaluarsa' => 'Kadaluarsa',
-                                        default      => ucfirst($obat->status),
-                                    };
+                                    $stokClass = $obat->stok === 0 ? 'color:#ef4444;font-weight:700;'
+                                               : ($obat->stok < 10 ? 'color:#f59e0b;font-weight:600;' : 'color:#22c55e;font-weight:600;');
                                 @endphp
                                 <tr>
                                     <td>
                                         <div style="font-weight:600;color:#1e293b;">{{ $obat->nama_obat }}</div>
                                         <div style="font-size:.72rem;color:#94a3b8;">ID #{{ $obat->id_obat }}</div>
                                     </td>
+                                    <td>{{ $obat->kategori->kategori_obat ?? '-' }}</td>
                                     <td style="text-align:center;">
-                                        <span style="background:#e0f2fe;color:#0369a1;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;">
-                                            {{ $obat->kategori->kategori_obat ?? '-' }}
-                                        </span>
+                                        <span style="{{ $stokClass }}">{{ $obat->stok }}</span>
                                     </td>
-                                    <td style="text-align:center;">
-                                        <span style="font-weight:700;color:{{ $stokColor }};">
-                                            {{ $obat->stok }}
-                                        </span>
-                                    </td>
-                                    <td style="text-align:center;font-weight:600;color:#1e293b;">
-                                        Rp {{ number_format($obat->harga, 0, ',', '.') }}
-                                    </td>
-                                    <td style="text-align:center;color:#64748b;font-size:.82rem;">
+                                    <td>Rp {{ number_format($obat->harga, 0, ',', '.') }}</td>
+                                    <td style="color:#64748b;font-size:.85rem;">
                                         {{ $obat->tanggal_kadaluarsa ? $obat->tanggal_kadaluarsa->format('d M Y') : '-' }}
                                     </td>
                                     <td style="text-align:center;">
-                                        <span class="stok-badge {{ $statusClass }}">{{ $statusLabel }}</span>
+                                        <span class="status-badge {{ $statusInfo['class'] }}">
+                                            {{ $statusInfo['label'] }}
+                                        </span>
                                     </td>
                                     <td style="text-align:center;">
                                         <div style="display:flex;gap:6px;justify-content:center;">
                                             <button type="button" class="btn-aksi btn-edit"
                                                     title="Edit"
-                                                    onclick="bukaModalEditObat({{ $obat->id_obat }})">
+                                                    onclick="bukaModalEdit({{ $obat->id_obat }})">
                                                 <i class="fa-solid fa-pen"></i>
                                             </button>
                                             <form method="POST"
@@ -221,7 +211,7 @@
     </div>
 
     {{-- MODAL TAMBAH OBAT --}}
-    <div class="modal-overlay" id="modalTambahObat" style="display:none;">
+    <div class="modal-overlay" id="modalTambah" style="display:none;">
         <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-header-icon">
@@ -231,40 +221,68 @@
                     <div class="modal-title">Tambah Obat Baru</div>
                     <div class="modal-subtitle">Isi data obat dengan lengkap</div>
                 </div>
-                <button class="modal-close" type="button" onclick="tutupModal('modalTambahObat')">
+                <button class="modal-close" type="button" onclick="tutupModal('modalTambah')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <form method="POST" action="{{ route('admin.obat.store') }}">
                 @csrf
                 <div class="modal-body">
+                    @if ($errors->any())
+                        <div style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;
+                                    padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:.82rem;">
+                            <ul style="margin:0;padding-left:16px;">
+                                @foreach ($errors->all() as $e)
+                                    <li>{{ $e }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nama Obat <span style="color:#DC2626">*</span></label>
-                            <input type="text" name="nama_obat" placeholder="Nama obat" required value="{{ old('nama_obat') }}">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-pills"></i>
+                                <input type="text" name="nama_obat"
+                                       value="{{ old('nama_obat') }}"
+                                       placeholder="Contoh: Paracetamol 500mg" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Kategori <span style="color:#DC2626">*</span></label>
                             <select name="id_kategori" required>
                                 <option value="">-- Pilih Kategori --</option>
                                 @foreach ($kategori as $kat)
-                                    <option value="{{ $kat->id_kategori }}" {{ old('id_kategori') == $kat->id_kategori ? 'selected' : '' }}>
+                                    <option value="{{ $kat->id_kategori }}"
+                                        {{ old('id_kategori') == $kat->id_kategori ? 'selected' : '' }}>
                                         {{ $kat->kategori_obat }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>Stok <span style="color:#DC2626">*</span></label>
-                            <input type="number" name="stok" min="0" placeholder="0" required value="{{ old('stok') }}">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-boxes-stacking"></i>
+                                <input type="number" name="stok" min="0"
+                                       value="{{ old('stok', 0) }}" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Harga (Rp) <span style="color:#DC2626">*</span></label>
-                            <input type="number" name="harga" min="0" step="0.01" placeholder="0" required value="{{ old('harga') }}">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-tag"></i>
+                                <input type="number" name="harga" min="0" step="100"
+                                       value="{{ old('harga') }}"
+                                       placeholder="Contoh: 5000" required>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>Status <span style="color:#DC2626">*</span></label>
@@ -276,12 +294,16 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Kadaluarsa</label>
-                            <input type="date" name="tanggal_kadaluarsa" value="{{ old('tanggal_kadaluarsa') }}">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-calendar-xmark"></i>
+                                <input type="date" name="tanggal_kadaluarsa"
+                                       value="{{ old('tanggal_kadaluarsa') }}">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalTambahObat')">
+                    <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalTambah')">
                         <i class="fa-solid fa-xmark" style="margin-right:5px"></i>Batal
                     </button>
                     <button class="btn-modal-save" type="submit">
@@ -293,7 +315,7 @@
     </div>
 
     {{-- MODAL EDIT OBAT --}}
-    <div class="modal-overlay" id="modalEditObat" style="display:none;">
+    <div class="modal-overlay" id="modalEdit" style="display:none;">
         <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-header-icon" style="background:linear-gradient(135deg,#0369a1,#0284c7);">
@@ -301,23 +323,27 @@
                 </div>
                 <div class="modal-header-text">
                     <div class="modal-title">Edit Obat</div>
-                    <div class="modal-subtitle" id="editObatSub">Perbarui data obat</div>
+                    <div class="modal-subtitle" id="editObatSubtitle">Perbarui data obat</div>
                 </div>
-                <button class="modal-close" type="button" onclick="tutupModal('modalEditObat')">
+                <button class="modal-close" type="button" onclick="tutupModal('modalEdit')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <form method="POST" id="formEditObat" action="">
                 @csrf
+                @method('PUT')
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nama Obat <span style="color:#DC2626">*</span></label>
-                            <input type="text" name="nama_obat" id="editNamaObat" required>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-pills"></i>
+                                <input type="text" name="nama_obat" id="editNamaObat" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Kategori <span style="color:#DC2626">*</span></label>
-                            <select name="id_kategori" id="editKategoriObat" required>
+                            <select name="id_kategori" id="editKategori" required>
                                 <option value="">-- Pilih Kategori --</option>
                                 @foreach ($kategori as $kat)
                                     <option value="{{ $kat->id_kategori }}">{{ $kat->kategori_obat }}</option>
@@ -328,17 +354,23 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Stok <span style="color:#DC2626">*</span></label>
-                            <input type="number" name="stok" id="editStokObat" min="0" required>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-boxes-stacking"></i>
+                                <input type="number" name="stok" id="editStok" min="0" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Harga (Rp) <span style="color:#DC2626">*</span></label>
-                            <input type="number" name="harga" id="editHargaObat" min="0" step="0.01" required>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-tag"></i>
+                                <input type="number" name="harga" id="editHarga" min="0" step="100" required>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Status <span style="color:#DC2626">*</span></label>
-                            <select name="status" id="editStatusObat" required>
+                            <select name="status" id="editStatus" required>
                                 <option value="tersedia">Tersedia</option>
                                 <option value="habis">Habis</option>
                                 <option value="kadaluarsa">Kadaluarsa</option>
@@ -346,12 +378,15 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Kadaluarsa</label>
-                            <input type="date" name="tanggal_kadaluarsa" id="editKadaluarsaObat">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-calendar-xmark"></i>
+                                <input type="date" name="tanggal_kadaluarsa" id="editTglKadaluarsa">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalEditObat')">
+                    <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalEdit')">
                         <i class="fa-solid fa-xmark" style="margin-right:5px"></i>Batal
                     </button>
                     <button class="btn-modal-save" type="submit">
@@ -362,43 +397,70 @@
         </div>
     </div>
 
-    {{-- MODAL TAMBAH KATEGORI --}}
-    <div class="modal-overlay" id="modalTambahKategori" style="display:none;">
-        <div class="modal-box" style="max-width:420px;">
+    {{-- MODAL KELOLA KATEGORI --}}
+    <div class="modal-overlay" id="modalKategori" style="display:none;">
+        <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-header-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);">
-                    <i class="fa-solid fa-tag"></i>
+                    <i class="fa-solid fa-tags"></i>
                 </div>
                 <div class="modal-header-text">
-                    <div class="modal-title">Tambah Kategori</div>
+                    <div class="modal-title">Kelola Kategori Obat</div>
+                    <div class="modal-subtitle">Tambah atau hapus kategori</div>
                 </div>
-                <button class="modal-close" type="button" onclick="tutupModal('modalTambahKategori')">
+                <button class="modal-close" type="button" onclick="tutupModal('modalKategori')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <form method="POST" action="{{ route('admin.kategori.store') }}">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nama Kategori <span style="color:#DC2626">*</span></label>
-                        <input type="text" name="kategori_obat" placeholder="Contoh: Antibiotik" required>
+            <div class="modal-body">
+                {{-- Form tambah kategori --}}
+                <form method="POST" action="{{ route('admin.kategori.store') }}" style="display:flex;gap:10px;margin-bottom:16px;">
+                    @csrf
+                    <div class="input-with-icon" style="flex:1;">
+                        <i class="fa-solid fa-tag"></i>
+                        <input type="text" name="kategori_obat" placeholder="Nama kategori baru..." required>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalTambahKategori')">Batal</button>
-                    <button class="btn-modal-save" type="submit">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    <button type="submit" class="btn-modal-save" style="white-space:nowrap;">
+                        <i class="fa-solid fa-plus"></i> Tambah
                     </button>
+                </form>
+
+                {{-- Daftar kategori --}}
+                <div style="max-height:300px;overflow-y:auto;">
+                    @forelse ($kategori as $kat)
+                        <div style="display:flex;align-items:center;justify-content:space-between;
+                                    padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:6px;">
+                            <span style="font-weight:500;color:#1e293b;">{{ $kat->kategori_obat }}</span>
+                            <form method="POST" action="{{ route('admin.kategori.destroy', $kat->id_kategori) }}"
+                                  onsubmit="return confirm('Hapus kategori {{ addslashes($kat->kategori_obat) }}?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-aksi btn-hapus" title="Hapus kategori">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    @empty
+                        <p style="text-align:center;color:#94a3b8;padding:20px;">Belum ada kategori.</p>
+                    @endforelse
                 </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-cancel" type="button" onclick="tutupModal('modalKategori')">
+                    Tutup
+                </button>
+            </div>
         </div>
     </div>
 
+    {{-- TOAST --}}
+    <div class="toast-container" id="toast-container"></div>
+
 </div>
 
-{{-- Data obat untuk modal edit --}}
-<script>
-    const OBAT_DATA = @json($obatList->keyBy('id_obat')->map(function($o) {
+{{-- Data obat untuk modal edit (JSON) --}}
+@php
+    $obatJson = $obatList->keyBy('id_obat')->map(function($o) {
         return [
             'id_obat'            => $o->id_obat,
             'nama_obat'          => $o->nama_obat,
@@ -408,42 +470,53 @@
             'status'             => $o->status,
             'tanggal_kadaluarsa' => $o->tanggal_kadaluarsa?->format('Y-m-d'),
         ];
-    }));
-
-    const ROUTE_UPDATE_OBAT = "{{ url('/admin/kelolaDataObat') }}";
-
-    function tutupModal(id) {
-        document.getElementById(id).style.display = 'none';
-    }
-
-    document.getElementById('btnTambahObat').addEventListener('click', () => {
-        document.getElementById('modalTambahObat').style.display = 'flex';
     });
-
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', e => {
-            if (e.target === overlay) overlay.style.display = 'none';
-        });
-    });
-
-    function bukaModalEditObat(idObat) {
-        const o = OBAT_DATA[idObat];
-        if (!o) return;
-
-        document.getElementById('editNamaObat').value       = o.nama_obat          ?? '';
-        document.getElementById('editKategoriObat').value   = o.id_kategori        ?? '';
-        document.getElementById('editStokObat').value       = o.stok               ?? 0;
-        document.getElementById('editHargaObat').value      = o.harga              ?? 0;
-        document.getElementById('editStatusObat').value     = o.status             ?? 'tersedia';
-        document.getElementById('editKadaluarsaObat').value = o.tanggal_kadaluarsa ?? '';
-        document.getElementById('editObatSub').textContent  = `Edit: ${o.nama_obat}`;
-        document.getElementById('formEditObat').action      = `${ROUTE_UPDATE_OBAT}/${idObat}`;
-
-        document.getElementById('modalEditObat').style.display = 'flex';
-    }
+@endphp
+<script>
+const OBAT_DATA = @json($obatJson);
+const ROUTE_OBAT_BASE = "{{ url('/admin/kelolaDataObat') }}";
 </script>
-
 @endsection
 
 @push('scripts')
+<script>
+function tutupModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+function bukaModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+        if (e.target === overlay) overlay.style.display = 'none';
+    });
+});
+
+document.getElementById('btnTambahObat').addEventListener('click', () => bukaModal('modalTambah'));
+document.getElementById('btnKelolaKategori').addEventListener('click', () => bukaModal('modalKategori'));
+
+// Buka modal tambah jika ada error validasi
+@if ($errors->any())
+    bukaModal('modalTambah');
+@endif
+
+function bukaModalEdit(idObat) {
+    const obat = OBAT_DATA[idObat];
+    if (!obat) return;
+
+    document.getElementById('editNamaObat').value      = obat.nama_obat          ?? '';
+    document.getElementById('editKategori').value      = obat.id_kategori        ?? '';
+    document.getElementById('editStok').value          = obat.stok               ?? 0;
+    document.getElementById('editHarga').value         = obat.harga              ?? 0;
+    document.getElementById('editStatus').value        = obat.status             ?? 'tersedia';
+    document.getElementById('editTglKadaluarsa').value = obat.tanggal_kadaluarsa ?? '';
+
+    document.getElementById('editObatSubtitle').textContent = 'Edit: ' + obat.nama_obat;
+    document.getElementById('formEditObat').action = ROUTE_OBAT_BASE + '/' + idObat;
+
+    bukaModal('modalEdit');
+}
+</script>
+<script src="{{ asset('js/kelolaDataObat.js') }}"></script>
 @endpush
